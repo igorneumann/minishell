@@ -1,0 +1,23 @@
+{
+	"workbench.editor.showTabs":true,
+	"[c]":
+	{
+		"C_Cpp.errorSquiggles": "Enabled"
+	},
+
+		"editor.wordBasedSuggestions": false,
+		"editor.suggest.insertMode": "replace",
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"files.trimTrailingWhitespace": true,
+		//"editor.acceptSuggestionOnEnter": "off",
+		"editor.mouseWheelZoom": true,
+		"editor.minimap.enabled": false,
+		"editor.rulers": [80],
+		"files.autoSave": "onFocusChange",
+		"files.insertFinalNewline": true,
+		"editor.renderWhitespace": "all",
+		"files.associations": {
+			"__locale": "c"
+		},
+}
