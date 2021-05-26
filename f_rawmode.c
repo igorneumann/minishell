@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/05/26 20:35:33 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/05/26 20:42:02 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ struct termios orig_termios;
 void die(const char *s)
 {
 	editorRefreshScreen();
-	perror(s);
+	if (s[0]!= '\0')
+		perror(s);
 	exit(1);
 }
 
@@ -85,10 +86,8 @@ void processkeypress(t_cmd *cmd)
 			disableRawMode();
 			exit(0);
 		}
-		else
-			c = 13;
 	}
-	if (c == 13) // ENTER
+	else if (c == 13) // ENTER
 	{
 		printf("\r\n");
 		ft_read_arguments(cmd);
