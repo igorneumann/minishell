@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/05/26 19:41:06 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/05/26 20:22:16 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,24 @@ int ft_commands(t_cmd *cmd)
 			cmd->in[cmd->i] = '\0';
 			return (1);
 		}
+		else if (seq[1] == 'H' && cmd->i > 0) //HOME
+		{
+			while (--cmd->i >= 0)
+				ft_putstr("\033[D");
+			cmd->i = 0;
+			return (1);
+		}
+		else if (seq[1] == 'F' && cmd->in[cmd->i] != '\0') //END
+		{
+			while (cmd->in[cmd->i] != '\0')
+			{
+				ft_putstr("\033[C");
+				cmd->i++;
+			}
+			return (1);
+		}
+		//else //OTROS IMPRIME CODIGO EN PANTALLA
+		//	printf("%s\r\n", seq);
 	}
 	return (0);
 }

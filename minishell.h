@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/05/26 18:54:37 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/05/26 20:17:55 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ char	f_raw(void);
 void	processkeypress(t_cmd *cmd);
 void	editorRefreshScreen(void);
 int		ft_commands(t_cmd *cmd);
+void	die(const char *s);
 
 #endif
