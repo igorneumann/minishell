@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/05/26 18:26:47 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/05/26 21:17:25 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 struct termios orig_termios;
 
-void die(const char *s) {
+void die(const char *s)
+{
 	editorRefreshScreen();
-	perror(s);
+	if (s[0]!= 0)
+		perror(s);
 	exit(1);
 }
 
@@ -74,19 +76,90 @@ void processkeypress(t_cmd *cmd)
 	write(STDOUT_FILENO, &c, 1);
 	cmd->in[cmd->i] = c;
 	cmd->i++;
-	cmd->in[cmd->i] = '\0';
 	c = '\0';
 	}
-	if (c == 26)
+	if (c == 4) // CTRL-D
 	{
-		write(STDOUT_FILENO, "\x1b[2J", 4);
-		write(STDOUT_FILENO, "\x1b[H", 3);
-		exit(0);
+		if (cmd->i == 0)
+		{
+			write(STDOUT_FILENO, "\x1b[2J", 4);
+			write(STDOUT_FILENO, "\x1b[H", 3);
+			disableRawMode();
+			exit(0);
+		}
 	}
-	else if (c == 13)
+	else if (c == 13) // ENTER
 	{
 		ft_lstadd_back(&list, ft_lstnew(cmd->in));
 		printf("\r\n");
 		ft_read_arguments(cmd);
+		cmd->in[0] = 13;
+		cmd->in[1] = '\0';
+		cmd->i = 0;
 	}
+	else if (c == 127) //BACKSPACE
+	{
+		if (cmd->i > 0)
+		{
+			ft_putstr("\033[D \033[D");
+			cmd->i--;
+			cmd->in[cmd->i] = '\0';
+		}
+	}
+	else if (c == '\x1b')
+		ft_commands(cmd);
+	else if (c != 0) //OTROS IMPRIME CODIGO EN PANTALLA
+		printf("%d\r\n", c);
+}
+
+int ft_commands(t_cmd *cmd)
+{
+	char seq[3];
+
+	if (read(STDIN_FILENO, &seq[0], 1) != 1)
+		return '\x1b';
+	if (seq[0] && read(STDIN_FILENO, &seq[1], 1) != 1)
+		return '\x1b';
+	if ((seq[1] >= '0' && seq[1] <= '9') && read(STDIN_FILENO, &seq[2], 1) != 1)
+		return '\x1b';
+	if (seq[2] == '~' || (seq[1] >= 'A' && seq[1] <= 'Z') )
+	{
+		if (seq[1] == 'D' && cmd->i > 0) //FLECHA IZQUIERDA
+		{
+			ft_putstr("\033[D");
+			cmd->i--;
+			return (1);
+		}
+		else if (seq[1] == 'C' && cmd->in[cmd->i] != '\0') //FLECHA DERECHA
+		{
+			ft_putstr("\033[C");
+			cmd->i++;
+			return (1);
+		}
+		else if (seq[1] == '3') //DELETE
+		{
+			ft_putstr(" \033[J\033[D");
+			cmd->in[cmd->i] = '\0';
+			return (1);
+		}
+		else if (seq[1] == 'H' && cmd->i > 0) //HOME
+		{
+			while (--cmd->i >= 0)
+				ft_putstr("\033[D");
+			cmd->i = 0;
+			return (1);
+		}
+		else if (seq[1] == 'F' && cmd->in[cmd->i] != '\0') //END
+		{
+			while (cmd->in[cmd->i] != '\0')
+			{
+				ft_putstr("\033[C");
+				cmd->i++;
+			}
+			return (1);
+		}
+		//else //OTROS IMPRIME CODIGO EN PANTALLA
+		//	printf("%s\r\n", seq);
+	}
+	return (0);
 }

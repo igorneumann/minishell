@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/05/26 17:51:33 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/05/26 21:20:33 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ typedef struct s_data
 	char			*copy;
 	struct s_data	*next;
 }					t_data;
+
+typedef struct s_data
+{
+	char	**env;
+}				t_data;
 
 void	ft_init(t_cmd *cmd);
 void	ft_presentation(void);

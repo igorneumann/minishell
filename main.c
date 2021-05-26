@@ -6,20 +6,31 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/05/26 17:37:57 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/05/26 21:25:39 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_init(t_cmd *cmd)
+void	ft_env(char **envp)
+{
+	t_data	data;
+	int		i;
+
+	i = 0;
+	while (envp[i])
+		data.env = ft_strdup(envp[i++]);
+}
+
+void	ft_init(t_cmd *cmd, char **envp)
 {
 	editorRefreshScreen();
+	ft_env(&*envp);
 	cmd->i = 0;
 	cmd->in = (char*)malloc(sizeof(char) * (1024));
 }
 
-void ft_presentation(void)
+void	ft_presentation(void)
 {
 	ft_putstr("\r\n\r\n                \x1B[33mᕙ ( \x1b[36m^");
 	ft_putstr("\x1b[35m ₒ \x1b[36m^\x1B[33m   ) (");
@@ -45,7 +56,7 @@ void	ft_read_arguments(t_cmd *cmd)
 //	cmd->pos = ft_strnstr(cmd->pos, '\n', 1);
 }
 
-void ft_cmd_line(t_cmd *cmd)
+void	ft_cmd_line(t_cmd *cmd)
 {
 	while (1)
 	{
@@ -57,11 +68,13 @@ void ft_cmd_line(t_cmd *cmd)
 	cmd->in = NULL;
 }
 
-int main()
+int main(int argc, char **argv, char **envp)
 {
-	t_cmd cmd;
+	t_cmd	cmd;
 
-	ft_init(&cmd);
+	(void)argc;
+	(void)argv;
+	ft_init(&cmd, &*envp);
 	ft_presentation();
 	ft_cmd_line(&cmd);
 
