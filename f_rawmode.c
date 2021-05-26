@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/05/26 20:42:02 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/05/26 20:48:46 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ struct termios orig_termios;
 void die(const char *s)
 {
 	editorRefreshScreen();
-	if (s[0]!= '\0')
+	if (s[0]!= 0)
 		perror(s);
 	exit(1);
 }
