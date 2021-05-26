@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   f_rawmode.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/05/25 21:13:04 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/05/26 18:26:47 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ char f_raw(void)
 
 void processkeypress(t_cmd *cmd)
 {
-	char c;
+	char	c;
+	t_data	*list;
 
 	c = f_raw();
 	while (!iscntrl(c))
@@ -76,7 +77,7 @@ void processkeypress(t_cmd *cmd)
 	cmd->in[cmd->i] = '\0';
 	c = '\0';
 	}
-	if (c == CTRL_KEY('z'))
+	if (c == 26)
 	{
 		write(STDOUT_FILENO, "\x1b[2J", 4);
 		write(STDOUT_FILENO, "\x1b[H", 3);
@@ -84,6 +85,7 @@ void processkeypress(t_cmd *cmd)
 	}
 	else if (c == 13)
 	{
+		ft_lstadd_back(&list, ft_lstnew(cmd->in));
 		printf("\r\n");
 		ft_read_arguments(cmd);
 	}
