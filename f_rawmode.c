@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/05/26 20:22:16 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/05/26 20:35:33 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,19 @@ void processkeypress(t_cmd *cmd)
 	cmd->i++;
 	c = '\0';
 	}
-	if (c == 26) // CTRL-Z
+	if (c == 4) // CTRL-D
 	{
-		write(STDOUT_FILENO, "\x1b[2J", 4);
-		write(STDOUT_FILENO, "\x1b[H", 3);
-		disableRawMode();
-		exit(0);
+		if (cmd->i == 0)
+		{
+			write(STDOUT_FILENO, "\x1b[2J", 4);
+			write(STDOUT_FILENO, "\x1b[H", 3);
+			disableRawMode();
+			exit(0);
+		}
+		else
+			c = 13;
 	}
-	else if (c == 13) // ENTER
+	if (c == 13) // ENTER
 	{
 		printf("\r\n");
 		ft_read_arguments(cmd);
