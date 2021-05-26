@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/05/25 21:25:10 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/05/26 17:30:50 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,18 @@ void	ft_read_arguments(t_cmd *cmd)
 		getcwd(buffer, -1);
 		ft_putstr("\x1B[33m¿Ya te has perdido? Estás en \e[1;33m");
 		ft_putstr(buffer);
-		ft_putstr("\e[0m\n");
+		ft_putstr("\e[0m\r\n");
 	}
-//	cmd->pos = ft_strnstr(cmd->pos, '\n', 1);
 }
 
 void ft_cmd_line(t_cmd *cmd)
 {
-	ft_putstr("\e[1;32m¿En qué puedo ayudarte?: \e[0m");
 	while (1)
+	{
+		if (cmd->i == 0)
+			ft_putstr("\e[1;32m¿En qué puedo ayudarte?: \e[0m");
 		processkeypress(cmd);
+	}
 	free(cmd->in);
 	cmd->in = NULL;
 }

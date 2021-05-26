@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/05/25 21:13:04 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/05/26 17:28:43 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,25 @@ void processkeypress(t_cmd *cmd)
 	cmd->in[cmd->i] = '\0';
 	c = '\0';
 	}
-	if (c == CTRL_KEY('z'))
+	if (c == 26) // CTRL-Z
 	{
 		write(STDOUT_FILENO, "\x1b[2J", 4);
 		write(STDOUT_FILENO, "\x1b[H", 3);
+		disableRawMode();
 		exit(0);
 	}
-	else if (c == 13)
+	if (c == 13) // ENTER
 	{
 		printf("\r\n");
 		ft_read_arguments(cmd);
+		cmd->i = 0;
 	}
+	else if (c == 127) //BACKSPACE
+	{
+		printf("\033[1D ");
+		cmd->i--;
+		cmd->in[cmd->i] = '\0';
+	}
+	else if (c != 0) //OTROS IMPRIME CODIGO EN PANTALLA
+		printf("%d\r\n", c);
 }
