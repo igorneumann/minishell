@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/05/26 17:28:43 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/05/26 19:41:06 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 struct termios orig_termios;
 
-void die(const char *s) {
+void die(const char *s)
+{
 	editorRefreshScreen();
 	perror(s);
 	exit(1);
@@ -73,7 +74,6 @@ void processkeypress(t_cmd *cmd)
 	write(STDOUT_FILENO, &c, 1);
 	cmd->in[cmd->i] = c;
 	cmd->i++;
-	cmd->in[cmd->i] = '\0';
 	c = '\0';
 	}
 	if (c == 26) // CTRL-Z
@@ -83,18 +83,59 @@ void processkeypress(t_cmd *cmd)
 		disableRawMode();
 		exit(0);
 	}
-	if (c == 13) // ENTER
+	else if (c == 13) // ENTER
 	{
 		printf("\r\n");
 		ft_read_arguments(cmd);
+		cmd->in[0] = 13;
+		cmd->in[1] = '\0';
 		cmd->i = 0;
 	}
 	else if (c == 127) //BACKSPACE
 	{
-		printf("\033[1D ");
-		cmd->i--;
-		cmd->in[cmd->i] = '\0';
+		if (cmd->i > 0)
+		{
+			ft_putstr("\033[D \033[D");
+			cmd->i--;
+			cmd->in[cmd->i] = '\0';
+		}
 	}
+	else if (c == '\x1b')
+		ft_commands(cmd);
 	else if (c != 0) //OTROS IMPRIME CODIGO EN PANTALLA
 		printf("%d\r\n", c);
+}
+
+int ft_commands(t_cmd *cmd)
+{
+	char seq[3];
+
+	if (read(STDIN_FILENO, &seq[0], 1) != 1)
+		return '\x1b';
+	if (seq[0] && read(STDIN_FILENO, &seq[1], 1) != 1)
+		return '\x1b';
+	if ((seq[1] >= '0' && seq[1] <= '9') && read(STDIN_FILENO, &seq[2], 1) != 1)
+		return '\x1b';
+	if (seq[2] == '~' || (seq[1] >= 'A' && seq[1] <= 'Z') )
+	{
+		if (seq[1] == 'D' && cmd->i > 0) //FLECHA IZQUIERDA
+		{
+			ft_putstr("\033[D");
+			cmd->i--;
+			return (1);
+		}
+		else if (seq[1] == 'C' && cmd->in[cmd->i] != '\0') //FLECHA DERECHA
+		{
+			ft_putstr("\033[C");
+			cmd->i++;
+			return (1);
+		}
+		else if (seq[1] == '3') //DELETE
+		{
+			ft_putstr(" \033[J\033[D");
+			cmd->in[cmd->i] = '\0';
+			return (1);
+		}
+	}
+	return (0);
 }

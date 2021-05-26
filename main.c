@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/05/26 17:30:50 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/05/26 19:39:02 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void ft_init(t_cmd *cmd)
 {
 	editorRefreshScreen();
 	cmd->i = 0;
-	cmd->in = (char*)malloc(sizeof(char) * (1024));
+	cmd->in = (char*)calloc(1024, sizeof(char) * (1024));
+	cmd->in[0] = 13;
 }
 
 void ft_presentation(void)
@@ -48,8 +49,11 @@ void ft_cmd_line(t_cmd *cmd)
 {
 	while (1)
 	{
-		if (cmd->i == 0)
+		if (cmd->i == 0 && cmd->in[0] == 13)
+		{
+			cmd->in[0] = '\0';
 			ft_putstr("\e[1;32m¿En qué puedo ayudarte?: \e[0m");
+		}
 		processkeypress(cmd);
 	}
 	free(cmd->in);
