@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/05/26 20:48:46 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/05/27 20:08:45 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,29 @@ struct termios orig_termios;
 
 void die(const char *s)
 {
+	int error;
+
+	error = 0;
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
 	editorRefreshScreen();
 	if (s[0]!= 0)
 		perror(s);
-	exit(1);
+	else
+	{
+		if (s[1] < 0)
+			error = (256 + s[1]);
+		else
+			error = s[1];
+		write(STDERR , &s[1], 1);
+		editorRefreshScreen();
+	}
+	exit(error);
 }
 
 void editorRefreshScreen(void)
 {
 	write(STDOUT_FILENO, "\x1b[2J", 4);
 	write(STDOUT_FILENO, "\x1b[H", 3);
-}
-
-void disableRawMode(void)
-{
-	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios) == -1)
-		die("tcsetattr");
 }
 
 void enableRawMode(void)
@@ -41,7 +48,6 @@ void enableRawMode(void)
 	if (tcgetattr(STDIN_FILENO, &orig_termios) == -1)
 		die("tcgetattr");
 	raw = orig_termios;
-	atexit(disableRawMode);
 	raw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
 	raw.c_oflag &= ~(OPOST);
 	raw.c_cflag |= (CS8);
@@ -83,8 +89,7 @@ void processkeypress(t_cmd *cmd)
 		{
 			write(STDOUT_FILENO, "\x1b[2J", 4);
 			write(STDOUT_FILENO, "\x1b[H", 3);
-			disableRawMode();
-			exit(0);
+			die(0);
 		}
 	}
 	else if (c == 13) // ENTER

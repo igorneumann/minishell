@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/05/26 20:47:33 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/05/27 20:08:46 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,14 @@ void ft_presentation(void)
 void	ft_read_arguments(t_cmd *cmd)
 {
 	int		i;
+	char	code[2];
 	char	buffer[512];
 
 	i = 0;
+	code[0] = 0;
+	code[1] = 0;
+	while (cmd->in[i] == ' ')
+		i++;
 	if (ft_strnstr(cmd->in, "pwd", 3) != NULL)
 	{
 		getcwd(buffer, -1);
@@ -44,7 +49,15 @@ void	ft_read_arguments(t_cmd *cmd)
 		ft_putstr("\e[0m\r\n");
 	}
 	else if (ft_strnstr(cmd->in, "exit", 4) != NULL)
-		die(0);
+	{
+		i += 4;
+		while (cmd->in[i] == ' ')
+			i++;
+		if 	(cmd->in[i] >= 0 || cmd->in[i] <= 9 ||
+		cmd->in[i] == '-' || cmd->in[i] == '+')
+			code[1] = ft_atoi(&cmd->in[i]);
+		die(code);
+	}
 }
 
 void ft_cmd_line(t_cmd *cmd)
