@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 17:17:03 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/05/26 21:11:22 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/05/27 10:18:52 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,20 @@ t_data	*ft_new(char *in)
 	new->in = in;
 	new->next = NULL;
 	return (new);
+}
+
+void	ft_lst_add_front(t_data **in, t_data *new)
+{
+	t_data	*first;
+
+	if (!in)
+	{
+		*in = new;
+		return ;
+	}
+	first = ft_lst_first(*in);
+	new->next = first;
+	first->prev = new;
 }
 
 void	ft_lst_add_back(t_data **in, t_data *new)

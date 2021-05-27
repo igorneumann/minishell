@@ -6,17 +6,17 @@
 #    By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 10:24:24 by narroyo-          #+#    #+#              #
-#    Updated: 2021/05/26 17:16:43 by narroyo-         ###   ########.fr        #
+#    Updated: 2021/05/27 10:28:51 by narroyo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	minishell
 HEADER			=	-I ./includes/libft/
-SRCS			=	./f_rawmode.c
+SRCS			=	main.c f_rawmode.c lists.c instructions.c
 LIBFT			=	../Libft
 OBJS 			=	$(SRCS:.c=.o)
 LIBS			=	../Libft/libft.a
-CC				=	@gcc -g -Wall -Wextra -Werror
+CC				=	@gcc -g -Wall -Wextra -Werror -g3 -fsanitize=address
 
 # -g3 -fsanitize=address
 
