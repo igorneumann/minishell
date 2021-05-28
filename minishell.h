@@ -6,14 +6,14 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/05/27 10:28:40 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/05/28 15:07:35 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../Libft/libft.h"
+# include "./includes/libft/libft.h"
 
 # include <stdio.h>
 # include <unistd.h>
@@ -30,13 +30,6 @@
 # define STDOUT 1
 # define STDERR 2
 
-typedef struct s_command
-{
-	char		*in;
-	int			i;
-	char		*pos;
-}				t_cmd;
-
 typedef struct s_data
 {
 	struct s_data	*prev;
@@ -44,6 +37,14 @@ typedef struct s_data
 	char			*copy;
 	struct s_data	*next;
 }					t_data;
+
+typedef struct s_command
+{
+	char		*in;
+	int			i;
+	char		*pos;
+	t_data		*list;
+}				t_cmd;
 
 typedef struct s_instruction
 {
@@ -54,7 +55,7 @@ typedef struct s_instruction
 *** Main
 */
 
-void	ft_init(t_cmd *cmd, char **envp);
+void	ft_init(t_cmd *cmd);
 void	ft_presentation(void);
 void	ft_read_arguments(t_cmd *cmd);
 void	ft_cmd_line(t_cmd *cmd);
@@ -76,7 +77,7 @@ int		ft_commands(t_cmd *cmd);
 
 t_data	*ft_new(char *in);
 void	ft_lst_add_front(t_data **in, t_data *new);
-void	ft_lst_add_back(t_data **in, t_data *new);
+void	ft_lst_add_back(t_data *in, t_data *new);
 t_data	*ft_lst_last(t_data *elem);
 t_data	*ft_lst_first(t_data *elem);
 

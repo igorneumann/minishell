@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/05/27 16:41:40 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/05/28 15:24:02 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,40 @@
 
 struct termios orig_termios;
 
-void	die(const char *s)
+void die(const char *s)
 {
+	int error;
+
+	error = 0;
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
 	editorRefreshScreen();
 	if (s[0]!= 0)
 		perror(s);
-	exit(1);
+	else
+	{
+		if (s[1] < 0)
+			error = (256 + s[1]);
+		else
+			error = s[1];
+		write(STDERR , &s[1], 1);
+		editorRefreshScreen();
+	}
+	exit(error);
 }
 
-void	editorRefreshScreen(void)
+void editorRefreshScreen(void)
 {
 	write(STDOUT_FILENO, "\x1b[2J", 4);
 	write(STDOUT_FILENO, "\x1b[H", 3);
 }
 
-void	disableRawMode(void)
-{
-	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios) == -1)
-		die("tcsetattr");
-}
-
-void	enableRawMode(void)
+void enableRawMode(void)
 {
 	struct	termios raw;
 
 	if (tcgetattr(STDIN_FILENO, &orig_termios) == -1)
 		die("tcgetattr");
 	raw = orig_termios;
-	atexit(disableRawMode);
 	raw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
 	raw.c_oflag &= ~(OPOST);
 	raw.c_cflag |= (CS8);
@@ -51,7 +57,7 @@ void	enableRawMode(void)
 		die("tcsetattr");
 }
 
-char	f_raw(void)
+char f_raw(void)
 {
 	int		nread;
 	char	c;
@@ -65,10 +71,9 @@ char	f_raw(void)
 	return (c);
 }
 
-void	processkeypress(t_cmd *cmd)
+void processkeypress(t_cmd *cmd)
 {
-	char	c;
-	//t_data	*list;
+	char c;
 
 	c = f_raw();
 	while (!iscntrl(c))
@@ -84,15 +89,13 @@ void	processkeypress(t_cmd *cmd)
 		{
 			write(STDOUT_FILENO, "\x1b[2J", 4);
 			write(STDOUT_FILENO, "\x1b[H", 3);
-			disableRawMode();
-			exit(0);
+			die(0);
 		}
 	}
 	else if (c == 13) // ENTER
 	{
 		printf("\r\n");
 		ft_read_arguments(cmd);
-	//	ft_lst_add_back(&list, ft_new(cmd->in));
 		cmd->in[0] = 13;
 		cmd->in[1] = '\0';
 		cmd->i = 0;
@@ -101,7 +104,7 @@ void	processkeypress(t_cmd *cmd)
 	{
 		if (cmd->i > 0)
 		{
-			printf("\033[D \033[D");
+			ft_putstr("\033[D \033[D");
 			cmd->i--;
 			cmd->in[cmd->i] = '\0';
 		}
@@ -112,7 +115,7 @@ void	processkeypress(t_cmd *cmd)
 		printf("%d\r\n", c);
 }
 
-int	ft_commands(t_cmd *cmd)
+int ft_commands(t_cmd *cmd)
 {
 	char seq[3];
 
@@ -126,26 +129,26 @@ int	ft_commands(t_cmd *cmd)
 	{
 		if (seq[1] == 'D' && cmd->i > 0) //FLECHA IZQUIERDA
 		{
-			printf("\033[D");
+			ft_putstr("\033[D");
 			cmd->i--;
 			return (1);
 		}
 		else if (seq[1] == 'C' && cmd->in[cmd->i] != '\0') //FLECHA DERECHA
 		{
-			printf("\033[C");
+			ft_putstr("\033[C");
 			cmd->i++;
 			return (1);
 		}
 		else if (seq[1] == '3') //DELETE
 		{
-			printf(" \033[J\033[D");
+			ft_putstr(" \033[J\033[D");
 			cmd->in[cmd->i] = '\0';
 			return (1);
 		}
 		else if (seq[1] == 'H' && cmd->i > 0) //HOME
 		{
 			while (--cmd->i >= 0)
-				printf("\033[D");
+				ft_putstr("\033[D");
 			cmd->i = 0;
 			return (1);
 		}
@@ -153,7 +156,7 @@ int	ft_commands(t_cmd *cmd)
 		{
 			while (cmd->in[cmd->i] != '\0')
 			{
-				printf("\033[C");
+				ft_putstr("\033[C");
 				cmd->i++;
 			}
 			return (1);

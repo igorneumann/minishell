@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   instructions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 10:28:08 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/05/27 10:41:01 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/05/27 18:26:24 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@ void	ft_env(char **envp)
 	int		i;
 
 	i = 0;
-	while (envp[i])
+	if (envp != NULL)
 	{
-		inst.env[i] = ft_strdup(envp[i]);
-		i++;
+		while (envp[i])
+		{
+			inst.env[i] = ft_strdup(envp[i]);
+			i++;
+		}
 	}
 }
