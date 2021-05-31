@@ -3,17 +3,22 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+         #
+#    By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 10:24:24 by narroyo-          #+#    #+#              #
-#    Updated: 2021/05/28 09:52:50 by narroyo-         ###   ########.fr        #
+#    Updated: 2021/05/31 17:27:01 by ineumann         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	minishell
 HEADER			=	-I ./includes/libft/
-SRCS			=	main.c ./includes/gnl/get_next_line.c ./f_rawmode.c lists.c \
-					instructions.c
+SRCS			=	main.c \
+					./includes/gnl/get_next_line.c \
+					f_rawmode.c \
+					lists.c \
+					instructions.c \
+					keypress.c \
+					commands.c
 LIBFT			=	./includes/libft
 LIB_SRC			=	$(shell find libft | fgrep ".c")
 OBJS 			=	$(SRCS:.c=.o)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 17:17:03 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/05/28 15:18:36 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/05/31 18:24:38 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_data	*ft_new(char *in)
 {
 	t_data	*new;
 
-	new = (t_data *)malloc(sizeof(t_data));
+	new = (t_data *)calloc(1, sizeof(t_data));
 	if (!new)
 		return (NULL);
 	new->prev = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/05/28 15:28:47 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/05/31 19:23:01 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,12 @@ void	ft_read_arguments(t_cmd *cmd)
 	i = 0;
 	code[0] = 0;
 	code[1] = 0;
-	ft_lst_add_front(&cmd->list, ft_new(cmd->in));
 	while (cmd->in[i] == ' ')
 		i++;
+	if (ft_strlen(cmd->in) > 0)
+		ft_lst_add_front(&cmd->list, ft_new(cmd->in));
 	x = cmd->list;
-	while (x)
-	{
-		printf("%s %p\r\n", x->in, x);
-		x = x->next;
-	}
-	//if (cmd->list->next)
-	//	printf("%s\r\n", cmd->list->next->in);
+	ft_printlist(x);
 	if (ft_strnstr(cmd->in, "pwd", 3) != NULL)
 	{
 		getcwd(buffer, -1);
@@ -92,6 +87,15 @@ int main()
 	ft_init(&cmd);
 	ft_presentation();
 	ft_cmd_line(&cmd);
-
+	die(0);
 	return (0);
+}
+
+void	ft_printlist(t_data *x)
+{
+	while (x)
+	{
+		printf("%s %p\r\n", x->in, x);
+		x = x->next;
+	}
 }

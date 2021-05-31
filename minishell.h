@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/05/28 15:07:35 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/05/31 19:43:46 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <fcntl.h>
 # include <sys/errno.h>
 # include <termios.h>
+# include <term.h>
 
 # define STDIN 0
 # define STDOUT 1
@@ -59,6 +60,7 @@ void	ft_init(t_cmd *cmd);
 void	ft_presentation(void);
 void	ft_read_arguments(t_cmd *cmd);
 void	ft_cmd_line(t_cmd *cmd);
+void	ft_printlist(t_data *x);
 
 /*
 *** f_rawmode
@@ -68,8 +70,6 @@ void	die(const char *s);
 void	editorRefreshScreen(void);
 void	enableRawMode(void);
 char	f_raw(void);
-void	processkeypress(t_cmd *cmd);
-int		ft_commands(t_cmd *cmd);
 
 /*
 *** lists
@@ -86,5 +86,19 @@ t_data	*ft_lst_first(t_data *elem);
 */
 
 void	ft_env(char **envp);
+
+/*
+*** keypress.c
+*/
+
+void	processkeypress(t_cmd *cmd);
+void	ft_backspace(t_cmd *cmd);
+
+/*
+*** commands.c
+*/
+
+int		ft_commands(t_cmd *cmd);
+int		ft_history(t_cmd *cmd, char *seq);
 
 #endif
