@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/05/31 20:58:48 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/01 18:58:28 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,13 @@ void processkeypress(t_cmd *cmd)
 {
 	char c;
 
-	c = f_raw();
+	c = f_raw(cmd->raw);
 	while (!iscntrl(c))
 	{
 	write(STDOUT_FILENO, &c, 1);
 	cmd->in[cmd->i] = c;
 	c = '\0';
-	cmd->i++;
-    cmd->in[cmd->i] = c;	
+    cmd->in[++cmd->i] = c;	
 	}
 	if (c == '\x1b')
 		ft_commands(cmd);
@@ -33,7 +32,7 @@ void processkeypress(t_cmd *cmd)
 		{
 			write(STDOUT_FILENO, "\x1b[2J", 4);
 			write(STDOUT_FILENO, "\x1b[H", 3);
-			die(0);
+			die(0, cmd->raw);
 		}
 	}
 	else if (c == 13) // ENTER

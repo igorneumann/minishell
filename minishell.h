@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/05/31 19:43:46 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/01 19:00:43 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,18 @@ typedef struct s_data
 	struct s_data	*next;
 }					t_data;
 
+typedef struct s_raw
+{
+	struct termios	raw;
+	struct termios	orig;
+}					t_raw;
+
 typedef struct s_command
 {
 	char		*in;
 	int			i;
 	char		*pos;
+	t_raw		*raw;
 	t_data		*list;
 }				t_cmd;
 
@@ -56,7 +63,7 @@ typedef struct s_instruction
 *** Main
 */
 
-void	ft_init(t_cmd *cmd);
+void	ft_init(t_cmd *cmd, t_raw *raw);
 void	ft_presentation(void);
 void	ft_read_arguments(t_cmd *cmd);
 void	ft_cmd_line(t_cmd *cmd);
@@ -66,10 +73,10 @@ void	ft_printlist(t_data *x);
 *** f_rawmode
 */
 
-void	die(const char *s);
+void	die(const char *s, t_raw *raw);
 void	editorRefreshScreen(void);
-void	enableRawMode(void);
-char	f_raw(void);
+void	enableRawMode(t_raw *raw);
+char	f_raw(t_raw *raw);
 
 /*
 *** lists
@@ -100,5 +107,6 @@ void	ft_backspace(t_cmd *cmd);
 
 int		ft_commands(t_cmd *cmd);
 int		ft_history(t_cmd *cmd, char *seq);
+void	ft_dupin(t_cmd *cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:26:29 by ineumann          #+#    #+#             */
-/*   Updated: 2021/05/31 21:06:06 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/01 19:19:51 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,22 @@ int ft_commands(t_cmd *cmd)
 		return '\x1b';
 	if (seq[2] == '~' || (seq[1] >= 'A' && seq[1] <= 'Z') )
 	{
-		if (seq[1] == 'D' && cmd->i > 0) //FLECHA IZQUIERDA
+		if (seq[1] == 'D') //FLECHA IZQUIERDA
 		{
-			ft_putstr("\033[D");
-			cmd->i--;
+			if (cmd->i > 0)
+			{
+				ft_putstr("\033[D");
+				cmd->i--;
+			}
 			return (1);
 		}
-		else if (seq[1] == 'C' && cmd->in[cmd->i] != '\0') //FLECHA DERECHA
+		else if (seq[1] == 'C') //FLECHA DERECHA
 		{
-			ft_putstr("\033[C");
-			cmd->i++;
+			if (cmd->in[cmd->i] != '\0')
+			{
+				ft_putstr("\033[C");
+				cmd->i++;
+			}
 			return (1);
 		}
 		else if (seq[1] == 'A' || seq[1] == 'B') //FLECHAS ABAJO / ARRIBA
@@ -69,19 +75,34 @@ int ft_commands(t_cmd *cmd)
 
 int		ft_history(t_cmd *cmd, char *seq)
 {
-			while (cmd->i)
-				ft_backspace(cmd);
-//			if (seq[1] == 'A' && ft_strlen(cmd->in) > 0) //ARRIBA CON ALGO EN LINEA DE COMANDO
-//			{
-//				cmd->list = ft_lst_first(cmd->list);
-//				ft_lst_add_front(&cmd->list, ft_new(cmd->in));
-//			}
-			if (seq[1] == 'B' && cmd->list->prev != NULL) //ABAJO
-				cmd->list = cmd->list->prev;
-			cmd->i = ft_strlen(cmd->list->in);
-            ft_putstr(cmd->list->in);
-//			cmd->in = cmd->list->in;
-			if (seq[1] == 'A' && cmd->list->next != NULL) //ARRIBA SI HAY SIGUIENTE
-				cmd->list = cmd->list->next;
-			return (1);
+	t_data *first;
+
+	if (cmd->list == NULL && seq)
+		return(0);
+	first = ft_lst_first(cmd->list); //APUNTA AL PRIMER ELEMENTO
+	if (seq[1] == 'A' && ft_strcmp(cmd->in, first->in) != 0 && ft_strcmp(cmd->in, cmd->list->in) != 0) //ARRIBA Y DISTINTO DEL ULTIMO
+		ft_lst_add_front(&cmd->list, ft_new(cmd->in));
+	if (seq[1] == 'A' && cmd->list->next != NULL) //ARRIBA SI HAY SIGUIENTE
+		cmd->list = cmd->list->next;
+	else if (seq[1] == 'B' && cmd->list->prev != NULL) //ABAJO
+		cmd->list = cmd->list->prev;
+	while (cmd->i)
+		ft_backspace(cmd);
+	ft_dupin(cmd);
+	cmd->i = ft_strlen(cmd->in);
+          ft_putstr(cmd->in);
+	return (1);
+}
+
+void		ft_dupin(t_cmd *cmd)
+{
+	int		i;
+
+	i = 0;
+	while (cmd->list->in[i])
+	{
+		cmd->in[i] = cmd->list->in[i];
+		i++;
+	}
+	cmd->in[i] = '\0';
 }

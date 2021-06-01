@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 17:17:03 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/05/31 18:24:38 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/01 19:47:14 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,24 @@ void	ft_lst_add_front(t_data **in, t_data *new)
 	t_data	*tmp;
 	
 	if (!(*in))
-	{
 		*in = new;
-		return ;
+	else
+	{
+		*in = ft_lst_first(*in);
+		tmp = *in;
+		*in = new;
+		new->next = tmp;
+		(tmp)->prev = new;
 	}
-	tmp = *in;
-	*in = new;
-	new->next = tmp;
-	(tmp)->prev = new;
+}
+
+void	ft_lst_remove_front(t_data *in)
+{
+	t_data	*tmp;
+	
+	tmp = in;
+	in = in->next;
+	free(tmp);
 }
 
 void	ft_lst_add_back(t_data *in, t_data *new)
