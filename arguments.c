@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/02 17:23:02 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/02 17:35:34 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,26 +56,26 @@ void	ft_export(t_cmd *cmd)
 
 void	ft_echo(t_cmd *cmd)
 {
+	int	i;
+
+	i = 0;
 	if (ft_strnstr(cmd->in, "echo", 4) != NULL)
 	{
-		cmd->i += 4;
-		while (cmd->in[cmd->i] == ' ' || cmd->in[cmd->i] == '\'')
-			cmd->i++;
-		if (ft_strnstr(cmd->in + cmd->i, "-n", 2) != NULL)
+		i += 4;
+		while (cmd->in[i] == ' ' || cmd->in[i] == '\'')
+			i++;
+		if (ft_strnstr(cmd->in + i, "-n", 2) != NULL)
 		{
-			cmd->i += 2;
-			while (cmd->in[cmd->i] == ' ' || cmd->in[cmd->i] == '\'')
-				cmd->i++;
-			if (cmd->in[cmd->i] != 0)
-			{
-				ft_putstr(&cmd->in[cmd->i]);
-				ft_putstr("%\n");
-			}
+			i += 2;
+			while (cmd->in[i] == ' ' || cmd->in[i] == '\'')
+				i++;
+			if (cmd->in[i] != 0)
+				ft_putstr(&cmd->in[i]);
 		}
 		else
 		{
-			ft_putstr(&cmd->in[cmd->i]);
-			ft_putstr("\n");
+			ft_putstr(&cmd->in[i]);
+			ft_putstr("\r\n");
 		}
 	}
 }
@@ -84,6 +84,6 @@ void	ft_cd(t_cmd *cmd)
 {
 	if (ft_strnstr(cmd->in, "cd", 2) != NULL)
 	{
-		ft_putstr("Te peinas\n");
+		ft_putstr("Aun está por hacer\n");
 	}
 }

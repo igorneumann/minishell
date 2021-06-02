@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/02 10:27:57 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/02 17:27:48 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	ft_read_arguments(t_cmd *cmd)
 		i++;
 	if (ft_strlen(cmd->in) > 0)
 		ft_lst_add_front(&cmd->list, ft_new(cmd->in));
+	ft_echo(cmd);
+	ft_cd(cmd);
 	ft_pwd(cmd);
 	ft_env(cmd);
 	ft_export(cmd);

@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/02 17:23:20 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/02 17:30:35 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_command
 {
 	char		*in;
 	int			i;
-	char		*pos;
+	char		*buff;
 	char		**env;
 	t_data		*list;
 	t_envp		*envp;
@@ -133,5 +133,7 @@ void	ft_sort_env(t_cmd *cmd);
 void	ft_pwd(t_cmd *cmd);
 void	ft_env(t_cmd *cmd);
 void	ft_export(t_cmd *cmd);
+void	ft_echo(t_cmd *cmd);
+void	ft_cd(t_cmd *cmd);
 
 #endif
