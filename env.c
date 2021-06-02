@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 10:28:08 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/02 10:45:19 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/02 16:34:27 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,19 +77,31 @@ void	ft_env(t_cmd *cmd)
 		while (cmd->in[i] == ' ')
 			i++;
 		if (cmd->in[i] == 'e')
-			i += 3;	
+			i += 3;
+		if (cmd->in[i] == '\0')
+			ft_print_env(cmd->envp);
 		if (cmd->in[i] == '-')
 		{
-			if (cmd->in[++i] == 'i' && cmd->in[++i] == 'v')
+			i++;
+			if (cmd->in[i] == 'i' && cmd->in[i + 1] && cmd->in[i + 1] == 'v')
 				ft_putstr("#env clearing environ\r\n");
 			else
 			{
-				printf("env: illegal option -- %c\r\n", cmd->in[++i]);
-				ft_putstr("usage: env [-iv] [-P utilpath] [-S string] [-u name]\r\n");
-				ft_putstr("           [name=value ...] [utility [argument ...]]\r\n");
+				if (cmd->in[i] == 'i' && cmd->in[i + 1] == '\0')
+					cmd->in[i] = '\0';
+				else
+				{
+					if (cmd->in[i] == 'i')
+						i++;
+					printf("env: illegal option -- %c\r\n", cmd->in[i]);
+					ft_putstr("usage: env [-iv] [-P utilpath] [-S string]");
+					ft_putstr(" [-u name]\r\n           [name=value ...]");
+					ft_putstr(" [utility [argument ...]]\r\n");
+
+				}
 			}
 		}
-		if (cmd->in[i] != '-' && cmd->in[i] != '\0')
+		else if (cmd->in[i] != '-' && cmd->in[i] != '\0')
 		{
 			while (cmd->in[i] != '\0')
 			{
@@ -99,7 +111,5 @@ void	ft_env(t_cmd *cmd)
 			}
 			printf("env: %s: No such file or directory\r\n", fod);
 		}
-		else
-			ft_print_env(cmd->envp);
 	}
 }

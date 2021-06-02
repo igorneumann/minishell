@@ -6,7 +6,7 @@
 #    By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 10:24:24 by narroyo-          #+#    #+#              #
-#    Updated: 2021/06/02 10:44:47 by narroyo-         ###   ########.fr        #
+#    Updated: 2021/06/02 16:00:37 by narroyo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS			=	main.c ./includes/gnl/get_next_line.c ./f_rawmode.c lists.c \
 LIBFT			=	./includes/libft
 OBJS 			=	$(SRCS:.c=.o)
 LIBS			=	./includes/libft/libft.a
-CC				=	@gcc -g -Wall -Wextra -Werror -g3 -fsanitize=address
+CC				=	@gcc -g -Wall -Wextra -Werror
 
 #  al final de CC -g3 -fsanitize=address
 
