@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/02 10:28:34 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/02 17:23:20 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,14 @@ void	ft_lst_remove_front(t_data *in);
 void	ft_lst_add_back(t_data **in, t_data *new);
 
 /*
-*** instructions.c
+*** env.c
 */
 
+t_envp	*ft_new_env_value(char *in, t_envp	*new, int i);
 t_envp	*ft_new_env(char *in);
 void	ft_save_env(t_cmd *cmd, char **envp);
+void	ft_options(t_cmd *cmd, int i);
+void	ft_env(t_cmd *cmd);
 
 /*
 *** keypress.c
@@ -121,6 +124,7 @@ t_data	*ft_lst_last(t_data *elem);
 t_data	*ft_lst_first(t_data *elem);
 void	ft_printlist(t_data *x);
 void	ft_print_env(t_envp *x);
+void	ft_sort_env(t_cmd *cmd);
 
 /*
 *** arguments.c

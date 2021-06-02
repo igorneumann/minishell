@@ -6,17 +6,33 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 10:28:08 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/02 16:34:27 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/02 17:22:16 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_envp	*ft_new_env_value(char *in, t_envp	*new, int i)
+{
+	int	j;
+
+	new->value = (char *)malloc(sizeof(char) * (ft_strlen(in) - i + 1));
+	j = 0;
+	while (in[i])
+	{
+		new->value[j] = in[i];
+		i++;
+		j++;
+	}
+	new->value[j] = '\0';
+	new->next = NULL;
+	return (new);
+}
+
 t_envp	*ft_new_env(char *in)
 {
 	t_envp	*new;
 	int		i;
-	int		j;
 
 	i = 0;
 	new = (t_envp *)calloc(1, sizeof(t_envp));
@@ -31,16 +47,7 @@ t_envp	*ft_new_env(char *in)
 	}
 	new->key[i] = '\0';
 	i++;
-	new->value = (char *)malloc(sizeof(char) * (ft_strlen(in) - i + 1));
-	j = 0;
-	while (in[i])
-	{
-		new->value[j] = in[i];
-		i++;
-		j++;
-	}
-	new->value[j] = '\0';
-	new->next = NULL;
+	new = ft_new_env_value(in, new, i);
 	return (new);
 }
 
@@ -57,8 +64,29 @@ void	ft_save_env(t_cmd *cmd, char **envp)
 		while (envp[i])
 		{
 			ft_lst_add_back((t_data **)&cmd->envp,
-			(t_data *)ft_new_env(envp[i]));
+				(t_data *)ft_new_env(envp[i]));
 			i++;
+		}
+	}
+}
+
+void	ft_options(t_cmd *cmd, int i)
+{
+	i++;
+	if (cmd->in[i] == 'i' && cmd->in[i + 1] && cmd->in[i + 1] == 'v')
+		ft_putstr("#env clearing environ\r\n");
+	else
+	{
+		if (cmd->in[i] == 'i' && cmd->in[i + 1] == '\0')
+			cmd->in[i] = '\0';
+		else
+		{
+			if (cmd->in[i] == 'i')
+				i++;
+			printf("env: illegal option -- %c\r\n", cmd->in[i]);
+			ft_putstr("usage: env [-iv] [-P utilpath] [-S string]");
+			ft_putstr(" [-u name]\r\n           [name=value ...]");
+			ft_putstr(" [utility [argument ...]]\r\n");
 		}
 	}
 }
@@ -81,34 +109,11 @@ void	ft_env(t_cmd *cmd)
 		if (cmd->in[i] == '\0')
 			ft_print_env(cmd->envp);
 		if (cmd->in[i] == '-')
-		{
-			i++;
-			if (cmd->in[i] == 'i' && cmd->in[i + 1] && cmd->in[i + 1] == 'v')
-				ft_putstr("#env clearing environ\r\n");
-			else
-			{
-				if (cmd->in[i] == 'i' && cmd->in[i + 1] == '\0')
-					cmd->in[i] = '\0';
-				else
-				{
-					if (cmd->in[i] == 'i')
-						i++;
-					printf("env: illegal option -- %c\r\n", cmd->in[i]);
-					ft_putstr("usage: env [-iv] [-P utilpath] [-S string]");
-					ft_putstr(" [-u name]\r\n           [name=value ...]");
-					ft_putstr(" [utility [argument ...]]\r\n");
-
-				}
-			}
-		}
+			ft_options(cmd, i);
 		else if (cmd->in[i] != '-' && cmd->in[i] != '\0')
 		{
 			while (cmd->in[i] != '\0')
-			{
-				fod[j] = cmd->in[i];
-				i++;
-				j++;
-			}
+				fod[j++] = cmd->in[i++];
 			printf("env: %s: No such file or directory\r\n", fod);
 		}
 	}

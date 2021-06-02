@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/01 16:19:25 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/02 17:23:02 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@ void	ft_pwd(t_cmd *cmd)
 		ft_putstr(getcwd(NULL, -1));
 		ft_putstr("\033[0m\r\n");
 	}
-}
-
-void	ft_sort_env(t_cmd *cmd)
-{
-	ft_print_env(cmd->envp);
 }
 
 void	ft_include(t_cmd *cmd, char *aux)
@@ -56,5 +51,39 @@ void	ft_export(t_cmd *cmd)
 				break ;
 			}
 		}
+	}
+}
+
+void	ft_echo(t_cmd *cmd)
+{
+	if (ft_strnstr(cmd->in, "echo", 4) != NULL)
+	{
+		cmd->i += 4;
+		while (cmd->in[cmd->i] == ' ' || cmd->in[cmd->i] == '\'')
+			cmd->i++;
+		if (ft_strnstr(cmd->in + cmd->i, "-n", 2) != NULL)
+		{
+			cmd->i += 2;
+			while (cmd->in[cmd->i] == ' ' || cmd->in[cmd->i] == '\'')
+				cmd->i++;
+			if (cmd->in[cmd->i] != 0)
+			{
+				ft_putstr(&cmd->in[cmd->i]);
+				ft_putstr("%\n");
+			}
+		}
+		else
+		{
+			ft_putstr(&cmd->in[cmd->i]);
+			ft_putstr("\n");
+		}
+	}
+}
+
+void	ft_cd(t_cmd *cmd)
+{
+	if (ft_strnstr(cmd->in, "cd", 2) != NULL)
+	{
+		ft_putstr("Te peinas\n");
 	}
 }
