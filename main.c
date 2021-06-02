@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/02 17:27:48 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/02 18:36:48 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_init(t_cmd *cmd, char **envp, t_raw *raw)
 	cmd->i = 0;
 	cmd->list = NULL;
 	cmd->in = (char*)calloc(1024, sizeof(char) * (1024));
+	cmd->buff = (char*)calloc(1024, sizeof(char) * (1024));
 	cmd->in[0] = 13;
 	ft_save_env(cmd, envp);
 }
@@ -74,7 +75,9 @@ void	ft_cmd_line(t_cmd *cmd)
 		processkeypress(cmd);
 	}
 	free(cmd->in);
+	free(cmd->buff);
 	cmd->in = NULL;
+	cmd->buff = NULL;
 }
 
 int	main(int argc, char **argv, char **envp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/02 17:30:35 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/02 19:41:41 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	ft_backspace(t_cmd *cmd);
 
 int		ft_commands(t_cmd *cmd);
 int		ft_history(t_cmd *cmd, char *seq);
-void	ft_dupin(t_cmd *cmd);
+void	ft_dupin(t_cmd *cmd, int src);
 
 /*
 *** utils.c
@@ -122,7 +122,7 @@ void	ft_dupin(t_cmd *cmd);
 
 t_data	*ft_lst_last(t_data *elem);
 t_data	*ft_lst_first(t_data *elem);
-void	ft_printlist(t_data *x);
+void	ft_printlist(t_data *x, char *buff);
 void	ft_print_env(t_envp *x);
 void	ft_sort_env(t_cmd *cmd);
 

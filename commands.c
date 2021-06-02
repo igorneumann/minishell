@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:26:29 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/02 17:31:51 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/02 20:34:32 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,34 +75,67 @@ int ft_commands(t_cmd *cmd)
 
 int		ft_history(t_cmd *cmd, char *seq)
 {
-	t_data	*first;
+	t_data *first;
 
 	if (cmd->list == NULL && seq)
 		return(0);
+	if (seq[1] == 'B' && cmd->buff[0] == 13)
+		return(0);
 	first = ft_lst_first(cmd->list); //APUNTA AL PRIMER ELEMENTO
-	if (seq[1] == 'A' && ft_strcmp(cmd->in, first->in) != 0 && ft_strcmp(cmd->in, cmd->buff) != 0) //ARRIBA Y DISTINTO DEL ULTIMO
-		ft_lst_add_front(&cmd->list, ft_new(cmd->in));
-	if (seq[1] == 'A' && cmd->list->next != NULL) //ARRIBA SI HAY SIGUIENTE
+	if (seq[1] == 'A' && (cmd->in[0] == '\0' || (ft_strcmp(cmd->in, cmd->list->in) != 0 && ft_strcmp(cmd->in, cmd->buff) != 0))) //ARRIBA Y DISTINTO DEL ULTIMO
+		ft_dupin(cmd, 2);
+	else if (seq[1] == 'A' && cmd->list->next != NULL) //ARRIBA SI HAY SIGUIENTE
 		cmd->list = cmd->list->next;
 	else if (seq[1] == 'B' && cmd->list->prev != NULL) //ABAJO
 		cmd->list = cmd->list->prev;
-	while (cmd->i)
-		ft_backspace(cmd);
-	ft_getcommand(cmd);
+	if (seq[1] == 'B' && cmd->list->prev == NULL && ft_strcmp(cmd->in, first->in) == 0)
+	{
+		while (cmd->i)
+			ft_backspace(cmd);
+		ft_dupin(cmd, 0);
+	}
+	else
+	{
+		while (cmd->i)
+			ft_backspace(cmd);
+		ft_dupin(cmd, 1);
+	}
 	cmd->i = ft_strlen(cmd->in);
 	ft_putstr(cmd->in);
 	return (1);
 }
 
-void		ft_dupin(t_cmd *cmd)
+void		ft_dupin(t_cmd *cmd, int src) //0 buffer, 1 historial, 2 guarda en buffer
 {
 	int	i;
 
 	i = 0;
-	while (cmd->list->in[i])
+	if (src == 2)
 	{
-		cmd->in[i] = cmd->list->in[i];
-		i++;
+		while (cmd->in[i])
+		{
+			cmd->buff[i] = cmd->in[i];
+			i++;
+		}
+		cmd->buff[i] = '\0';
 	}
-	cmd->in[i] = '\0';
+	if (src == 1)
+	{
+		while (cmd->list->in[i])
+		{
+			cmd->in[i] = cmd->list->in[i];
+			i++;
+		}
+		cmd->in[i] = '\0';
+	}
+	else if (src == 0)
+	{
+		while (cmd->list->in[i])
+		{
+			cmd->in[i] = cmd->buff[i];
+			i++;
+		}
+		cmd->in[i] = '\0';
+		cmd->buff[0] = 13;
+	}
 }

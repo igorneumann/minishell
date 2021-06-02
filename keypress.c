@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keypress.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/02 10:12:47 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/02 19:42:36 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void processkeypress(t_cmd *cmd)
 		cmd->in[0] = 13;
 		cmd->in[1] = '\0';
 		cmd->i = 0;
+		ft_printlist(cmd->list, cmd->buff);
 	}
 	else if (c == 127) //BACKSPACE
 		ft_backspace(cmd);
