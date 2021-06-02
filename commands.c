@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:26:29 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/02 10:07:20 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/02 17:31:51 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int		ft_history(t_cmd *cmd, char *seq)
 	if (cmd->list == NULL && seq)
 		return(0);
 	first = ft_lst_first(cmd->list); //APUNTA AL PRIMER ELEMENTO
-	if (seq[1] == 'A' && ft_strcmp(cmd->in, first->in) != 0 && ft_strcmp(cmd->in, cmd->list->in) != 0) //ARRIBA Y DISTINTO DEL ULTIMO
+	if (seq[1] == 'A' && ft_strcmp(cmd->in, first->in) != 0 && ft_strcmp(cmd->in, cmd->buff) != 0) //ARRIBA Y DISTINTO DEL ULTIMO
 		ft_lst_add_front(&cmd->list, ft_new(cmd->in));
 	if (seq[1] == 'A' && cmd->list->next != NULL) //ARRIBA SI HAY SIGUIENTE
 		cmd->list = cmd->list->next;
@@ -88,7 +88,7 @@ int		ft_history(t_cmd *cmd, char *seq)
 		cmd->list = cmd->list->prev;
 	while (cmd->i)
 		ft_backspace(cmd);
-	ft_dupin(cmd);
+	ft_getcommand(cmd);
 	cmd->i = ft_strlen(cmd->in);
 	ft_putstr(cmd->in);
 	return (1);
