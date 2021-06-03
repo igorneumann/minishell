@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/02 19:41:41 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/03 15:44:23 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,6 @@ void	ft_pwd(t_cmd *cmd);
 void	ft_env(t_cmd *cmd);
 void	ft_export(t_cmd *cmd);
 void	ft_echo(t_cmd *cmd);
-void	ft_cd(t_cmd *cmd);
+void	ft_cd(t_cmd *cmd, int i);
 
 #endif

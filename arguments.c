@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/02 17:35:34 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/03 16:22:22 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,24 @@ void	ft_echo(t_cmd *cmd)
 	}
 }
 
-void	ft_cd(t_cmd *cmd)
+void	ft_cd(t_cmd *cmd, int i)
 {
+	char	old_path[2048];
+	char	path[2048];
+	int		j;
+	int		ok;
+
+	j = 0;
 	if (ft_strnstr(cmd->in, "cd", 2) != NULL)
 	{
-		ft_putstr("Aun está por hacer\n");
+		getcwd(old_path, 2048);
+		i += 3;
+		while (cmd->in[i] != '\0')
+			path[j++] = cmd->in[i++];
+		ok = chdir(path);
+		if (ok != 0)
+			ft_putstr("Lagrimita\r\n");
+		else
+			getcwd(path, 2048);
 	}
 }

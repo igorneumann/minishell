@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 10:47:23 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/02 19:45:15 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/03 16:59:22 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,20 @@ void	ft_printlist(t_data *x, char *buff)
 {
 	t_data *y;
 
+	(void)buff;
 	y = ft_lst_first(x);
 	while (y && y != x)
 	{
 		printf("%s %p\r\n", y->in, x);
 		y = y->next;
 	}
-	ft_putstr("\x1B[33m");
+		ft_putstr("\x1B[33m");
 	while (x)
 	{
 		printf("%s %p\r\n", x->in, x);
 		x = x->next;
 	}
-	printf ("\x1B[34mBuffer is %s\r\n", buff);
+		printf ("\x1B[34mBuffer is %s\r\n", buff);
 }
 
 void	ft_print_env(t_envp *x)
