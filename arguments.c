@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/03 16:22:22 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/03 17:31:07 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,21 @@ void	ft_cd(t_cmd *cmd, int i)
 		i += 3;
 		while (cmd->in[i] != '\0')
 			path[j++] = cmd->in[i++];
+		if (ft_strnstr(path, "..", 2) != NULL)
+		{
+			j = ft_strlen(old_path);
+			if (old_path[j] == '/')
+			{
+				old_path[j] = '\0';
+				j--;
+			}
+			while (old_path[j] != '/')
+			{
+				old_path[j] = '\0';
+				j--;
+			}
+			ft_memcpy(path, old_path, 2048);
+		}
 		ok = chdir(path);
 		if (ok != 0)
 			ft_putstr("Lagrimita\r\n");
