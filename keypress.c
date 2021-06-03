@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/02 19:42:36 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/03 19:28:47 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,14 @@ void processkeypress(t_cmd *cmd)
 	else if (c == 13) // ENTER
 	{
 		printf("\r\n");
-		ft_read_arguments(cmd);
+		if (ft_strlen(cmd->in) > 0)
+			ft_read_arguments(cmd);
 		cmd->in[0] = 13;
+		cmd->buff[0] = 13;
 		cmd->in[1] = '\0';
+		cmd->buff[1] = '\0';
 		cmd->i = 0;
-		ft_printlist(cmd->list, cmd->buff);
+//		ft_printlist(cmd->list, cmd->buff);
 	}
 	else if (c == 127) //BACKSPACE
 		ft_backspace(cmd);

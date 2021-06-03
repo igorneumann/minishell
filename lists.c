@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 17:17:03 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/03 17:01:12 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/03 18:36:39 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ void	ft_lst_add_front(t_data **in, t_data *new)
 	}
 }
 
-void	ft_lst_remove_front(t_data *in)
+/*void	ft_lst_remove_front(t_data *in)
 {
 	t_data	*tmp;
 
 	tmp = in;
 	in = in->next;
 	free(tmp);
-}
+}*/
 
 void	ft_lst_add_back(t_data **in, t_data *new)
 {
@@ -66,4 +66,25 @@ void	ft_lst_add_back(t_data **in, t_data *new)
 	last = ft_lst_last(*in);
 	new->prev = last;
 	last->next = new;
+}
+
+void	ft_lst_edit(t_data **in, t_data *new)
+{
+	t_data	*tmp;
+
+	tmp = *in;
+	new->next = tmp->next;
+	new->prev = tmp->prev;
+	*in = new;
+	free(tmp);
+	if (new->next != NULL)
+	{
+		tmp = new->next;
+		tmp->prev = new;
+	}
+	if (new->prev != NULL)
+	{
+		tmp = new->prev;
+		tmp->next = new;
+	}
 }

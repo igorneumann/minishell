@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:26:29 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/02 20:34:32 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/03 19:16:16 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int		ft_history(t_cmd *cmd, char *seq)
 		return(0);
 	if (seq[1] == 'B' && cmd->buff[0] == 13)
 		return(0);
+	if (ft_strcmp(cmd->buff, cmd->list->in) != 0 && cmd->buff[0] != 13)
+		ft_lst_edit(&cmd->list, ft_new(cmd->in)); //ACTUALIZA ITEM
 	first = ft_lst_first(cmd->list); //APUNTA AL PRIMER ELEMENTO
 	if (seq[1] == 'A' && (cmd->in[0] == '\0' || (ft_strcmp(cmd->in, cmd->list->in) != 0 && ft_strcmp(cmd->in, cmd->buff) != 0))) //ARRIBA Y DISTINTO DEL ULTIMO
 		ft_dupin(cmd, 2);

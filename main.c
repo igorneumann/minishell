@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/03 15:44:16 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/03 19:27:00 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_init(t_cmd *cmd, char **envp, t_raw *raw)
 	cmd->in = (char*)calloc(1024, sizeof(char) * (1024));
 	cmd->buff = (char*)calloc(1024, sizeof(char) * (1024));
 	cmd->in[0] = 13;
+	cmd->buff[0] = 13;
 	ft_save_env(cmd, envp);
 }
 
@@ -44,8 +45,7 @@ void	ft_read_arguments(t_cmd *cmd)
 	code[1] = 0;
 	while (cmd->in[i] == ' ')
 		i++;
-	if (ft_strlen(cmd->in) > 0)
-		ft_lst_add_front(&cmd->list, ft_new(cmd->in));
+	ft_lst_add_front(&cmd->list, ft_new(cmd->in));
 	ft_echo(cmd);
 	ft_cd(cmd, i);
 	ft_pwd(cmd);
