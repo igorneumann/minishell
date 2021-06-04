@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/03 15:44:23 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/04 10:29:47 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,16 @@ void	enableRawMode(t_raw *raw);
 char	f_raw(t_raw *raw);
 
 /*
+*** lists_utils
+*/
+
+t_data	*ft_lst_last(t_data *elem);
+t_data	*ft_lst_first(t_data *elem);
+t_envp	*search_elem(t_envp *elem, char *wanted);
+t_envp	*change_value(t_envp *elem, char *new_value);
+void	remove_elem(t_envp *elem);
+
+/*
 *** lists
 */
 
@@ -120,8 +130,6 @@ void	ft_dupin(t_cmd *cmd, int src);
 *** utils.c
 */
 
-t_data	*ft_lst_last(t_data *elem);
-t_data	*ft_lst_first(t_data *elem);
 void	ft_printlist(t_data *x, char *buff);
 void	ft_print_env(t_envp *x);
 void	ft_sort_env(t_cmd *cmd);
@@ -133,6 +141,7 @@ void	ft_sort_env(t_cmd *cmd);
 void	ft_pwd(t_cmd *cmd);
 void	ft_env(t_cmd *cmd);
 void	ft_export(t_cmd *cmd);
+void	ft_unset(t_cmd *cmd);
 void	ft_echo(t_cmd *cmd);
 void	ft_cd(t_cmd *cmd, int i);
 

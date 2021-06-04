@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/03 15:44:16 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/04 10:29:23 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	ft_read_arguments(t_cmd *cmd)
 	ft_pwd(cmd);
 	ft_env(cmd);
 	ft_export(cmd);
+	ft_unset(cmd);
 	if (ft_strnstr(cmd->in, "exit", 4) != NULL)
 	{
 		i += 4;

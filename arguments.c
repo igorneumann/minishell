@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/03 17:31:07 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/04 10:44:21 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,25 @@ void	ft_export(t_cmd *cmd)
 				break ;
 			}
 		}
+	}
+}
+
+void	ft_unset(t_cmd *cmd)
+{
+	int		i;
+	int		j;
+	char	*erase;
+
+	i = 0;
+	j = 0;
+	erase = (char *)malloc(sizeof(char) * (ft_strlen(cmd->in) - i + 1));
+	if (ft_strnstr(cmd->in, "unset", 5) != NULL)
+	{
+		i += 6;
+		while (cmd->in[i] != '\0')
+			erase[j++] = cmd->in[i++];
+		cmd->envp = search_elem(cmd->envp, erase);
+		remove_elem(cmd->envp);
 	}
 }
 
