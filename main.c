@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/04 10:52:20 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/04 12:01:27 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	ft_read_arguments(t_cmd *cmd)
 	i = 0;
 	code[0] = 0;
 	code[1] = 0;
+	cmd->not_found = 0;
 	while (cmd->in[i] == ' ')
 		i++;
 	ft_lst_add_front(&cmd->list, ft_new(cmd->in));
@@ -54,6 +55,7 @@ void	ft_read_arguments(t_cmd *cmd)
 	ft_unset(cmd);
 	if (ft_strnstr(cmd->in, "exit", 4) != NULL)
 	{
+		cmd->not_found = 1;
 		i += 4;
 		while (cmd->in[i] == ' ')
 			i++;
@@ -62,6 +64,8 @@ void	ft_read_arguments(t_cmd *cmd)
 			code[1] = ft_atoi(&cmd->in[i]);
 		die(code, cmd->raw);
 	}
+	if (cmd->not_found == 0)
+		printf("%s : command not found", cmd->in);
 }
 
 void	ft_cmd_line(t_cmd *cmd)
