@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/04 10:52:36 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/04 11:03:57 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_data	*ft_lst_last(t_data *elem);
 t_data	*ft_lst_first(t_data *elem);
 t_envp	*search_elem(t_envp *elem, char *wanted);
 t_envp	*change_value(t_envp *elem, char *new_value);
-void	remove_elem(t_envp *elem);
+t_envp	*remove_elem(t_envp *elem);
 
 /*
 *** lists

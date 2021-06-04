@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 09:35:29 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/04 10:46:40 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/04 11:06:07 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_envp *search_elem(t_envp *elem, char *wanted)
 	return (elem);
 }
 
-t_envp *change_value(t_envp *elem, char *new_value)
+t_envp	*change_value(t_envp *elem, char *new_value)
 {
 	if (elem)
 	{
@@ -59,29 +59,24 @@ t_envp *change_value(t_envp *elem, char *new_value)
 	return (elem);
 }
 
-void	remove_elem(t_envp *elem)
+t_envp	*remove_elem(t_envp *elem)
 {
 	if (elem->prev && elem->next && elem)
 	{
 		elem->prev->next = elem->next;
 		elem->next->prev = elem->prev;
-		free(elem->key);
-		free(elem->value);
-		free(elem);
+		elem = elem->prev;
 	}
 	if (!elem->prev && elem->next && elem)
 	{
 		elem->next->prev = NULL;
-		free(elem->key);
-		free(elem->value);
-		free(elem);
+		elem = elem->next;
 	}
 	if (elem->prev && !elem->next && elem)
 	{
 		elem->prev->next = NULL;
-		free(elem->key);
-		free(elem->value);
-		free(elem);
+		elem = elem->prev;
 	}
+	return(elem);
 }
 
