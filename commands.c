@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:26:29 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/03 19:16:16 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/04 19:57:07 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,17 @@ int ft_commands(t_cmd *cmd)
 			return(ft_history(cmd, seq));
 		else if (seq[1] == '3') //DELETE
 		{
-			ft_putstr(" \033[J\033[D");
-			cmd->in[cmd->i] = '\0';
+			if (cmd->in[cmd->i + 1] != '\0')
+			{
+				ft_putstr("\033[C");
+				cmd->i++;
+				ft_backspace(cmd);
+			}
+			else
+			{
+				ft_putstr(" \033[J\033[D");
+				cmd->in[cmd->i] = '\0';
+			}
 			return (1);
 		}
 		else if (seq[1] == 'H' && cmd->i > 0) //HOME
@@ -141,3 +150,30 @@ void		ft_dupin(t_cmd *cmd, int src) //0 buffer, 1 historial, 2 guarda en buffer
 		cmd->buff[0] = 13;
 	}
 }
+
+/*void		ft_dupin(t_cmd *cmd, int src) //0 buffer, 1 historial, 2 guarda en buffer
+{
+	int	i;
+	char *tmp;
+
+	tmp = cmd->buff;
+	i = 0;
+	if (src == 2 && cmd->in != NULL)
+	{
+		tmp = cmd->buff;
+		cmd->buff = ft_strdup(cmd->in);
+		free(tmp);
+	}
+	else if (src == 1 && cmd->list->in != NULL)
+	{
+		tmp = cmd->in;
+		cmd->in = ft_strdup(cmd->list->in);
+		free(tmp);
+	}
+	else if (src == 0 && cmd->buff != NULL)
+	{
+		tmp = cmd->in;
+		cmd->in = ft_strdup(cmd->buff);
+		free(tmp);
+	}
+}*/

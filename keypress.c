@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/03 19:35:23 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/04 20:17:59 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,25 @@
 void processkeypress(t_cmd *cmd)
 {
 	char	c;
+	//char	*tmp;
 
 	c = f_raw(cmd->raw);
 	while (!iscntrl(c))
 	{
 	write(STDOUT_FILENO, &c, 1);
-	cmd->in[cmd->i] = c;
+	if (cmd->in[cmd->i] == '\0')
+		cmd->in[cmd->i + 1] = '\0';
+	cmd->in[cmd->i++] = c;
 	c = '\0';
-	cmd->in[++cmd->i] = c;
 	}
+	/*while (!iscntrl(c))
+	{
+	write(STDOUT_FILENO, &c, 1);
+	tmp = cmd->in;
+	cmd->in = ft_strjoin(cmd->in, &c);
+	c = '\0';
+	free(tmp);
+	}*/
 	if (c == '\x1b')
 		ft_commands(cmd);
 	else if (c == 4) // CTRL-D
@@ -55,10 +65,22 @@ void processkeypress(t_cmd *cmd)
 
 void	ft_backspace(t_cmd *cmd)
 {
+	int i;
+
+	i = 0;
 	if (cmd->i > 0)
 	{
 		ft_putstr("\033[D \033[D");
 		cmd->i--;
-		cmd->in[cmd->i] = '\0';
+		while (cmd->in[cmd->i + i + 1] != '\0')
+		{
+			cmd->in[cmd->i + i] = cmd->in[cmd->i + i + 1];
+			i++;
+		}
+		cmd->in[cmd->i + i] = '\0';
+		ft_putstr(&cmd->in[cmd->i]);
+		ft_putstr(" \033[D");
+		while (i-- > 0)
+			ft_putstr("\033[D");
 	}
 }

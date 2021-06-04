@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/04 12:01:27 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/04 20:06:51 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@ void	ft_init(t_cmd *cmd, char **envp, t_raw *raw)
 	cmd->list = NULL;
 	cmd->i = 0;
 	cmd->list = NULL;
+	//cmd->in = (char*)malloc(2 * sizeof(char));
+	//cmd->buff = (char*)malloc(2 * sizeof(char));
 	cmd->in = (char*)calloc(1024, sizeof(char) * (1024));
 	cmd->buff = (char*)calloc(1024, sizeof(char) * (1024));
 	cmd->in[0] = 13;
 	cmd->buff[0] = 13;
 	ft_save_env(cmd, envp);
+	enableRawMode(raw);
 }
 
 void	ft_presentation(void)
@@ -65,7 +68,11 @@ void	ft_read_arguments(t_cmd *cmd)
 		die(code, cmd->raw);
 	}
 	if (cmd->not_found == 0)
-		printf("%s : command not found", cmd->in);
+	{
+		ft_putstr("Command not found: ");
+		ft_putstr(cmd->in);
+		ft_putstr("\r\n\r\n");
+	}
 }
 
 void	ft_cmd_line(t_cmd *cmd)
