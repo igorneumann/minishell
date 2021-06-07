@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/04 12:56:59 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/07 18:37:43 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	ft_pwd(t_cmd *cmd)
 {
 	if (ft_strnstr(cmd->in, "pwd", 3))
 	{
+		cmd->not_found = 1;
 		if (command_not_found("pwd", cmd))
 			return ;
-		cmd->not_found = 1;
 		ft_putstr("¿Ya te has perdido? Estás en \033[1m");
 		ft_putstr(getcwd(NULL, -1));
 		ft_putstr("\033[0m\r\n");
@@ -40,9 +40,9 @@ void	ft_export(t_cmd *cmd)
 	i = 0;
 	if (ft_strnstr(cmd->in, "export", 6))
 	{
+		cmd->not_found = 1;
 		if (command_not_found("export", cmd))
 			return ;
-		cmd->not_found = 1;
 		while (cmd->in[i])
 		{
 			if (cmd->in[i] != ' ')
@@ -70,9 +70,9 @@ void	ft_unset(t_cmd *cmd)
 	j = 0;
 	if (ft_strnstr(cmd->in, "unset", 5) != NULL)
 	{
+		cmd->not_found = 1;
 		if (command_not_found("unset", cmd))
 			return ;
-		cmd->not_found = 1;
 		i += 6;
 		erase = (char *)malloc(sizeof(char) * (ft_strlen(cmd->in) - i + 1));
 		while (cmd->in[i] != '\0')
@@ -90,9 +90,9 @@ void	ft_echo(t_cmd *cmd)
 	i = 0;
 	if (ft_strnstr(cmd->in, "echo", 4) != NULL)
 	{
+		cmd->not_found = 1;
 		if (command_not_found("echo", cmd))
 			return ;
-		cmd->not_found = 1;
 		i += 4;
 		while (cmd->in[i] == ' ' || cmd->in[i] == '\'')
 			i++;
@@ -117,14 +117,13 @@ void	ft_cd(t_cmd *cmd, int i)
 	char	old_path[2048];
 	char	path[2048];
 	int		j;
-	int		ok;
 
 	j = 0;
 	if (ft_strnstr(cmd->in, "cd", 2) != NULL)
 	{
+		cmd->not_found = 1;
 		if (command_not_found("cd", cmd))
 			return ;
-		cmd->not_found = 1;
 		getcwd(old_path, 2048);
 		i += 3;
 		while (cmd->in[i] != '\0')
@@ -144,9 +143,9 @@ void	ft_cd(t_cmd *cmd, int i)
 			}
 			ft_memcpy(path, old_path, 2048);
 		}
-		ok = chdir(path);
-		if (ok != 0 && cmd->not_found == 0)
-			printf("Algo ha fallado\r\n");
+		printf("|%s|\n", path);
+		if (chdir(path) != 0)
+			printf("%s\r\n", strerror(errno));
 		else
 			getcwd(path, 2048);
 	}

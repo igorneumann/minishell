@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:26:29 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/04 19:57:07 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/07 18:48:28 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_commands(t_cmd *cmd)
+int	ft_commands(t_cmd *cmd)
 {
 	char seq[4];
 
 	seq[3] = '\0';
 	if (read(STDIN_FILENO, &seq[0], 1) != 1)
-		return '\x1b';
+		return ('\x1b');
 	if (seq[0] && read(STDIN_FILENO, &seq[1], 1) != 1)
-		return '\x1b';
+		return ('\x1b');
 	if ((seq[1] >= '0' && seq[1] <= '9') && read(STDIN_FILENO, &seq[2], 1) != 1)
-		return '\x1b';
+		return ('\x1b');
 	if (seq[2] == '~' || (seq[1] >= 'A' && seq[1] <= 'Z') )
 	{
 		if (seq[1] == 'D') //FLECHA IZQUIERDA
@@ -82,9 +82,9 @@ int ft_commands(t_cmd *cmd)
 	return (0);
 }
 
-int		ft_history(t_cmd *cmd, char *seq)
+int	ft_history(t_cmd *cmd, char *seq)
 {
-	t_data *first;
+	t_data	*first;
 
 	if (cmd->list == NULL && seq)
 		return(0);
@@ -116,7 +116,7 @@ int		ft_history(t_cmd *cmd, char *seq)
 	return (1);
 }
 
-void		ft_dupin(t_cmd *cmd, int src) //0 buffer, 1 historial, 2 guarda en buffer
+void	ft_dupin(t_cmd *cmd, int src) //0 buffer, 1 historial, 2 guarda en buffer
 {
 	int	i;
 
@@ -150,30 +150,3 @@ void		ft_dupin(t_cmd *cmd, int src) //0 buffer, 1 historial, 2 guarda en buffer
 		cmd->buff[0] = 13;
 	}
 }
-
-/*void		ft_dupin(t_cmd *cmd, int src) //0 buffer, 1 historial, 2 guarda en buffer
-{
-	int	i;
-	char *tmp;
-
-	tmp = cmd->buff;
-	i = 0;
-	if (src == 2 && cmd->in != NULL)
-	{
-		tmp = cmd->buff;
-		cmd->buff = ft_strdup(cmd->in);
-		free(tmp);
-	}
-	else if (src == 1 && cmd->list->in != NULL)
-	{
-		tmp = cmd->in;
-		cmd->in = ft_strdup(cmd->list->in);
-		free(tmp);
-	}
-	else if (src == 0 && cmd->buff != NULL)
-	{
-		tmp = cmd->in;
-		cmd->in = ft_strdup(cmd->buff);
-		free(tmp);
-	}
-}*/

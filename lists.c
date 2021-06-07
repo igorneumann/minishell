@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 17:17:03 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/03 18:36:39 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/07 16:41:23 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,6 @@ void	ft_lst_add_front(t_data **in, t_data *new)
 		(tmp)->prev = new;
 	}
 }
-
-/*void	ft_lst_remove_front(t_data *in)
-{
-	t_data	*tmp;
-
-	tmp = in;
-	in = in->next;
-	free(tmp);
-}*/
 
 void	ft_lst_add_back(t_data **in, t_data *new)
 {

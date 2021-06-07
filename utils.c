@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 10:47:23 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/04 18:02:10 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/07 16:31:19 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ int	command_not_found(char *str, t_cmd *cmd)
 	{
 		if (cmd->in[i] != ' ' && cmd->in[i] != '\0')
 		{
-			ft_putstr("Command not found: ");
-			ft_putstr(cmd->in);
-			ft_putstr("\r\n\r\n");
+			printf("%s : command not found\r\n", cmd->in);
 			return (1);
 		}
 	}

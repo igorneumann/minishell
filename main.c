@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/04 20:06:51 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/07 18:41:17 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,7 @@ void	ft_read_arguments(t_cmd *cmd)
 		die(code, cmd->raw);
 	}
 	if (cmd->not_found == 0)
-	{
-		ft_putstr("Command not found: ");
-		ft_putstr(cmd->in);
-		ft_putstr("\r\n\r\n");
-	}
+		printf("%s : command not found\r\n", cmd->in);
 }
 
 void	ft_cmd_line(t_cmd *cmd)
