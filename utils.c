@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 10:47:23 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/07 16:31:19 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/08 18:37:29 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	command_not_found(char *str, t_cmd *cmd)
 
 void	ft_printlist(t_data *x, char *buff)
 {
-	t_data *y;
+	t_data	*y;
 
 	(void)buff;
 	y = ft_lst_first(x);
@@ -39,13 +39,13 @@ void	ft_printlist(t_data *x, char *buff)
 		printf("%s %p\r\n", y->in, x);
 		y = y->next;
 	}
-		ft_putstr("\x1B[33m");
+	ft_putstr("\x1B[33m");
 	while (x)
 	{
 		printf("%s %p\r\n", x->in, x);
 		x = x->next;
 	}
-		printf ("\x1B[34mBuffer is %s\r\n", buff);
+	printf ("\x1B[34mBuffer is %s\r\n", buff);
 }
 
 void	ft_print_env(t_envp *x)
@@ -54,12 +54,31 @@ void	ft_print_env(t_envp *x)
 		x = x->prev;
 	while (x)
 	{
-		printf("%s=%s\r\n", x->key, x->value);
-		x = x->next;
+		if (x->value == NULL)
+			x = x->next;
+		else
+		{
+			printf("%s=%s\r\n", x->key, x->value);
+			x = x->next;
+		}
 	}
 }
 
 void	ft_sort_env(t_cmd *cmd)
 {
-	ft_print_env(cmd->envp);
+	ft_print_export(cmd->envp);
+}
+
+void	ft_print_export(t_envp *x)
+{
+	while (x->prev)
+		x = x->prev;
+	while (x)
+	{
+		if (x->value == NULL)
+			printf("declare -x %s\r\n", x->key);
+		else
+			printf("declare -x %s=\"%s\"\r\n", x->key, x->value);
+		x = x->next;
+	}
 }

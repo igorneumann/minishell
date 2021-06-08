@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/04 19:34:57 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/08 19:03:44 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,20 @@ typedef struct s_command
 }				t_cmd;
 
 /*
-*** Main
+*** arguments.c
+*/
+
+void	ft_pwd(t_cmd *cmd);
+void	ft_echo(t_cmd *cmd);
+void	previous_folder(char *path, char *old_path, int j);
+void	ft_cd(t_cmd *cmd, int i);
+
+/*
+*** main.c
 */
 
 void	ft_init(t_cmd *cmd, char **envp, t_raw *raw);
 void	ft_presentation(void);
-void	ft_read_arguments(t_cmd *cmd);
 void	ft_cmd_line(t_cmd *cmd);
 
 /*
@@ -111,7 +119,16 @@ t_envp	*ft_new_env_value(char *in, t_envp	*new, int i);
 t_envp	*ft_new_env(char *in);
 void	ft_save_env(t_cmd *cmd, char **envp);
 void	ft_options(t_cmd *cmd, int i);
+void	error_file_or_directory(t_cmd *cmd, int i);
 void	ft_env(t_cmd *cmd);
+
+/*
+*** export.c
+*/
+
+void	ft_include(t_cmd *cmd, char *aux);
+void	ft_export(t_cmd *cmd);
+void	ft_unset(t_cmd *cmd);
 
 /*
 *** keypress.c
@@ -130,6 +147,13 @@ void	ft_dupin(t_cmd *cmd, int src);
 void	ft_updatehist(t_cmd *cmd);
 
 /*
+*** read_arguments.c
+*/
+
+void	arguments(t_cmd *cmd, int i);
+void	ft_read_arguments(t_cmd *cmd);
+
+/*
 *** utils.c
 */
 
@@ -137,16 +161,6 @@ int		command_not_found(char *str, t_cmd *cmd);
 void	ft_printlist(t_data *x, char *buff);
 void	ft_print_env(t_envp *x);
 void	ft_sort_env(t_cmd *cmd);
-
-/*
-*** arguments.c
-*/
-
-void	ft_pwd(t_cmd *cmd);
-void	ft_env(t_cmd *cmd);
-void	ft_export(t_cmd *cmd);
-void	ft_unset(t_cmd *cmd);
-void	ft_echo(t_cmd *cmd);
-void	ft_cd(t_cmd *cmd, int i);
+void	ft_print_export(t_envp *x);
 
 #endif

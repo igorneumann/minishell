@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 09:35:29 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/04 11:06:07 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/08 18:56:36 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_data	*ft_lst_first(t_data *elem)
 	return (elem);
 }
 
-t_envp *search_elem(t_envp *elem, char *wanted)
+t_envp	*search_elem(t_envp *elem, char *wanted)
 {
 	if (elem)
 	{
@@ -77,6 +77,5 @@ t_envp	*remove_elem(t_envp *elem)
 		elem->prev->next = NULL;
 		elem = elem->prev;
 	}
-	return(elem);
+	return (elem);
 }
-
