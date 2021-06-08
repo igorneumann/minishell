@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/08 16:52:44 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/08 18:58:26 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,21 @@
 void processkeypress(t_cmd *cmd)
 {
 	char	c;
-	//char	*tmp;
+	char	*tmp;
 
 	c = f_raw(cmd->raw);
 	while (!iscntrl(c))
 	{
 	write(STDOUT_FILENO, &c, 1);
-	if (cmd->in[cmd->i] == '\0')
-		cmd->in[cmd->i + 1] = '\0';
-	cmd->in[cmd->i++] = c;
+	if (ft_isprint(c))
+		{
+			tmp = cmd->in;
+			cmd->in = ft_strjoin(cmd->in, &c);
+			cmd->i++;
+			free(tmp);
+		}
 	c = '\0';
 	}
-	/*while (!iscntrl(c))
-	{
-	write(STDOUT_FILENO, &c, 1);
-	tmp = cmd->in;
-	cmd->in = ft_strjoin(cmd->in, &c);
-	c = '\0';
-	free(tmp);
-	}*/
 	if (c == '\x1b')
 		ft_commands(cmd);
 	else if (c == 4) // CTRL-D
@@ -50,10 +46,11 @@ void processkeypress(t_cmd *cmd)
 		printf("\r\n");
 		if (ft_strlen(cmd->in) > 0)
 			ft_read_arguments(cmd);
+		free(cmd->in);
+		cmd->in = ft_strdup(" ");
 		cmd->in[0] = 13;
-		cmd->buff[0] = 13;
-		cmd->in[1] = '\0';
-		cmd->buff[1] = '\0';
+		free(cmd->buff);
+		cmd->buff = ft_strdup(cmd->in);
 		cmd->i = 0;
 	//	ft_printlist(cmd->list, cmd->buff);
 	}

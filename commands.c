@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:26:29 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/07 18:48:28 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/08 18:59:23 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,9 @@ int	ft_history(t_cmd *cmd, char *seq)
 	else if (seq[1] == 'B' && cmd->list->prev != NULL) //ABAJO
 		cmd->list = cmd->list->prev;
 	if (seq[1] == 'B' && cmd->list->prev == NULL && ft_strcmp(cmd->in, first->in) == 0)
-	{
-		while (cmd->i)
-			ft_backspace(cmd);
 		ft_dupin(cmd, 0);
-	}
 	else
-	{
-		while (cmd->i)
-			ft_backspace(cmd);
 		ft_dupin(cmd, 1);
-	}
 	cmd->i = ft_strlen(cmd->in);
 	ft_putstr(cmd->in);
 	return (1);
@@ -120,33 +112,25 @@ void	ft_dupin(t_cmd *cmd, int src) //0 buffer, 1 historial, 2 guarda en buffer
 {
 	int	i;
 
-	i = 0;
 	if (src == 2)
 	{
-		while (cmd->in[i])
-		{
-			cmd->buff[i] = cmd->in[i];
-			i++;
-		}
-		cmd->buff[i] = '\0';
+		free (cmd->buff);
+		cmd->buff = ft_strdup(cmd->in);
 	}
-	if (src == 1)
+	else
 	{
-		while (cmd->list->in[i])
+		i = ft_strlen(cmd->in);
+		while (i-- > 0)
+			ft_putstr("\033[D \033[D");
+		free (cmd->in);
+		if (src == 1)
+			cmd->in = ft_strdup(cmd->list->in);
+		else if (src == 0)
 		{
-			cmd->in[i] = cmd->list->in[i];
-			i++;
+			cmd->in = ft_strdup(cmd->buff);
+			free(cmd->buff);
+			cmd->buff = ft_strdup(" ");
+			cmd->buff[0] = 13;
 		}
-		cmd->in[i] = '\0';
-	}
-	else if (src == 0)
-	{
-		while (cmd->list->in[i])
-		{
-			cmd->in[i] = cmd->buff[i];
-			i++;
-		}
-		cmd->in[i] = '\0';
-		cmd->buff[0] = 13;
 	}
 }

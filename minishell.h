@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/08 19:03:44 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/08 19:08:53 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ void	ft_unset(t_cmd *cmd);
 
 void	processkeypress(t_cmd *cmd);
 void	ft_backspace(t_cmd *cmd);
+void	remove13(char *str);
 
 /*
 *** commands.c
