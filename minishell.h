@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/04 19:34:57 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/08 18:31:51 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	ft_env(t_cmd *cmd);
 
 void	processkeypress(t_cmd *cmd);
 void	ft_backspace(t_cmd *cmd);
+void	remove13(char *str);
 
 /*
 *** commands.c
