@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/07 18:37:43 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/08 17:13:39 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void	ft_cd(t_cmd *cmd, int i)
 		i += 3;
 		while (cmd->in[i] != '\0')
 			path[j++] = cmd->in[i++];
+		path[j] = '\0';
 		if (ft_strnstr(path, "..", 2) != NULL)
 		{
 			j = ft_strlen(old_path);
