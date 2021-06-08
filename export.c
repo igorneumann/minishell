@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 18:38:34 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/08 18:55:15 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/08 19:20:49 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,35 @@ void	ft_include(t_cmd *cmd, char *aux)
 		ft_lst_add_back((t_data **)&cmd->envp, (t_data *)ft_new_env(aux));
 }
 
-void	ft_export(t_cmd *cmd)
+int	new_env_element(t_cmd *cmd, int i)
 {
 	char	**aux;
-	int		i;
 	int		j;
 
-	i = 0;
 	j = 0;
+	while (cmd->in[i] == ' ' || cmd->in[i] == '\'')
+		i++;
+	if (cmd->in[i] != ' ')
+	{
+		aux = ft_split(cmd->in + i, ' ');
+		while (aux[j])
+		{
+			ft_include(cmd, aux[j]);
+			j++;
+		}
+		free(aux);
+		return (0);
+	}
+	return (1);
+}
+
+void	ft_export(t_cmd *cmd)
+{
+	int		i;
+	int		bucle;
+
+	i = 0;
+	bucle = 1;
 	if (ft_strnstr(cmd->in, "export", 6))
 	{
 		cmd->not_found = 1;
@@ -57,22 +78,8 @@ void	ft_export(t_cmd *cmd)
 		i += 6;
 		if (cmd->in[i] == '\0')
 			ft_sort_env(cmd);
-		while (cmd->in[i])
-		{
-			while (cmd->in[i] == ' ' || cmd->in[i] == '\'')
-				i++;
-			if (cmd->in[i] != ' ')
-			{
-				aux = ft_split(cmd->in + i, ' ');
-				while (aux[j])
-				{
-					ft_include(cmd, aux[j]);
-					j++;
-				}
-				free(aux);
-				break ;
-			}
-		}
+		while (cmd->in[i] && bucle == 1)
+			bucle = new_env_element(cmd, i);
 	}
 }
 
