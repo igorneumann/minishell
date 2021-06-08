@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/08 19:09:58 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/08 19:31:01 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@ void	ft_init(t_cmd *cmd, char **envp, t_raw *raw)
 	cmd->list = NULL;
 	cmd->i = 0;
 	cmd->list = NULL;
-	cmd->in = (char*)malloc(3 * sizeof(char));
-	cmd->buff = (char*)malloc(3 * sizeof(char));
-	cmd->in[0] = 13;
-	cmd->buff[0] = 13;
+	cmd->in = ft_strdup("\x0D");
+	cmd->buff = ft_strdup("\x0D");
 	ft_save_env(cmd, envp);
 	enableRawMode(raw);
 }
@@ -43,8 +41,7 @@ void	ft_cmd_line(t_cmd *cmd)
 		if (cmd->i == 0 && cmd->in[0] == 13)
 		{
 			free(cmd->in);
-			cmd->in = ft_strdup(" ");
-			cmd->in[0] = '\0';
+			cmd->in = ft_strdup("\0");
 			ft_putstr("\e[1;32m¿En qué puedo ayudarte?: \e[0m");
 		}
 		processkeypress(cmd);
