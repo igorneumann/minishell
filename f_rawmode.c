@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   f_rawmode.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/07 16:48:09 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/08 16:50:51 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void die(const char *s, t_raw *raw)
 
 	error = 0;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw->orig);
-	if (tcgetattr(STDIN_FILENO, &raw->orig) == -1)
-		die("tcgetattr", raw);
+//	if (tcgetattr(STDIN_FILENO, &raw->orig) == -1)
+//		die("tcgetattr", raw);
 	editorRefreshScreen();
 	if (s[0]!= 0)
 		perror(s);

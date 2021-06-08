@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keypress.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/07 18:47:19 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/08 16:52:44 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@ void processkeypress(t_cmd *cmd)
 	}*/
 	if (c == '\x1b')
 		ft_commands(cmd);
-//	else if (c == 4) // CTRL-D
-//	{
-//		if (cmd->i == 0)
-//		{
-//			write(STDOUT_FILENO, "\x1b[2J", 4);
-//			write(STDOUT_FILENO, "\x1b[H", 3);
-//			die(0, cmd->raw);
-//		}
-//	}
+	else if (c == 4) // CTRL-D
+	{
+		if (cmd->i == 0)
+		{
+			write(STDOUT_FILENO, "\x1b[2J", 4);
+			write(STDOUT_FILENO, "\x1b[H", 3);
+			die(cmd->in, cmd->raw);
+		}
+	}
 	else if (c == 13) // ENTER
 	{
 		printf("\r\n");
