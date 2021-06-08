@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/08 19:09:58 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/08 19:21:20 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	ft_init(t_cmd *cmd, char **envp, t_raw *raw)
 	cmd->list = NULL;
 	cmd->i = 0;
 	cmd->list = NULL;
-	cmd->in = (char*)malloc(3 * sizeof(char));
-	cmd->buff = (char*)malloc(3 * sizeof(char));
+	cmd->in = (char *)malloc(3 * sizeof(char));
+	cmd->buff = (char *)malloc(3 * sizeof(char));
 	cmd->in[0] = 13;
 	cmd->buff[0] = 13;
 	ft_save_env(cmd, envp);
