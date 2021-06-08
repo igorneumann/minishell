@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/08 19:34:11 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/08 20:13:41 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,18 @@ void processkeypress(t_cmd *cmd)
 	c = f_raw(cmd->raw);
 	while (!iscntrl(c))
 	{
-	write(STDOUT_FILENO, &c, 1);
-	if (ft_isprint(c))
+		//write(STDOUT_FILENO, &c, 1);
+		tmp = cmd->in;
+		if (cmd->i == (int)ft_strlen(cmd->in))
 		{
-			tmp = cmd->in;
 			cmd->in = ft_strjoin(cmd->in, &c);
+			ft_putstr(&cmd->in[cmd->i]);
 			cmd->i++;
-			free(tmp);
 		}
-	c = '\0';
+		else
+			ft_editstring(cmd, c);
+		free(tmp);
+		c = '\0';
 	}
 	if (c == '\x1b')
 		ft_commands(cmd);
@@ -50,6 +53,28 @@ void processkeypress(t_cmd *cmd)
 		ft_backspace(cmd);
 	else if (c != 0 && c != 4) //OTROS IMPRIME CODIGO EN PANTALLA
 		printf("%d\r\n", c);
+}
+
+void	ft_editstring(t_cmd *cmd, char c)
+{
+	char	*rest;
+	char	*res;
+	char	ch[2];
+	int		sizerest;
+
+	ch[0] = c;
+	ch[1] = '\0';
+	rest = ft_strdup(&cmd->in[cmd->i]);
+	sizerest = (int)ft_strlen(rest);
+	cmd->in[cmd->i] = '\0';
+	res = ft_strjoin(cmd->in, ch);
+	cmd->in = ft_strjoin(res, rest);
+	ft_putstr(&cmd->in[cmd->i]);
+	while (sizerest-- > 0)
+		ft_putstr("\033[D");
+	cmd->i++;
+	free (res);
+	free (rest);
 }
 
 void	ft_backspace(t_cmd *cmd)
