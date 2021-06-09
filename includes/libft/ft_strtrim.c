@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 16:36:28 by narroyo-          #+#    #+#             */
-/*   Updated: 2019/11/20 11:35:28 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/03/08 12:26:15 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_start(char const *s1, char const *set)
+static int	ft_start(char const *s1, char const *set)
 {
 	int		i;
 	int		j;
@@ -35,16 +35,17 @@ static int		ft_start(char const *s1, char const *set)
 	return (i);
 }
 
-static int		ft_end(char const *s1, char const *set, int start)
+static int	ft_end(char const *s1, char const *set, int start)
 {
 	int		i;
 	int		j;
 	char	boolean;
 
-	i = 0;
-	while (s1[i])
-		i++;
-	i = i == 0 ? 0 : i - 1;
+	i = ft_strlen(s1);
+	if (i != 0)
+		i -= 1;
+	else
+		i = 0;
 	boolean = 'T';
 	while (start < i && boolean == 'T')
 	{
@@ -63,13 +64,14 @@ static int		ft_end(char const *s1, char const *set, int start)
 	return (i);
 }
 
-static char		*ft_trim(char const *s1, int start, int end)
+static char	*ft_trim(char const *s1, int start, int end)
 {
 	char	*trimmed;
 	int		i;
 	int		j;
 
-	if (!(trimmed = malloc(sizeof(char) * (end - start + 2))))
+	trimmed = malloc(sizeof(char) * (end - start + 2));
+	if (!trimmed)
 		return (NULL);
 	i = start;
 	j = 0;
@@ -83,7 +85,7 @@ static char		*ft_trim(char const *s1, int start, int end)
 	return (trimmed);
 }
 
-char			*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	int		start;
 	int		end;
@@ -93,7 +95,8 @@ char			*ft_strtrim(char const *s1, char const *set)
 		return (NULL);
 	if (s1[0] == '\0')
 	{
-		if (!(trimmed = malloc(sizeof(char) * 1)))
+		trimmed = malloc(sizeof(char) * 1);
+		if (!trimmed)
 			return (NULL);
 		trimmed[0] = '\0';
 		return (trimmed);

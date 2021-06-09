@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/04 13:43:51 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/03/07 10:59:01 by narroyo-         ###   ########.fr       */
+/*   Created: 2021/05/25 12:41:34 by narroyo-          #+#    #+#             */
+/*   Updated: 2021/05/25 12:44:00 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+long	ft_atol(const char *str)
 {
 	unsigned long long	value;
 	unsigned long long	i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:26:29 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/08 19:30:51 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/09 12:35:11 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_commands(t_cmd *cmd)
 {
-	char seq[4];
+	char	seq[4];
 
 	seq[3] = '\0';
 	if (read(STDIN_FILENO, &seq[0], 1) != 1)

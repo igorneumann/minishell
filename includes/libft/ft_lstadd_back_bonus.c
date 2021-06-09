@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 16:42:30 by narroyo-          #+#    #+#             */
-/*   Updated: 2019/11/19 20:14:27 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/03/05 09:11:40 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_lstadd_back(t_list **alst, t_list *new)
 {
-	t_list *ptr;
+	t_list	*ptr;
 
 	ptr = *alst;
 	if (ptr)

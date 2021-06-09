@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 14:54:23 by narroyo-          #+#    #+#             */
-/*   Updated: 2019/11/19 19:28:19 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/05/24 17:51:38 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_countwords(char const *s, char c)
+static int	ft_countwords(char const *s, char c)
 {
-	int i;
-	int words;
+	int	i;
+	int	words;
 
 	i = 0;
 	words = 0;
@@ -33,9 +33,9 @@ static int		ft_countwords(char const *s, char c)
 	return (words);
 }
 
-static int		size_nextword(char const *s, char c, int i)
+static int	size_nextword(char const *s, char c, int i)
 {
-	int counter;
+	int	counter;
 
 	while (s[i] == c && s[i])
 		i++;
@@ -50,9 +50,9 @@ static int		size_nextword(char const *s, char c, int i)
 	return (counter);
 }
 
-static int		save_word(char *str, char const *s, char c, int i)
+static int	save_word(char *str, char const *s, char c, int i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (s[i] == c)
@@ -72,14 +72,15 @@ static int		save_word(char *str, char const *s, char c, int i)
 	return (i);
 }
 
-static char		**ft_split2(char const *s, char c, int max)
+static char	**ft_split2(char const *s, char c, int max)
 {
 	int		j;
 	char	**tab;
 	int		i;
 
 	i = ft_countwords(s, c);
-	if (!(tab = (char **)malloc(sizeof(char *) * (i + 1))))
+	tab = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!tab)
 		return (NULL);
 	tab[i] = NULL;
 	max = i;
@@ -87,7 +88,8 @@ static char		**ft_split2(char const *s, char c, int max)
 	j = 0;
 	while (j < max)
 	{
-		if (!(tab[j] = malloc(sizeof(char) * (size_nextword(s, c, i) + 1))))
+		tab[j] = malloc(sizeof(char) * (size_nextword(s, c, i) + 1));
+		if (!tab)
 			return (NULL);
 		i = save_word(tab[j], s, c, i);
 		j++;
@@ -95,9 +97,9 @@ static char		**ft_split2(char const *s, char c, int max)
 	return (tab);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
-	int max;
+	int	max;
 
 	if (s == NULL)
 		return (NULL);

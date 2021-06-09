@@ -1,31 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_bubble_sort.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/04 13:40:51 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/03/05 10:16:49 by narroyo-         ###   ########.fr       */
+/*   Created: 2021/04/26 15:24:23 by narroyo-          #+#    #+#             */
+/*   Updated: 2021/04/26 15:30:36 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+static void	swap(int *xp, int *yp)
 {
-	size_t	a;
+	int	temp;
 
-	a = 0;
-	if (!dst || !src)
-		return (0);
-	while (src[a] != '\0' && dstsize > 1)
+	temp = *xp;
+	*xp = *yp;
+	*yp = temp;
+}
+
+void	ft_bubble_sort(int *arr, int n)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < n - 1)
 	{
-		dst[a] = src[a];
-		a++;
-		dstsize--;
+		j = 0;
+		while (j < n - i - 1)
+		{
+			if (arr[j] > arr[j + 1])
+				swap(&arr[j], &arr[j + 1]);
+			j++;
+		}
+		i++;
 	}
-	if (dstsize > 0)
-		dst[a] = '\0';
-	return (ft_strlen(src));
 }

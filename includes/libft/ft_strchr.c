@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 17:28:11 by narroyo-          #+#    #+#             */
-/*   Updated: 2019/11/05 17:31:45 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/05/24 17:53:50 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ char	*ft_strchr(const char *s, int c)
 	if (*s != (char)c)
 		return (NULL);
 	else
-		return ((char*)s);
+		return ((char *)s);
 }

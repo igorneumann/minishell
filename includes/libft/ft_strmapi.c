@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:21:05 by narroyo-          #+#    #+#             */
-/*   Updated: 2019/11/19 18:41:49 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/03/05 10:17:36 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*ft_strcpy1(char *dst, const char *src)
 	return (dst);
 }
 
-char		*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
 	char			*dst;
 	unsigned int	i;
@@ -34,7 +34,8 @@ char		*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	i = 0;
 	if (!s)
 		return (NULL);
-	if (!(dst = (char *)malloc(sizeof(char) * ft_strlen((char *)s) + 1)))
+	dst = (char *)malloc(sizeof(char) * ft_strlen((char *)s) + 1);
+	if (!dst)
 		return (NULL);
 	ft_strcpy1(dst, s);
 	if (!dst)

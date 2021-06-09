@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 13:44:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2020/12/18 10:03:45 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/03/05 10:16:25 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ static char	ft_whiles(char *str, char const *s1, char const *s2)
 	return (*str);
 }
 
-char		*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
 
 	if (!s1 || !s2)
 		return (NULL);
-	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	str = malloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2) + 1)));
 	if (str != '\0')
 	{
 		ft_whiles(str, s1, s2);
