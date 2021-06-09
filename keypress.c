@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/09 17:16:01 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/09 19:53:43 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,19 @@ void	ft_backspace(t_cmd *cmd)
 
 void	ft_enter(t_cmd *cmd)
 {
+	cmd->buff = ft_strdup(cmd->in);
+	ft_semicolon(cmd);
 	printf("\r\n");
 	if (ft_strlen(cmd->in) > 0)
 		ft_read_arguments(cmd);
+	while (cmd->nexcom != NULL)
+	{
+		cmd->in = ft_strdup(cmd->nexcom->in);
+		cmd->nexcom = cmd->nexcom->next;
+		ft_many_arguments(cmd);
+		free (cmd->list->in);
+		cmd->list->in = ft_strdup(cmd->buff);
+	}
 	free(cmd->in);
 	cmd->in = ft_strdup("\x0D");
 	free(cmd->buff);
@@ -94,7 +104,7 @@ void	ft_enter(t_cmd *cmd)
 void	noprintable(t_cmd *cmd, char c)
 {
 	if (c == '\x1b')
-		ft_commands(cmd);
+		commandkeys(cmd);
 	else if (c == 4 && cmd->i == 0)
 		die("\0", cmd->raw);
 	else if (c == 13)

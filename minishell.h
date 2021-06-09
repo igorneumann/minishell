@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/09 17:44:37 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/09 19:55:07 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_command
 	char		*buff;
 	char		**env;
 	t_data		*list;
+	t_data		*nexcom;
 	t_envp		*envp;
 	t_raw		*raw;
 }				t_cmd;
@@ -87,7 +88,7 @@ void	ft_cmd_line(t_cmd *cmd);
 */
 
 void	die(const char *s, t_raw *raw);
-void	editorRefreshScreen(void);
+void	RefreshScreen(void);
 void	enableRawMode(t_raw *raw);
 char	f_raw(t_raw *raw);
 
@@ -141,13 +142,20 @@ void	ft_enter(t_cmd *cmd);
 void	noprintable(t_cmd *cmd, char c);
 
 /*
-*** commands.c
+*** commandkeys.c
 */
 
-int		ft_commands(t_cmd *cmd);
+int		commandkeys(t_cmd *cmd);
 int		ft_arrows(t_cmd *cmd, char *seq);
 int		ft_homeend(t_cmd *cmd, char *seq);
 int		ft_delete(t_cmd *cmd);
+
+/*
+*** semicolon.c
+*/
+
+void	ft_semicolon(t_cmd *cmd);
+void	freenextcom(t_cmd *cmd);
 
 /*
 *** history.c
@@ -163,6 +171,7 @@ void	ft_updatehist(t_cmd *cmd);
 
 void	arguments(t_cmd *cmd, int i);
 void	ft_read_arguments(t_cmd *cmd);
+void	ft_many_arguments(t_cmd *cmd);
 
 /*
 *** utils.c
