@@ -6,20 +6,20 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/08 19:29:03 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/09 17:07:29 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void die(const char *s, t_raw *raw)
+void	die(const char *s, t_raw *raw)
 {
-	int error;
+	int	error;
 
 	error = 0;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw->orig);
 	editorRefreshScreen();
-	if (s[0]!= 0)
+	if (s[0] != 0)
 		perror(s);
 	else
 	{
@@ -27,19 +27,19 @@ void die(const char *s, t_raw *raw)
 			error = (256 + s[1]);
 		else
 			error = s[1];
-		write(STDERR , &s[1], 1);
+		write(STDERR, &s[1], 1);
 		editorRefreshScreen();
 	}
 	exit(error);
 }
 
-void editorRefreshScreen(void)
+void	editorRefreshScreen(void)
 {
 	write(STDOUT_FILENO, "\x1b[2J", 4);
 	write(STDOUT_FILENO, "\x1b[H", 3);
 }
 
-void enableRawMode(t_raw *raw)
+void	enableRawMode(t_raw *raw)
 {
 	if (tcgetattr(STDIN_FILENO, &raw->orig) == -1)
 		die("tcgetattr", raw);
@@ -53,15 +53,17 @@ void enableRawMode(t_raw *raw)
 		die("tcsetattr", raw);
 }
 
-char f_raw(t_raw *raw)
+char	f_raw(t_raw *raw)
 {
 	int		nread;
 	char	c;
 
-	while ((nread = read(STDIN_FILENO, &c, 1)) != 1)
+	nread = read(STDIN_FILENO, &c, 1);
+	while (nread != 1)
 	{
 		if (nread == -1 && errno != EAGAIN)
 			die("read", raw);
+		nread = read(STDIN_FILENO, &c, 1);
 	}
 	return (c);
 }

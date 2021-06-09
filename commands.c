@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:26:29 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/09 12:35:11 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/09 17:51:30 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,113 +23,75 @@ int	ft_commands(t_cmd *cmd)
 		return ('\x1b');
 	if ((seq[1] >= '0' && seq[1] <= '9') && read(STDIN_FILENO, &seq[2], 1) != 1)
 		return ('\x1b');
-	if (seq[2] == '~' || (seq[1] >= 'A' && seq[1] <= 'Z') )
+	if (seq[2] == '~' && seq[1] == '3')
+		ft_delete(cmd);
+	if (seq[1] >= 'A' && seq[1] <= 'D')
+		return (ft_arrows(cmd, seq));
+	if (seq[2] == '~' || (seq[1] >= 'E' && seq[1] <= 'Z'))
+		return (ft_homeend(cmd, seq));
+	else
+		ft_putstr(seq);
+	return (0);
+}
+
+int	ft_arrows(t_cmd *cmd, char *seq)
+{
+	if (seq[1] == 'D')
 	{
-		if (seq[1] == 'D') //FLECHA IZQUIERDA
+		if (cmd->i > 0)
 		{
-			if (cmd->i > 0)
-			{
-				ft_putstr("\033[D");
-				cmd->i--;
-			}
-			return (1);
+			ft_putstr("\033[D");
+			cmd->i--;
 		}
-		else if (seq[1] == 'C') //FLECHA DERECHA
+		return (1);
+	}
+	else if (seq[1] == 'C')
+	{
+		if (cmd->in[cmd->i] != '\0')
 		{
-			if (cmd->in[cmd->i] != '\0')
-			{
-				ft_putstr("\033[C");
-				cmd->i++;
-			}
-			return (1);
+			ft_putstr("\033[C");
+			cmd->i++;
 		}
-		else if (seq[1] == 'A' || seq[1] == 'B') //FLECHAS ABAJO / ARRIBA
-			return(ft_history(cmd, seq));
-		else if (seq[1] == '3') //DELETE
+		return (1);
+	}
+	else if (seq[1] == 'A' || seq[1] == 'B')
+		return (ft_history(cmd, seq));
+	return (0);
+}
+
+int	ft_homeend(t_cmd *cmd, char *seq)
+{
+	if (seq[1] == 'H' && cmd->i > 0)
+	{
+		while (--cmd->i >= 0)
+			ft_putstr("\033[D");
+		cmd->i = 0;
+		return (1);
+	}
+	else if (seq[1] == 'F' && cmd->in[cmd->i] != '\0')
+	{
+		while (cmd->in[cmd->i] != '\0')
 		{
-			if (cmd->in[cmd->i + 1] != '\0')
-			{
-				ft_putstr("\033[C");
-				cmd->i++;
-				ft_backspace(cmd);
-			}
-			else
-			{
-				ft_putstr(" \033[J\033[D");
-				cmd->in[cmd->i] = '\0';
-			}
-			return (1);
+			ft_putstr("\033[C");
+			cmd->i++;
 		}
-		else if (seq[1] == 'H' && cmd->i > 0) //HOME
-		{
-			while (--cmd->i >= 0)
-				ft_putstr("\033[D");
-			cmd->i = 0;
-			return (1);
-		}
-		else if (seq[1] == 'F' && cmd->in[cmd->i] != '\0') //END
-		{
-			while (cmd->in[cmd->i] != '\0')
-			{
-				ft_putstr("\033[C");
-				cmd->i++;
-			}
-			return (1);
-		}
-		else //OTROS IMPRIME CODIGO EN PANTALLA
-			ft_putstr(seq);
+		return (1);
 	}
 	return (0);
 }
 
-int	ft_history(t_cmd *cmd, char *seq)
+int	ft_delete(t_cmd *cmd)
 {
-	t_data	*first;
-
-	if (cmd->list == NULL && seq)
-		return(0);
-	if (seq[1] == 'B' && cmd->buff[0] == 13)
-		return(0);
-	if (ft_strcmp(cmd->buff, cmd->list->in) != 0 && cmd->buff[0] != 13)
-		ft_lst_edit(&cmd->list, ft_new(cmd->in)); //ACTUALIZA ITEM
-	first = ft_lst_first(cmd->list); //APUNTA AL PRIMER ELEMENTO
-	if (seq[1] == 'A' && (cmd->in[0] == '\0' || (ft_strcmp(cmd->in, cmd->list->in) != 0 && ft_strcmp(cmd->in, cmd->buff) != 0))) //ARRIBA Y DISTINTO DEL ULTIMO
-		ft_dupin(cmd, 2);
-	else if (seq[1] == 'A' && cmd->list->next != NULL) //ARRIBA SI HAY SIGUIENTE
-		cmd->list = cmd->list->next;
-	else if (seq[1] == 'B' && cmd->list->prev != NULL) //ABAJO
-		cmd->list = cmd->list->prev;
-	if (seq[1] == 'B' && cmd->list->prev == NULL && ft_strcmp(cmd->in, first->in) == 0)
-		ft_dupin(cmd, 0);
+	if (cmd->in[cmd->i + 1] != '\0')
+	{
+		ft_putstr("\033[C");
+		cmd->i++;
+		ft_backspace(cmd);
+	}
 	else
-		ft_dupin(cmd, 1);
-	cmd->i = ft_strlen(cmd->in);
-	ft_putstr(cmd->in);
+	{
+		ft_putstr(" \033[J\033[D");
+		cmd->in[cmd->i] = '\0';
+	}
 	return (1);
-}
-
-void	ft_dupin(t_cmd *cmd, int src) //0 buffer, 1 historial, 2 guarda en buffer
-{
-	int	i;
-
-	if (src == 2)
-	{
-		free (cmd->buff);
-		cmd->buff = ft_strdup(cmd->in);
-	}
-	else
-	{
-		i = ft_strlen(cmd->in);
-		while (i-- > 0)
-			ft_putstr("\033[D \033[D");
-		free (cmd->in);
-		if (src == 1)
-			cmd->in = ft_strdup(cmd->list->in);
-		else if (src == 0)
-		{
-			cmd->in = ft_strdup(cmd->buff);
-			free(cmd->buff);
-			cmd->buff = ft_strdup("\x0D");
-		}
-	}
 }

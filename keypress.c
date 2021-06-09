@@ -6,13 +6,13 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/08 20:13:41 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/09 17:16:01 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void processkeypress(t_cmd *cmd)
+void	processkeypress(t_cmd *cmd)
 {
 	char	c;
 	char	*tmp;
@@ -20,7 +20,6 @@ void processkeypress(t_cmd *cmd)
 	c = f_raw(cmd->raw);
 	while (!iscntrl(c))
 	{
-		//write(STDOUT_FILENO, &c, 1);
 		tmp = cmd->in;
 		if (cmd->i == (int)ft_strlen(cmd->in))
 		{
@@ -33,26 +32,7 @@ void processkeypress(t_cmd *cmd)
 		free(tmp);
 		c = '\0';
 	}
-	if (c == '\x1b')
-		ft_commands(cmd);
-	else if (c == 4 && cmd->i == 0) // CTRL-D
-		die("\0", cmd->raw);
-	else if (c == 13) // ENTER
-	{
-		printf("\r\n");
-		if (ft_strlen(cmd->in) > 0)
-			ft_read_arguments(cmd);
-		free(cmd->in);
-		cmd->in = ft_strdup("\x0D");
-		free(cmd->buff);
-		cmd->buff = ft_strdup("\x0D");
-		cmd->i = 0;
-	//	ft_printlist(cmd->list, cmd->buff);
-	}
-	else if (c == 127) //BACKSPACE
-		ft_backspace(cmd);
-	else if (c != 0 && c != 4) //OTROS IMPRIME CODIGO EN PANTALLA
-		printf("%d\r\n", c);
+	noprintable(cmd, c);
 }
 
 void	ft_editstring(t_cmd *cmd, char c)
@@ -79,7 +59,7 @@ void	ft_editstring(t_cmd *cmd, char c)
 
 void	ft_backspace(t_cmd *cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (cmd->i > 0)
@@ -97,4 +77,30 @@ void	ft_backspace(t_cmd *cmd)
 		while (i-- > 0)
 			ft_putstr("\033[D");
 	}
+}
+
+void	ft_enter(t_cmd *cmd)
+{
+	printf("\r\n");
+	if (ft_strlen(cmd->in) > 0)
+		ft_read_arguments(cmd);
+	free(cmd->in);
+	cmd->in = ft_strdup("\x0D");
+	free(cmd->buff);
+	cmd->buff = ft_strdup("\x0D");
+	cmd->i = 0;
+}
+
+void	noprintable(t_cmd *cmd, char c)
+{
+	if (c == '\x1b')
+		ft_commands(cmd);
+	else if (c == 4 && cmd->i == 0)
+		die("\0", cmd->raw);
+	else if (c == 13)
+		ft_enter(cmd);
+	else if (c == 127)
+		ft_backspace(cmd);
+	else if (c != 0 && c != 4)
+		printf("%d\r\n", c);
 }

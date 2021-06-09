@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/08 19:57:10 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/09 17:44:37 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,12 +137,22 @@ void	ft_unset(t_cmd *cmd);
 void	processkeypress(t_cmd *cmd);
 void	ft_backspace(t_cmd *cmd);
 void	ft_editstring(t_cmd *cmd, char c);
+void	ft_enter(t_cmd *cmd);
+void	noprintable(t_cmd *cmd, char c);
 
 /*
 *** commands.c
 */
 
 int		ft_commands(t_cmd *cmd);
+int		ft_arrows(t_cmd *cmd, char *seq);
+int		ft_homeend(t_cmd *cmd, char *seq);
+int		ft_delete(t_cmd *cmd);
+
+/*
+*** history.c
+*/
+
 int		ft_history(t_cmd *cmd, char *seq);
 void	ft_dupin(t_cmd *cmd, int src);
 void	ft_updatehist(t_cmd *cmd);
