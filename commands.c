@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:26:29 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/08 18:59:23 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/08 19:30:51 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,7 @@ void	ft_dupin(t_cmd *cmd, int src) //0 buffer, 1 historial, 2 guarda en buffer
 		{
 			cmd->in = ft_strdup(cmd->buff);
 			free(cmd->buff);
-			cmd->buff = ft_strdup(" ");
-			cmd->buff[0] = 13;
+			cmd->buff = ft_strdup("\x0D");
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/08 18:58:26 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/08 20:13:41 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,44 +20,61 @@ void processkeypress(t_cmd *cmd)
 	c = f_raw(cmd->raw);
 	while (!iscntrl(c))
 	{
-	write(STDOUT_FILENO, &c, 1);
-	if (ft_isprint(c))
+		//write(STDOUT_FILENO, &c, 1);
+		tmp = cmd->in;
+		if (cmd->i == (int)ft_strlen(cmd->in))
 		{
-			tmp = cmd->in;
 			cmd->in = ft_strjoin(cmd->in, &c);
+			ft_putstr(&cmd->in[cmd->i]);
 			cmd->i++;
-			free(tmp);
 		}
-	c = '\0';
+		else
+			ft_editstring(cmd, c);
+		free(tmp);
+		c = '\0';
 	}
 	if (c == '\x1b')
 		ft_commands(cmd);
-	else if (c == 4) // CTRL-D
-	{
-		if (cmd->i == 0)
-		{
-			write(STDOUT_FILENO, "\x1b[2J", 4);
-			write(STDOUT_FILENO, "\x1b[H", 3);
-			die(cmd->in, cmd->raw);
-		}
-	}
+	else if (c == 4 && cmd->i == 0) // CTRL-D
+		die("\0", cmd->raw);
 	else if (c == 13) // ENTER
 	{
 		printf("\r\n");
 		if (ft_strlen(cmd->in) > 0)
 			ft_read_arguments(cmd);
 		free(cmd->in);
-		cmd->in = ft_strdup(" ");
-		cmd->in[0] = 13;
+		cmd->in = ft_strdup("\x0D");
 		free(cmd->buff);
-		cmd->buff = ft_strdup(cmd->in);
+		cmd->buff = ft_strdup("\x0D");
 		cmd->i = 0;
 	//	ft_printlist(cmd->list, cmd->buff);
 	}
 	else if (c == 127) //BACKSPACE
 		ft_backspace(cmd);
-	else if (c != 0) //OTROS IMPRIME CODIGO EN PANTALLA
+	else if (c != 0 && c != 4) //OTROS IMPRIME CODIGO EN PANTALLA
 		printf("%d\r\n", c);
+}
+
+void	ft_editstring(t_cmd *cmd, char c)
+{
+	char	*rest;
+	char	*res;
+	char	ch[2];
+	int		sizerest;
+
+	ch[0] = c;
+	ch[1] = '\0';
+	rest = ft_strdup(&cmd->in[cmd->i]);
+	sizerest = (int)ft_strlen(rest);
+	cmd->in[cmd->i] = '\0';
+	res = ft_strjoin(cmd->in, ch);
+	cmd->in = ft_strjoin(res, rest);
+	ft_putstr(&cmd->in[cmd->i]);
+	while (sizerest-- > 0)
+		ft_putstr("\033[D");
+	cmd->i++;
+	free (res);
+	free (rest);
 }
 
 void	ft_backspace(t_cmd *cmd)
