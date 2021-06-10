@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/09 19:55:07 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/10 19:43:17 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ t_envp	*remove_elem(t_envp *elem);
 
 t_data	*ft_new(char *in);
 void	ft_lst_add_front(t_data **in, t_data *new);
-void	ft_lst_remove_front(t_data *in);
 void	ft_lst_add_back(t_data **in, t_data *new);
 void	ft_lst_edit(t_data **in, t_data *new);
+int		lst_size(t_envp *lst);
 
 /*
 *** env.c

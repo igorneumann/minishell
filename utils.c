@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 10:47:23 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/08 18:37:29 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/10 20:35:09 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,43 @@ void	ft_print_env(t_envp *x)
 
 void	ft_sort_env(t_cmd *cmd)
 {
-	ft_print_export(cmd->envp);
+	int		i;
+	int		j;
+	t_envp	*tmp;
+	t_envp	*lst;
+
+	i = 0;
+	lst = cmd->envp;
+	while (lst->prev)
+		lst = lst->prev;
+	while (i < lst_size(lst) - 1)
+	{
+		j = 0;
+		while (j < lst_size(lst) - i - 1)
+		{
+			printf("%s\n", lst->key);
+			printf("%d\n", j);
+			if (lst->key[0] > lst->next->key[0])
+			{
+		/*		printf("%c\n", lst->key[0]);
+				printf("%c\n", lst->next->key[0]);
+				temp = lst;
+				lst->next->prev = lst->prev;
+				lst->next->next = temp;
+				lst->next->next->prev = temp;
+				temp->next = lst->next->next;
+				temp->prev = lst->next;*/
+	// ESTO ES UNA MIERDA COMO UNA CASA
+			}
+			j++;
+				printf("%d\n", j);
+			lst = lst->next;
+		}
+		lst = lst->next;
+		printf("%d\n", i);
+		i++;
+	}
+	ft_print_export(lst);
 }
 
 void	ft_print_export(t_envp *x)
