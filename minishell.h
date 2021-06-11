@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/10 19:43:17 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/11 17:05:38 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,12 @@ void	ft_save_env(t_cmd *cmd, char **envp);
 void	ft_options(t_cmd *cmd, int i);
 void	error_file_or_directory(t_cmd *cmd, int i);
 void	ft_env(t_cmd *cmd);
+
+/*
+*** export_utils.c
+*/
+
+t_envp	*copy_env(t_envp *envp);
 
 /*
 *** export.c
