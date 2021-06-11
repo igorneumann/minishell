@@ -18,6 +18,7 @@
 		"files.insertFinalNewline": true,
 		"editor.renderWhitespace": "all",
 		"files.associations": {
-			"__locale": "c"
+			"__locale": "c",
+			"minishell.h": "c"
 		},
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/10 19:43:17 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/11 17:53:27 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ int		commandkeys(t_cmd *cmd);
 int		ft_arrows(t_cmd *cmd, char *seq);
 int		ft_homeend(t_cmd *cmd, char *seq);
 int		ft_delete(t_cmd *cmd);
+int		ft_jumpword(t_cmd *cmd, char seq);
 
 /*
 *** semicolon.c
