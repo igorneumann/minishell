@@ -68,7 +68,7 @@ void	ft_sort_env(t_cmd *cmd)
 {
 	int		i;
 	int		j;
-	t_envp	*tmp;
+//	t_envp	*tmp;
 	t_envp	*lst;
 
 	i = 0;

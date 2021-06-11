@@ -21,10 +21,11 @@ void	ft_semicolon(t_cmd *cmd)
 	j = 1;
 	while (i > 0)
 	{
-		if (cmd->in[i] == '&' && cmd->in[i + j] == '&')
+		if ((cmd->in[i] == '&' && cmd->in[i + j] == '&') || cmd->in[i] == ';')
 		{
 			cmd->in[i] = '\0';
-			cmd->in[i + j++] = '\0';
+			if (cmd->in[i + j] == '&')
+				cmd->in[i + j++] = '\0';
 			while (cmd->in[i + j] == ' ')
 				j++;
 			ft_lst_add_front(&cmd->nexcom, ft_new(&cmd->in[i + j]));
