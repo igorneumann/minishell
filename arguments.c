@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/08 18:45:57 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/10 18:54:56 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,11 @@ void	ft_cd(t_cmd *cmd, int i)
 		if (command_not_found("cd", cmd))
 			return ;
 		getcwd(old_path, 2048);
-		i += 3;
+		i += 2;
+		if (cmd->in[i] == '\0')
+			return ;
+		else
+			i++;
 		while (cmd->in[i] != '\0')
 			path[j++] = cmd->in[i++];
 		path[j] = '\0';

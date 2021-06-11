@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 17:17:03 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/09 19:30:27 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/10 19:42:56 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,19 @@ void	ft_lst_edit(t_data **in, t_data *new)
 		tmp = new->prev;
 		tmp->next = new;
 	}
+}
+
+int	lst_size(t_envp *lst)
+{
+	int		i;
+
+	i = 0;
+	while (lst->prev)
+		lst = lst->prev;
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }
