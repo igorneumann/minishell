@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/06/11 17:05:38 by narroyo-         ###   ########.fr       */
+=======
+/*   Updated: 2021/06/11 18:45:23 by ineumann         ###   ########.fr       */
+>>>>>>> 3fdb50568666df913fb2d872fd1dbc73e07f7830
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +159,7 @@ int		commandkeys(t_cmd *cmd);
 int		ft_arrows(t_cmd *cmd, char *seq);
 int		ft_homeend(t_cmd *cmd, char *seq);
 int		ft_delete(t_cmd *cmd);
+int		ft_jumpword(t_cmd *cmd, char seq);
 
 /*
 *** semicolon.c
@@ -170,6 +175,7 @@ void	freenextcom(t_cmd *cmd);
 int		ft_history(t_cmd *cmd, char *seq);
 void	ft_dupin(t_cmd *cmd, int src);
 void	ft_updatehist(t_cmd *cmd);
+int		ft_altarrow(t_cmd *cmd);
 
 /*
 *** read_arguments.c
