@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:26:29 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/11 18:11:21 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/11 19:12:37 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	commandkeys(t_cmd *cmd)
 	if (read(STDIN_FILENO, &seq[0], 1) != 1)
 		return ('\x1b');
 	if (seq[0] && read(STDIN_FILENO, &seq[1], 1) != 1)
-		return(ft_jumpword(cmd, seq[0]));
+		return (ft_jumpword(cmd, seq[0]));
 	if ((seq[1] >= '0' && seq[1] <= '9') && read(STDIN_FILENO, &seq[2], 1) != 1)
 		return ('\x1b');
 	if (seq[2] == '~' && seq[1] == '3')
@@ -31,13 +31,22 @@ int	commandkeys(t_cmd *cmd)
 		return (ft_homeend(cmd, seq));
 	if (seq[2] == '~' && (seq[1] == '1' || seq[1] == '5'))
 		ft_delete(cmd);
-	else
-		ft_putstr(seq);
+	if (seq[2] == ';' && seq[1] == '1')
+		ft_altarrow(cmd);
+	/*else
+	{
+		ft_putstr("\r\nchar 1 is"); write(1, &seq[0], 1);
+		ft_putstr("\r\nchar 2 is"); write(1, &seq[1], 1);
+		ft_putstr("\r\nchar 3 is"); write(1, &seq[2], 1);
+	}*/
 	return (0);
 }
 
 int	ft_arrows(t_cmd *cmd, char *seq)
 {
+	int	j;
+
+	j = strlen(cmd->in);
 	if (seq[1] == 'D')
 	{
 		if (cmd->i > 0)
@@ -57,7 +66,14 @@ int	ft_arrows(t_cmd *cmd, char *seq)
 		return (1);
 	}
 	else if (seq[1] == 'A' || seq[1] == 'B')
+	{
+		while (cmd->in[cmd->i] != '\0')
+		{
+			ft_putstr("\033[C");
+			cmd->i++;
+		}
 		return (ft_history(cmd, seq));
+	}
 	return (0);
 }
 
@@ -81,6 +97,8 @@ int	ft_jumpword(t_cmd *cmd, char seq)
 		ft_putstr("\033[C");
 		return (1);
 	}
+	//else
+	//	write(1, &seq, 1);
 	return (0);
 }
 

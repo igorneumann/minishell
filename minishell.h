@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/11 17:53:27 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/11 18:45:23 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ void	freenextcom(t_cmd *cmd);
 int		ft_history(t_cmd *cmd, char *seq);
 void	ft_dupin(t_cmd *cmd, int src);
 void	ft_updatehist(t_cmd *cmd);
+int		ft_altarrow(t_cmd *cmd);
 
 /*
 *** read_arguments.c

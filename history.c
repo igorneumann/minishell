@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 17:19:56 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/09 17:29:22 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/11 19:24:17 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,25 @@ void	ft_dupin(t_cmd *cmd, int src)
 			cmd->buff = ft_strdup("\x0D");
 		}
 	}
+}
+
+int	ft_altarrow(t_cmd *cmd)
+{
+	int		i;
+	int		j;
+	char	seq[2];
+
+	i = cmd->i;
+	if (read(STDIN_FILENO, &seq[0], 1) != 1)
+		return ('\x1b');
+	if (read(STDIN_FILENO, &seq[1], 1) != 1)
+		return ('\x1b');
+	if (seq[0] == '5')
+		ft_arrows(cmd, seq);
+	j = strlen(cmd->in);
+	if (i < j)
+		seq[1] = 'D';
+	while (i < j--)
+		ft_arrows(cmd, seq);
+	return (1);
 }
