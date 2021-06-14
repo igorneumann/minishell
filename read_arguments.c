@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/09 19:42:10 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/14 20:26:11 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_read_arguments(t_cmd *cmd)
 		die(code, cmd->raw);
 	}
 	if (cmd->not_found == 0)
-		printf("%s : command not found\r\n", cmd->in);
+		executor(cmd);
 }
 
 void	ft_many_arguments(t_cmd *cmd)
@@ -74,5 +74,5 @@ void	ft_many_arguments(t_cmd *cmd)
 		die(code, cmd->raw);
 	}
 	if (cmd->not_found == 0)
-		printf("%s : command not found\r\n", cmd->in);
+		executor(cmd);
 }

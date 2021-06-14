@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/11 18:45:23 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/14 19:32:43 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <string.h>
 # include <sys/param.h>
 # include <sys/mount.h>
+# include <sys/types.h>
 # include <signal.h>
 # include <fcntl.h>
 # include <sys/errno.h>
@@ -184,5 +185,17 @@ void	ft_printlist(t_data *x, char *buff);
 void	ft_print_env(t_envp *x);
 void	ft_sort_env(t_cmd *cmd);
 void	ft_print_export(t_envp *x);
+
+/*
+*** morekeys.c
+*/
+
+void	ft_tab(t_cmd *cmd);
+
+/*
+*** exec.c
+*/
+int	executor(t_cmd *cmd);
+int	exec(char *str, t_cmd *cmd);
 
 #endif
