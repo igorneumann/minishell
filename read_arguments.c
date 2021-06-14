@@ -41,7 +41,7 @@ void	ft_read_arguments(t_cmd *cmd)
 		i += 4;
 		while (cmd->in[i] == ' ')
 			i++;
-		if (cmd->in[i] >= 0 || cmd->in[i] <= 9
+		if ((cmd->in[i] >= 0 && cmd->in[i] <= 9)
 			|| cmd->in[i] == '-' || cmd->in[i] == '+')
 			code[1] = ft_atoi(&cmd->in[i]);
 		die(code, cmd->raw);
@@ -68,7 +68,7 @@ void	ft_many_arguments(t_cmd *cmd)
 		i += 4;
 		while (cmd->in[i] == ' ')
 			i++;
-		if (cmd->in[i] >= 0 || cmd->in[i] <= 9
+		if ((cmd->in[i] >= 0 && cmd->in[i] <= 9)
 			|| cmd->in[i] == '-' || cmd->in[i] == '+')
 			code[1] = ft_atoi(&cmd->in[i]);
 		die(code, cmd->raw);

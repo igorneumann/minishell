@@ -68,10 +68,6 @@ void	ft_sort_env(t_cmd *cmd)
 {
 	int		i;
 	int		j;
-<<<<<<< HEAD
-=======
-//	t_envp	*tmp;
->>>>>>> 3fdb50568666df913fb2d872fd1dbc73e07f7830
 	t_envp	*lst;
 	t_envp	*tmp;
 	char	*key;

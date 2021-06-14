@@ -105,7 +105,7 @@ void	noprintable(t_cmd *cmd, char c)
 {
 	if (c == '\x1b')
 		commandkeys(cmd);
-	else if (c == 4 && cmd->i == 0)
+	if (c == 4 && cmd->i == 0)
 		die("\0", cmd->raw);
 	else if (c == 13)
 		ft_enter(cmd);
