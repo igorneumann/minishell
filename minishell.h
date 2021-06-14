@@ -125,6 +125,12 @@ void	error_file_or_directory(t_cmd *cmd, int i);
 void	ft_env(t_cmd *cmd);
 
 /*
+*** export_utils.c
+*/
+
+t_envp	*copy_env(t_envp *envp);
+
+/*
 *** export.c
 */
 
