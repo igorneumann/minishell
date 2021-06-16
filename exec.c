@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/14 20:24:35 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/16 19:43:17 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ int	executor(t_cmd *cmd)
 {
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->orig) == -1)
 		die("tcsetattr", cmd->raw);
-	exec(ft_strdup(cmd->in), cmd);
+	if (findpipes(cmd->in) == 0)
+		exec(ft_strdup(cmd->in), cmd);
+	else
+		pipes(cmd);
 	wait (0);
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
 		die("tcsetattr", cmd->raw);
@@ -59,6 +62,7 @@ int	exec(char *str, t_cmd *cmd)
 		if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
 			die("tcsetattr", cmd->raw);
 		printf("%s : command not found\r\n", cmd->in);
+		exit(0);
 		return (1);
 	}
 	return (0);

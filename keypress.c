@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/14 18:01:36 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/16 17:46:20 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,6 @@ void	noprintable(t_cmd *cmd, char c)
 		ft_backspace(cmd);
 	else if (c == 9)
 		ft_tab(cmd);
-	else if (c != 0 && c != 4)
-		printf("%d\r\n", c);
+//	else if (c != 0 && c != 4)
+//		printf("%d\r\n", c);
 }

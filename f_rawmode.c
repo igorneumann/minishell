@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/09 17:53:50 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/16 19:39:54 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	die(const char *s, t_raw *raw)
 		write(STDERR, &s[1], 1);
 		RefreshScreen();
 	}
+	//ft_putstr("HAY SALIDA");
 	exit(error);
 }
 

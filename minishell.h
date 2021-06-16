@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/14 19:32:43 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/16 19:23:57 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,10 @@ int		ft_jumpword(t_cmd *cmd, char seq);
 */
 
 void	ft_semicolon(t_cmd *cmd);
-void	freenextcom(t_cmd *cmd);
+int		prepstr(char *str, int pos, int qt);
+//int		delstrchar(char *str);
+int		countquotes(char *str, int pos);
+int		findpipes(char *str);
 
 /*
 *** history.c
@@ -201,7 +204,12 @@ void	ft_tab(t_cmd *cmd);
 /*
 *** exec.c
 */
-int	executor(t_cmd *cmd);
-int	exec(char *str, t_cmd *cmd);
+int		executor(t_cmd *cmd);
+int		exec(char *str, t_cmd *cmd);
+
+/*
+*** pipes.c
+*/
+int		pipes(t_cmd *cmd);
 
 #endif
