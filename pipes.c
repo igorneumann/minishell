@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/16 19:25:58 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/17 16:54:35 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,59 @@
 
 int	pipes(t_cmd *cmd)
 {
-	void	*str;
+	int		i;
+	int		j;
 
-	str = cmd->in;
-	ft_putstr("Hay pipe, YAY!");
+	i = ft_strlen(cmd->in);
+	j = 1;
+	while (i > 0)
+	{
+		if (cmd->in[i] == '|')
+		{
+			cmd->in[i] = '\0';
+			while (cmd->in[i + j] == ' ')
+				j++;
+			ft_lst_add_front(&cmd->nexpip, ft_new(&cmd->in[i + j]));
+		}
+		else if (cmd->in[i] == '>')
+		{
+			cmd->in[i] = '\0';
+			while (cmd->in[i + j] == ' ')
+				j++;
+			cmd->outp = ft_strdup(&cmd->in[i + j]);
+		}
+		j = 1;
+		i--;
+	}
+	printpip(cmd);
 	return (0);
+}
+
+void	printpip(t_cmd *cmd)
+{
+	int i;
+
+	i = 0;
+	if (cmd->nexpip != NULL)
+	{
+		while (cmd->nexpip->next != NULL)
+		{
+			i++;
+			ft_putstr("Pipe ");
+			ft_putstr(ft_itoa(i));
+			ft_putstr(cmd->nexpip->in);
+			ft_putstr("\r\n");
+			cmd->nexpip = cmd->nexpip->next;
+		}
+		ft_putstr("Pipe ");
+		ft_putstr(ft_itoa(++i));
+		ft_putstr(cmd->nexpip->in);
+		ft_putstr("\r\n");
+	}
+	if (cmd->outp != NULL)
+	{
+		ft_putstr("Output is ");
+		ft_putstr(cmd->outp);
+		ft_putstr("\r\n");
+	}
 }

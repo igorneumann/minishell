@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/16 19:23:57 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/16 20:32:18 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,12 @@ typedef struct s_command
 	char		*in;
 	int			i;
 	int			not_found;
+	char		*outp;
 	char		*buff;
 	char		**env;
 	t_data		*list;
 	t_data		*nexcom;
+	t_data		*nexpip;
 	t_envp		*envp;
 	t_raw		*raw;
 }				t_cmd;
@@ -211,5 +213,6 @@ int		exec(char *str, t_cmd *cmd);
 *** pipes.c
 */
 int		pipes(t_cmd *cmd);
+void	printpip(t_cmd *cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 18:24:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/16 19:22:23 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/17 16:55:38 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,6 @@ void	ft_semicolon(t_cmd *cmd)
 	}
 }
 
-/*int	delstrchar(char *str)
-{
-	while (str[1] != '\0')
-	{
-		str[0] = str[1];
-		str++;
-	}
-	str[0] = '\0';
-	return (1);
-}*/
-
 int	countquotes(char *str, int pos)
 {
 	int	i;
@@ -64,37 +53,16 @@ int	countquotes(char *str, int pos)
 
 int	findpipes(char *str)
 {
-	int	pp;
+	int		pp;
+	char	*st;
 
+	st = str;
 	pp = 0;
-	while (str[0] != '\0')
+	while (st[0] != '\0')
 	{
-		if ((str[0] == '|' || str[0] == '>'))
+		if ((st[0] == '|' || st[0] == '>'))
 			pp++;
-		str++;
+		st++;
 	}
 	return (pp);
 }
-
-/*int	prepstr(char *str, int pos, int qt)
-{
-	int	i;
-	int	print;
-
-	i = pos + 1;
-	qt = i;
-	print = 0;
-	while (--i >= 0)
-	{
-		if ((str[i] == ' ' && print == 0) ||
-			str[i] == '\"' || str[i] == '\'')
-			delstrchar(&str[i]);
-		else if (ft_isprint(str[i]))
-			print++;
-	}
-	i = pos - 1;
-	while (str[++i] != '\0')
-		if (str[i] == '"')
-			return (delstrchar(&str[i]));
-	return (2);
-}*/
