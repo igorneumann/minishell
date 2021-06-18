@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/16 20:32:18 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/18 19:31:45 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
+# define READ_END 0
+# define WRITE_END 1
 
 typedef struct s_data
 {
@@ -63,6 +65,7 @@ typedef struct s_command
 	char		*buff;
 	char		**env;
 	t_data		*list;
+	t_data		*param;
 	t_data		*nexcom;
 	t_data		*nexpip;
 	t_envp		*envp;
@@ -116,6 +119,12 @@ void	ft_lst_edit(t_data **in, t_data *new);
 int		lst_size(t_envp *lst);
 
 /*
+*** lists
+*/
+
+t_data	*freelist(t_data *lst);
+
+/*
 *** env.c
 */
 
@@ -166,7 +175,6 @@ int		ft_jumpword(t_cmd *cmd, char seq);
 
 void	ft_semicolon(t_cmd *cmd);
 int		prepstr(char *str, int pos, int qt);
-//int		delstrchar(char *str);
 int		countquotes(char *str, int pos);
 int		findpipes(char *str);
 
@@ -176,7 +184,6 @@ int		findpipes(char *str);
 
 int		ft_history(t_cmd *cmd, char *seq);
 void	ft_dupin(t_cmd *cmd, int src);
-void	ft_updatehist(t_cmd *cmd);
 int		ft_altarrow(t_cmd *cmd);
 
 /*
@@ -186,6 +193,7 @@ int		ft_altarrow(t_cmd *cmd);
 void	arguments(t_cmd *cmd, int i);
 void	ft_read_arguments(t_cmd *cmd);
 void	ft_many_arguments(t_cmd *cmd);
+void	ft_lst_add_arguments(t_data **in, char *new);
 
 /*
 *** utils.c
@@ -208,11 +216,15 @@ void	ft_tab(t_cmd *cmd);
 */
 int		executor(t_cmd *cmd);
 int		exec(char *str, t_cmd *cmd);
+char	*copyparam(t_cmd *cmd);
+size_t	ft_strlentochar(const char *s, char c);
+char	*ft_strduptochar(const char *s1, char c);
 
 /*
 *** pipes.c
 */
 int		pipes(t_cmd *cmd);
+void	runpip(t_cmd *cmd);
 void	printpip(t_cmd *cmd);
 
 #endif

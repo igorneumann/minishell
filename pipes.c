@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/17 16:54:35 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/17 18:26:10 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	pipes(t_cmd *cmd)
 	int		j;
 
 	i = ft_strlen(cmd->in);
-	j = 1;
 	while (i > 0)
 	{
+		j = 1;
 		if (cmd->in[i] == '|')
 		{
 			cmd->in[i] = '\0';
@@ -35,16 +35,15 @@ int	pipes(t_cmd *cmd)
 				j++;
 			cmd->outp = ft_strdup(&cmd->in[i + j]);
 		}
-		j = 1;
 		i--;
 	}
-	printpip(cmd);
+	runpip(cmd);
 	return (0);
 }
 
-void	printpip(t_cmd *cmd)
+/*void	printpip(t_cmd *cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (cmd->nexpip != NULL)
@@ -69,4 +68,21 @@ void	printpip(t_cmd *cmd)
 		ft_putstr(cmd->outp);
 		ft_putstr("\r\n");
 	}
+}*/
+
+void	runpip(t_cmd *cmd)
+{
+	int	fd[2];
+	int	status;
+
+	pipe(fd);
+	close(fd[READ_END]);
+	dup2(fd[WRITE_END], STDOUT_FILENO);
+	close(fd[WRITE_END]);
+	exec(ft_strduptochar(cmd->in, 32), cmd);
+	dup2(fd[READ_END], STDIN_FILENO);
+	close(fd[READ_END]);
+	exec(ft_strduptochar(cmd->in, 32), cmd);
+	wait(&status);
+	wait(&status);
 }

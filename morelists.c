@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   morelists.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/14 18:10:44 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/18 20:15:06 by ineumann         ###   ########.fr       */
+/*   Created: 2021/06/18 18:36:03 by ineumann          #+#    #+#             */
+/*   Updated: 2021/06/18 19:13:15 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "minishell.h"
 
-int	main(int argc, char **argv)
+t_data	*freelist(t_data *lst)
 {
-	int	i;
+	t_data	*last;
+	t_data	*prev;
 
-	i = 0;
-	printf ("Hello World\r\n\r\nARGC IS %i\r\n", argc);
-	while (i < argc)
+	last = ft_lst_last(lst);
+	while (last->prev != NULL)
 	{
-		printf("ARGV[%i] is %s\r\n", i, argv[i]);
-		i++;
+		prev = last->prev;
+		free (last->in);
+		last->in = NULL;
+		last->next = NULL;
+		last->prev = NULL;
+		free (last);
+		last = prev;
 	}
-	return (0);
+	last->next = NULL;
+	last->prev = NULL;
+	free (last->in);
+	last->in = NULL;
+	free(last);
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/16 19:29:49 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/18 18:11:20 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	ft_many_arguments(t_cmd *cmd)
 	cmd->not_found = 0;
 	while (cmd->in[i] == ' ')
 		i++;
+	ft_lst_add_front(&cmd->list, ft_new(cmd->in));
+	ft_lst_add_arguments(&cmd->param, cmd->in);
 	arguments(cmd, i);
 	if (ft_strnstr(cmd->in, "exit", 4) != NULL)
 	{
@@ -75,4 +77,23 @@ void	ft_many_arguments(t_cmd *cmd)
 	}
 	if (cmd->not_found == 0)
 		executor(cmd);
+}
+
+void	ft_lst_add_arguments(t_data **in, char *new)
+{
+	int		i;
+	char	*temp;
+	int		size;
+
+	i = 0;
+	while (new[i] == ' ')
+		i++;
+	temp = ft_strduptochar(&new[i], 32);
+	ft_lst_add_front(in, ft_new(temp));
+	size = ft_strlen(temp);
+	while (new[i] && size--)
+		i++;
+	if (new[i] != '\0')
+		ft_lst_add_arguments(in, &new[i]);
+	//printf("%s\r\n", temp);
 }
