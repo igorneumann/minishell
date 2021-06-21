@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/18 20:10:01 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/21 19:24:53 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,56 +57,48 @@ char	*ft_strduptochar(const char *s1, char c)
 	return (dest);
 }
 
-char	*copyparam(t_cmd *cmd)
+char	**copyparam(t_cmd *cmd)
 {
-	char	*temp;
-	char	*temp2;
-	char	*str;
+	char	**arg;
+	int		i;
 
-	temp = NULL;
-	if (cmd->param->in == NULL || cmd->param->next == NULL)
-		return (" ");
-	temp2 = ft_strjoin("\"", cmd->param->in);
-	temp = ft_strjoin(temp2, "\", ");
-	str = ft_strdup(temp);
-	free(temp);
-	free(temp2);
-	while (cmd->param->next != NULL && cmd->param->next->in != NULL)
+	i = (lst_size ((struct s_envp *) &cmd->param));
+	if (i < 1)
+		i = 1;
+	arg = malloc (sizeof(char **) * i);
+	arg[--i] = cmd->param->in;
+	while (cmd->param->next != NULL && i > 0)
 	{
 		cmd->param = cmd->param->next;
-		temp2 = ft_strdup(str);
-		str = ft_strjoin(copyparam(cmd), temp2);
-		free(temp2);
+		arg[--i] = cmd->param->in;
 	}
-	printf("ParmList is %s\r\n", str);
-	return (str);
+	return (arg);
 }
 
 int	exec(char *str, t_cmd *cmd)
 {
 	pid_t	pid;
-	char	*parmList;
+	char	**parmList;
 	char	*envParms[2];
 
 	parmList = NULL;
-	if (cmd->param != NULL && cmd->param->next != NULL)
-		parmList = ft_strdup(copyparam(cmd));
+	parmList = copyparam(cmd);
 	envParms[0] = "STEPLIB=SASC.V6.LINKLIB";
 	envParms[1] = NULL;
-	cmd->param = freelist(cmd->param);
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork error");
 		return (1);
 	}
-	else if (pid == 0)
+	else if (pid <= 0)
 	{
-		execve(str, &parmList, envParms);
+		execve(str, parmList, envParms);
 		if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
 			die("tcsetattr", cmd->raw);
 		printf("%s : command not found\r\n", cmd->in);
-		exit(0);
+		exit(pid);
 	}
+	cmd->param = freelist(cmd->param);
 	return (0);
 }
