@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/17 18:26:10 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/21 19:44:28 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	pipes(t_cmd *cmd)
 	return (0);
 }
 
-/*void	printpip(t_cmd *cmd)
+/*void	printpip(t_cmd *cmd) YA NO LO NECESITO
 {
 	int	i;
 

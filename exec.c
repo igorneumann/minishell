@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/21 19:24:53 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/21 19:56:34 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,16 @@ char	**copyparam(t_cmd *cmd)
 	char	**arg;
 	int		i;
 
-	i = (lst_size ((struct s_envp *) &cmd->param));
+	if (cmd->param != NULL)
+		i = (lst_size ((struct s_envp *) &cmd->param));
+	else
+		i = 1;
 	if (i < 1)
 		i = 1;
 	arg = malloc (sizeof(char **) * i);
-	arg[--i] = cmd->param->in;
-	while (cmd->param->next != NULL && i > 0)
+	if (cmd->param != NULL && cmd->param->in != NULL)
+		arg[--i] = cmd->param->in;
+	while (cmd->param != NULL && cmd->param->next != NULL && i > 0)
 	{
 		cmd->param = cmd->param->next;
 		arg[--i] = cmd->param->in;

@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/21 19:13:24 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/21 19:38:14 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,15 @@ void	ft_lst_add_arguments(t_data **in, char *new)
 	i = 0;
 	while (new[i] == ' ')
 		i++;
-	temp = ft_strduptochar(&new[i], 32);
-	ft_lst_add_front(in, ft_new(temp));
-	size = ft_strlen(temp);
-	while (new[i] && size--)
-		i++;
-	if (new[i] != '\0')
-		ft_lst_add_arguments(in, &new[i]);
+	if (new[i] != '|')
+	{
+		temp = ft_strduptochar(&new[i], 32);
+		ft_lst_add_front(in, ft_new(temp));
+		size = ft_strlen(temp);
+		while (new[i] && size--)
+			i++;
+		if (new[i] != '\0')
+			ft_lst_add_arguments(in, &new[i]);
+	}
 	//printf("%s\r\n", temp);
 }
