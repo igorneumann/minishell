@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/21 19:56:34 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/22 18:51:56 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,23 +85,22 @@ int	exec(char *str, t_cmd *cmd)
 	char	**parmList;
 	char	*envParms[2];
 
-	parmList = NULL;
+	pid = fork();
 	parmList = copyparam(cmd);
 	envParms[0] = "STEPLIB=SASC.V6.LINKLIB";
 	envParms[1] = NULL;
-	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork error");
 		return (1);
 	}
-	else if (pid <= 0)
+	else if (pid == 0)
 	{
 		execve(str, parmList, envParms);
 		if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
 			die("tcsetattr", cmd->raw);
 		printf("%s : command not found\r\n", cmd->in);
-		exit(pid);
+		exit(0);
 	}
 	cmd->param = freelist(cmd->param);
 	return (0);
