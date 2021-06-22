@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:26:29 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/11 19:12:37 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/22 19:18:33 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,29 +49,20 @@ int	ft_arrows(t_cmd *cmd, char *seq)
 	j = strlen(cmd->in);
 	if (seq[1] == 'D')
 	{
-		if (cmd->i > 0)
-		{
+		if (cmd->i > 0 && cmd->i--)
 			ft_putstr("\033[D");
-			cmd->i--;
-		}
 		return (1);
 	}
 	else if (seq[1] == 'C')
 	{
-		if (cmd->in[cmd->i] != '\0')
-		{
+		if (cmd->in[cmd->i] != '\0' && cmd->i++)
 			ft_putstr("\033[C");
-			cmd->i++;
-		}
 		return (1);
 	}
 	else if (seq[1] == 'A' || seq[1] == 'B')
 	{
-		while (cmd->in[cmd->i] != '\0')
-		{
+		while (cmd->in[cmd->i] != '\0' && cmd->i++)
 			ft_putstr("\033[C");
-			cmd->i++;
-		}
 		return (ft_history(cmd, seq));
 	}
 	return (0);

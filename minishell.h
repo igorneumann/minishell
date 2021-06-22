@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/22 19:31:52 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/22 20:11:35 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,6 @@ int		ft_altarrow(t_cmd *cmd);
 */
 
 void	arguments(t_cmd *cmd, int i);
-void	ft_read_arguments(t_cmd *cmd);
 void	ft_many_arguments(t_cmd *cmd);
 void	ft_lst_add_arguments(t_data **in, char *new);
 
