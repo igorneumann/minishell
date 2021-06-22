@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/11 19:53:31 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/22 19:31:52 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <string.h>
 # include <sys/param.h>
 # include <sys/mount.h>
+# include <sys/types.h>
 # include <signal.h>
 # include <fcntl.h>
 # include <sys/errno.h>
@@ -30,6 +31,8 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
+# define READ_END 0
+# define WRITE_END 1
 
 typedef struct s_data
 {
@@ -58,10 +61,14 @@ typedef struct s_command
 	char		*in;
 	int			i;
 	int			not_found;
+	char		*outp;
 	char		*buff;
 	char		**env;
+	char		**path;
 	t_data		*list;
+	t_data		*param;
 	t_data		*nexcom;
+	t_data		*nexpip;
 	t_envp		*envp;
 	t_raw		*raw;
 }				t_cmd;
@@ -113,6 +120,12 @@ void	ft_lst_edit(t_data **in, t_data *new);
 int		lst_size(t_envp *lst);
 
 /*
+*** lists
+*/
+
+t_data	*freelist(t_data *lst);
+
+/*
 *** env.c
 */
 
@@ -162,7 +175,9 @@ int		ft_jumpword(t_cmd *cmd, char seq);
 */
 
 void	ft_semicolon(t_cmd *cmd);
-void	freenextcom(t_cmd *cmd);
+int		prepstr(char *str, int pos, int qt);
+int		countquotes(char *str, int pos);
+int		findpipes(char *str);
 
 /*
 *** history.c
@@ -170,7 +185,6 @@ void	freenextcom(t_cmd *cmd);
 
 int		ft_history(t_cmd *cmd, char *seq);
 void	ft_dupin(t_cmd *cmd, int src);
-void	ft_updatehist(t_cmd *cmd);
 int		ft_altarrow(t_cmd *cmd);
 
 /*
@@ -180,6 +194,7 @@ int		ft_altarrow(t_cmd *cmd);
 void	arguments(t_cmd *cmd, int i);
 void	ft_read_arguments(t_cmd *cmd);
 void	ft_many_arguments(t_cmd *cmd);
+void	ft_lst_add_arguments(t_data **in, char *new);
 
 /*
 *** utils.c
@@ -190,5 +205,33 @@ void	ft_printlist(t_data *x, char *buff);
 void	ft_print_env(t_envp *x);
 void	ft_sort_env(t_cmd *cmd);
 void	ft_print_export(t_envp *x);
+
+/*
+*** morekeys.c
+*/
+
+void	ft_tab(t_cmd *cmd);
+
+/*
+*** exec.c
+*/
+int		executor(t_cmd *cmd);
+int		exec(char *str, t_cmd *cmd);
+char	**copyparam(t_cmd *cmd);
+size_t	ft_strlentochar(const char *s, char c);
+char	*ft_strduptochar(const char *s1, char c);
+
+/*
+*** path.c
+*/
+
+void	ft_path(t_cmd *cmd);
+
+/*
+*** pipes.c
+*/
+int		pipes(t_cmd *cmd);
+void	runpip(t_cmd *cmd);
+void	printpip(t_cmd *cmd);
 
 #endif

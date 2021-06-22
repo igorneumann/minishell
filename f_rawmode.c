@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/09 17:53:50 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/17 16:31:51 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	die(const char *s, t_raw *raw)
 
 	error = 0;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw->orig);
-	RefreshScreen();
 	if (s[0] != 0)
 		perror(s);
 	else
@@ -28,7 +27,6 @@ void	die(const char *s, t_raw *raw)
 		else
 			error = s[1];
 		write(STDERR, &s[1], 1);
-		RefreshScreen();
 	}
 	exit(error);
 }

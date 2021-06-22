@@ -19,6 +19,7 @@
 		"editor.renderWhitespace": "all",
 		"files.associations": {
 			"__locale": "c",
-			"minishell.h": "c"
+			"minishell.h": "c",
+			"__config": "c"
 		},
 }

@@ -17,7 +17,7 @@ void	ft_putstr_fd(char *s, int fd)
 	int	i;
 
 	i = 0;
-	if (s != '\0')
+	if (s != NULL)
 	{
 		while (s[i] != '\0')
 		{

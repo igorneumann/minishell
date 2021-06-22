@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keypress.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/10 19:23:33 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/18 18:12:00 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,12 @@ void	ft_enter(t_cmd *cmd)
 	ft_semicolon(cmd);
 	printf("\r\n");
 	if (ft_strlen(cmd->in) > 0)
-		ft_read_arguments(cmd);
+		ft_many_arguments(cmd);
 	while (cmd->nexcom != NULL)
 	{
 		cmd->in = ft_strdup(cmd->nexcom->in);
 		cmd->nexcom = cmd->nexcom->next;
 		ft_many_arguments(cmd);
-		free (cmd->list->in);
 		cmd->list->in = ft_strdup(cmd->buff);
 	}
 	free(cmd->in);
@@ -105,12 +104,14 @@ void	noprintable(t_cmd *cmd, char c)
 {
 	if (c == '\x1b')
 		commandkeys(cmd);
-	else if (c == 4 && cmd->i == 0)
+	if (c == 4 && cmd->i == 0)
 		die("\0", cmd->raw);
 	else if (c == 13)
 		ft_enter(cmd);
 	else if (c == 127)
 		ft_backspace(cmd);
-	else if (c != 0 && c != 4)
-		printf("%d\r\n", c);
+	else if (c == 9)
+		ft_tab(cmd);
+//	else if (c != 0 && c != 4)
+//		printf("%d\r\n", c);
 }

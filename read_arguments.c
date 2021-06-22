@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_arguments.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/09 19:42:10 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/22 19:12:39 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	arguments(t_cmd *cmd, int i)
 	ft_env(cmd);
 	ft_export(cmd);
 	ft_unset(cmd);
+	ft_path(cmd);
 }
 
 void	ft_read_arguments(t_cmd *cmd)
@@ -41,13 +42,13 @@ void	ft_read_arguments(t_cmd *cmd)
 		i += 4;
 		while (cmd->in[i] == ' ')
 			i++;
-		if (cmd->in[i] >= 0 || cmd->in[i] <= 9
+		if ((cmd->in[i] >= 0 && cmd->in[i] <= 9)
 			|| cmd->in[i] == '-' || cmd->in[i] == '+')
 			code[1] = ft_atoi(&cmd->in[i]);
 		die(code, cmd->raw);
 	}
 	if (cmd->not_found == 0)
-		printf("%s : command not found\r\n", cmd->in);
+		executor(cmd);
 }
 
 void	ft_many_arguments(t_cmd *cmd)
@@ -61,6 +62,8 @@ void	ft_many_arguments(t_cmd *cmd)
 	cmd->not_found = 0;
 	while (cmd->in[i] == ' ')
 		i++;
+	ft_lst_add_front(&cmd->list, ft_new(cmd->in));
+	ft_lst_add_arguments(&cmd->param, cmd->in);
 	arguments(cmd, i);
 	if (ft_strnstr(cmd->in, "exit", 4) != NULL)
 	{
@@ -68,11 +71,33 @@ void	ft_many_arguments(t_cmd *cmd)
 		i += 4;
 		while (cmd->in[i] == ' ')
 			i++;
-		if (cmd->in[i] >= 0 || cmd->in[i] <= 9
+		if ((cmd->in[i] >= 0 && cmd->in[i] <= 9)
 			|| cmd->in[i] == '-' || cmd->in[i] == '+')
 			code[1] = ft_atoi(&cmd->in[i]);
 		die(code, cmd->raw);
 	}
 	if (cmd->not_found == 0)
-		printf("%s : command not found\r\n", cmd->in);
+		executor(cmd);
+}
+
+void	ft_lst_add_arguments(t_data **in, char *new)
+{
+	int		i;
+	char	*temp;
+	int		size;
+
+	i = 0;
+	while (new[i] == ' ')
+		i++;
+	if (new[i] != '|')
+	{
+		temp = ft_strduptochar(&new[i], 32);
+		ft_lst_add_front(in, ft_new(temp));
+		size = ft_strlen(temp);
+		while (new[i] && size--)
+			i++;
+		if (new[i] != '\0')
+			ft_lst_add_arguments(in, &new[i]);
+	}
+	//printf("%s\r\n", temp);
 }
