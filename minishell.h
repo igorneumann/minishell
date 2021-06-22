@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/22 20:11:35 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/22 20:13:06 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,21 @@ typedef struct s_raw
 
 typedef struct s_command
 {
-	char		*in;
-	int			i;
-	int			not_found;
-	char		*outp;
-	char		*buff;
-	char		**env;
-	char		**path;
-	t_data		*list;
-	t_data		*param;
-	t_data		*nexcom;
-	t_data		*nexpip;
-	t_envp		*envp;
-	t_raw		*raw;
-}				t_cmd;
+	char	*in;
+	int		i;
+	int		not_found;
+	char	*outp;
+	char	*buff;
+	char	**env;
+	char	**path;
+	char	*other_cmd;
+	t_data	*list;
+	t_data	*param;
+	t_data	*nexcom;
+	t_data	*nexpip;
+	t_envp	*envp;
+	t_raw	*raw;
+}			t_cmd;
 
 /*
 *** arguments.c

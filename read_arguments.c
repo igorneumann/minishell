@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/22 20:11:31 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/22 20:15:51 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ void	ft_many_arguments(t_cmd *cmd)
 		die(code, cmd->raw);
 	}
 	if (cmd->not_found == 0)
+	{
+		cmd->other_cmd = ft_strdup(cmd->in);
 		executor(cmd);
+	}
 }
 
 void	ft_lst_add_arguments(t_data **in, char *new)
