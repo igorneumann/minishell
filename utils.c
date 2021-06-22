@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 10:47:23 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/11 17:25:55 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/11 19:53:59 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,6 @@ void	ft_sort_env(t_cmd *cmd)
 {
 	int		i;
 	int		j;
-<<<<<<< HEAD
-=======
-//	t_envp	*tmp;
->>>>>>> 3fdb50568666df913fb2d872fd1dbc73e07f7830
 	t_envp	*lst;
 	t_envp	*tmp;
 	char	*key;
