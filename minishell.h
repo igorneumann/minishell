@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/22 20:13:06 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/23 18:44:04 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ int		ft_altarrow(t_cmd *cmd);
 */
 
 void	arguments(t_cmd *cmd, int i);
-void	ft_many_arguments(t_cmd *cmd);
+void	ft_read_arguments(t_cmd *cmd);
 void	ft_lst_add_arguments(t_data **in, char *new);
 
 /*
@@ -225,7 +225,8 @@ char	*ft_strduptochar(const char *s1, char c);
 *** path.c
 */
 
-void	ft_path(t_cmd *cmd);
+int		ft_path(t_cmd *cmd);
+int		addpath(t_cmd *cmd, char *command, char *tmp);
 
 /*
 *** pipes.c

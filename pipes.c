@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/22 20:05:50 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/23 17:15:51 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,22 +76,19 @@ void	runpip(t_cmd *cmd)
 	int		status;
 	char	*str;
 	char	**parmList;
-	char	*envParms[2];
 	int		pid;
 
 	pipe(fd);
 	pid = fork();
 	parmList = copyparam(cmd);
-	envParms[0] = "STEPLIB=SASC.V6.LINKLIB";
-	envParms[1] = NULL;
 	str = ft_strduptochar(cmd->in, 32);
-	ft_putstr("YAY, PIPES!");
+	//ft_putstr("YAY, PIPES!");
 	if (pid == 0)
 	{
 		close(fd[READ_END]);
 		dup2(fd[WRITE_END], STDOUT_FILENO);
 		close(fd[WRITE_END]);
-		execve(str, parmList, envParms);
+		execve(str, parmList, cmd->env);
 	}
 	else
 		close(fd[WRITE_END]);
@@ -100,8 +97,7 @@ void	runpip(t_cmd *cmd)
 	{
 		dup2(fd[READ_END], STDIN_FILENO);
 		close(fd[READ_END]);
-		//execlp("/usr/bin/wc", "wc", "-l", NULL);
-		execve(cmd->nexpip->in, parmList, envParms);
+		execve(cmd->nexpip->in, parmList, cmd->env);
 	}
 	else
 		close(fd[READ_END]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_arguments.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/23 12:02:49 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/23 18:55:27 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	arguments(t_cmd *cmd, int i)
 	ft_unset(cmd);
 }
 
-void	ft_many_arguments(t_cmd *cmd)
+void	ft_read_arguments(t_cmd *cmd)
 {
 	int		i;
 	char	code[2];
@@ -48,11 +48,7 @@ void	ft_many_arguments(t_cmd *cmd)
 		die(code, cmd->raw);
 	}
 	if (cmd->not_found == 0)
-	{
-		cmd->other_cmd = ft_strdup(cmd->in);
-		ft_path(cmd);
 		executor(cmd);
-	}
 }
 
 void	ft_lst_add_arguments(t_data **in, char *new)
@@ -71,8 +67,9 @@ void	ft_lst_add_arguments(t_data **in, char *new)
 		size = ft_strlen(temp);
 		while (new[i] && size--)
 			i++;
+		while (new[i] == ' ')
+			i++;
 		if (new[i] != '\0')
 			ft_lst_add_arguments(in, &new[i]);
 	}
-	//printf("%s\r\n", temp);
 }

@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/18 18:12:00 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/23 17:44:50 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,12 @@ void	ft_enter(t_cmd *cmd)
 	ft_semicolon(cmd);
 	printf("\r\n");
 	if (ft_strlen(cmd->in) > 0)
-		ft_many_arguments(cmd);
+		ft_read_arguments(cmd);
 	while (cmd->nexcom != NULL)
 	{
 		cmd->in = ft_strdup(cmd->nexcom->in);
 		cmd->nexcom = cmd->nexcom->next;
-		ft_many_arguments(cmd);
+		ft_read_arguments(cmd);
 		cmd->list->in = ft_strdup(cmd->buff);
 	}
 	free(cmd->in);

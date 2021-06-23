@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/23 16:39:30 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/23 18:51:43 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	executor(t_cmd *cmd)
 {
+	cmd->other_cmd = ft_strduptochar(cmd->in, 32);
+	ft_path(cmd);
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->orig) == -1)
 		die("tcsetattr", cmd->raw);
 	if (findpipes(cmd->in) == 0)
@@ -83,12 +85,9 @@ int	exec(char *str, t_cmd *cmd)
 {
 	pid_t	pid;
 	char	**parmList;
-	char	*envParms[2];
 
 	pid = fork();
 	parmList = copyparam(cmd);
-	envParms[0] = "STEPLIB=SASC.V6.LINKLIB";
-	envParms[1] = NULL;
 	if (pid == -1)
 	{
 		perror("fork error");
@@ -96,7 +95,7 @@ int	exec(char *str, t_cmd *cmd)
 	}
 	else if (pid == 0)
 	{
-		execve(str, parmList, envParms);
+		execve(str, parmList, cmd->env);
 		if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
 			die("tcsetattr", cmd->raw);
 		printf("%s: command not found\r\n", cmd->in);
