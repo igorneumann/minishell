@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/23 20:15:22 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/23 20:22:38 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	ft_read_arguments(t_cmd *cmd)
 	cmd->not_found = 0;
 	while (cmd->in[i] == ' ')
 		i++;
-	ft_lst_add_front(&cmd->list, ft_new(cmd->in));
-	ft_lst_add_arguments(&cmd->param, cmd->in);
+	ft_lst_add_front(&cmd->list, ft_new(cmd->in)); // ADD TO HISTORY
+	ft_lst_add_arguments(&cmd->param, cmd->in); // GET ARGUMENTS AND CLEAN THE COMMAND LINE
 	if (ft_strnstr(cmd->in, "echo", 4) != NULL)
 		ft_echo(cmd);
 	else if (ft_strnstr(cmd->in, "cd", 2) != NULL)
@@ -36,8 +36,8 @@ void	ft_read_arguments(t_cmd *cmd)
 		ft_exit(cmd, i);
 	else if (ft_strnstr(cmd->in, "env", 3))
 		ft_env(cmd);
-	if (cmd->not_found == 0)
-		executor(cmd);
+	else if (cmd->not_found == 0)
+		executor(cmd); // RUN, FOREST, RUN
 }
 
 void	ft_lst_add_arguments(t_data **in, char *new)
