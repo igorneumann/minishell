@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/22 18:51:56 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/23 16:39:30 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	exec(char *str, t_cmd *cmd)
 		execve(str, parmList, envParms);
 		if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
 			die("tcsetattr", cmd->raw);
-		printf("%s : command not found\r\n", cmd->in);
+		printf("%s: command not found\r\n", cmd->in);
 		exit(0);
 	}
 	cmd->param = freelist(cmd->param);
