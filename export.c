@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 18:38:34 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/08 19:20:49 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/23 20:04:15 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,14 @@ void	ft_export(t_cmd *cmd)
 
 	i = 0;
 	bucle = 1;
-	if (ft_strnstr(cmd->in, "export", 6))
-	{
-		cmd->not_found = 1;
-		if (command_not_found("export", cmd))
-			return ;
-		i += 6;
-		if (cmd->in[i] == '\0')
-			ft_sort_env(cmd);
-		while (cmd->in[i] && bucle == 1)
-			bucle = new_env_element(cmd, i);
-	}
+	cmd->not_found = 1;
+	if (command_not_found("export", cmd))
+		return ;
+	i += 6;
+	if (cmd->in[i] == '\0')
+		ft_sort_env(cmd);
+	while (cmd->in[i] && bucle == 1)
+		bucle = new_env_element(cmd, i);
 }
 
 void	ft_unset(t_cmd *cmd)
@@ -91,17 +88,14 @@ void	ft_unset(t_cmd *cmd)
 
 	i = 0;
 	j = 0;
-	if (ft_strnstr(cmd->in, "unset", 5) != NULL)
-	{
-		cmd->not_found = 1;
-		if (command_not_found("unset", cmd))
-			return ;
-		i += 6;
-		erase = (char *)malloc(sizeof(char) * (ft_strlen(cmd->in) - i + 1));
-		while (cmd->in[i] != '\0')
-			erase[j++] = cmd->in[i++];
-		erase[j] = '\0';
-		cmd->envp = search_elem(cmd->envp, erase);
-		cmd->envp = remove_elem(cmd->envp);
-	}
+	cmd->not_found = 1;
+	if (command_not_found("unset", cmd))
+		return ;
+	i += 6;
+	erase = (char *)malloc(sizeof(char) * (ft_strlen(cmd->in) - i + 1));
+	while (cmd->in[i] != '\0')
+		erase[j++] = cmd->in[i++];
+	erase[j] = '\0';
+	cmd->envp = search_elem(cmd->envp, erase);
+	cmd->envp = remove_elem(cmd->envp);
 }

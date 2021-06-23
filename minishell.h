@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/23 18:44:04 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/23 19:59:29 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,9 +192,9 @@ int		ft_altarrow(t_cmd *cmd);
 *** read_arguments.c
 */
 
-void	arguments(t_cmd *cmd, int i);
 void	ft_read_arguments(t_cmd *cmd);
 void	ft_lst_add_arguments(t_data **in, char *new);
+void	ft_exit(t_cmd *cmd, int i);
 
 /*
 *** utils.c

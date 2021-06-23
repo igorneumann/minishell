@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arguments.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/10 18:54:56 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/23 20:02:00 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,12 @@
 
 void	ft_pwd(t_cmd *cmd)
 {
-	if (ft_strnstr(cmd->in, "pwd", 3))
-	{
-		cmd->not_found = 1;
-		if (command_not_found("pwd", cmd))
-			return ;
-		ft_putstr("¿Ya te has perdido? Estás en \033[1m");
-		ft_putstr(getcwd(NULL, -1));
-		ft_putstr("\033[0m\r\n");
-	}
+	cmd->not_found = 1;
+	if (command_not_found("pwd", cmd))
+		return ;
+	ft_putstr("¿Ya te has perdido? Estás en \033[1m");
+	ft_putstr(getcwd(NULL, -1));
+	ft_putstr("\033[0m\r\n");
 }
 
 void	ft_echo(t_cmd *cmd)
@@ -30,27 +27,24 @@ void	ft_echo(t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	if (ft_strnstr(cmd->in, "echo", 4) != NULL)
+	cmd->not_found = 1;
+	if (command_not_found("echo", cmd))
+		return ;
+	i += 4;
+	while (cmd->in[i] == ' ' || cmd->in[i] == '\'')
+		i++;
+	if (ft_strnstr(cmd->in + i, "-n", 2) != NULL)
 	{
-		cmd->not_found = 1;
-		if (command_not_found("echo", cmd))
-			return ;
-		i += 4;
+		i += 2;
 		while (cmd->in[i] == ' ' || cmd->in[i] == '\'')
 			i++;
-		if (ft_strnstr(cmd->in + i, "-n", 2) != NULL)
-		{
-			i += 2;
-			while (cmd->in[i] == ' ' || cmd->in[i] == '\'')
-				i++;
-			if (cmd->in[i] != 0)
-				ft_putstr(&cmd->in[i]);
-		}
-		else
-		{
+		if (cmd->in[i] != 0)
 			ft_putstr(&cmd->in[i]);
-			ft_putstr("\r\n");
-		}
+	}
+	else
+	{
+		ft_putstr(&cmd->in[i]);
+		ft_putstr("\r\n");
 	}
 }
 
