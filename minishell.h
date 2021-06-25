@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/23 19:59:29 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/25 12:46:43 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ char	*ft_strduptochar(const char *s1, char c);
 *** path.c
 */
 
-int		ft_path(t_cmd *cmd);
+void	ft_path(t_cmd *cmd);
 int		addpath(t_cmd *cmd, char *command, char *tmp);
 
 /*
