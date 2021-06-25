@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 19:10:00 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/25 18:10:29 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/25 18:16:15 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	addpath(t_cmd *cmd, char *tmp)
 		free (cmd->in);
 		cmd->in = to_find;
 		to_find = NULL;
+		cmd->other_cmd = NULL;
 		tmp = NULL;
 	}
 	return (0);
