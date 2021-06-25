@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 19:10:00 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/23 18:47:12 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/25 17:50:40 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,9 @@ int	addpath(t_cmd *cmd, char *command, char *tmp)
 	return (0);
 }
 
-int	ft_path(t_cmd *cmd)
+void	ft_path(t_cmd *cmd)
 {
 	int		i;
-	int		j;
 	char	*command;
 	char	*tmp;
 
@@ -50,14 +49,12 @@ int	ft_path(t_cmd *cmd)
 	cmd->path = ft_split(cmd->envp->value, ':');
 	while (cmd->path[i])
 	{
-		j = 0;
 		tmp = ft_strjoin(cmd->path[i], "/");
-		j = addpath(cmd, command, tmp);
-		i += j;
-		if (j != 1)
-			return (j);
+		if (addpath(cmd, command, tmp) == 0)
+			break ;
+		else
+			i++;
 	}
-	return (1);
 }
 
 /*void	ft_path(t_cmd *cmd) // OLD PATH
