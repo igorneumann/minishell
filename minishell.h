@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/25 17:45:56 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/25 17:54:55 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ char	*ft_strduptochar(const char *s1, char c);
 */
 
 void	ft_path(t_cmd *cmd);
-int		addpath(t_cmd *cmd, char *command, char *tmp);
+int		addpath(t_cmd *cmd, char *tmp);
 
 /*
 *** pipes.c
