@@ -6,30 +6,34 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 19:10:00 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/25 18:01:04 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/27 16:55:30 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	addpath(t_cmd *cmd, char *command, char *tmp)
+int	addpath(t_cmd *cmd, char *tmp)
 {
 	char	*to_find;
 
-	to_find = ft_strjoin(tmp, command);
+	to_find = ft_strjoin(tmp, cmd->other_cmd);
 	free(tmp);
+	tmp = NULL;
 	if (open(to_find, O_RDONLY) == -1)
 	{
 		free(to_find);
+		to_find = NULL;
 		return (1);
 	}
 	else
 	{
-		tmp = command;
-		command = to_find;
+		tmp = cmd->other_cmd;
 		free(tmp);
 		free (cmd->in);
 		cmd->in = to_find;
+		to_find = NULL;
+		cmd->other_cmd = NULL;
+		tmp = NULL;
 	}
 	return (0);
 }
@@ -37,11 +41,9 @@ int	addpath(t_cmd *cmd, char *command, char *tmp)
 void	ft_path(t_cmd *cmd)
 {
 	int		i;
-	char	*command;
 	char	*tmp;
 
 	i = 0;
-	command = ft_strdup(cmd->other_cmd);
 	while (cmd->envp->prev)
 		cmd->envp = cmd->envp->prev;
 	while (ft_strcmp(cmd->envp->key, "PATH") != 0)
@@ -50,7 +52,7 @@ void	ft_path(t_cmd *cmd)
 	while (cmd->path[i])
 	{
 		tmp = ft_strjoin(cmd->path[i], "/");
-		if (addpath(cmd, command, tmp) == 0)
+		if (addpath(cmd, tmp) == 0)
 			break ;
 		else
 			i++;

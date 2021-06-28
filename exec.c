@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/25 12:36:55 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/27 16:56:14 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 int	executor(t_cmd *cmd)
 {
-	cmd->other_cmd = ft_strduptochar(cmd->in, 32);
-	ft_path(cmd);
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->orig) == -1)
 		die("tcsetattr", cmd->raw);
+	if (open(cmd->in, O_RDONLY) == -1)
+	{
+		cmd->other_cmd = ft_strduptochar(cmd->in, 32);
+		ft_path(cmd);
+	}
 	if (findpipes(cmd->in) == 0)
 		exec(ft_strduptochar(cmd->in, 32), cmd);
 	else
 		pipes(cmd);
 	wait (0);
-	ft_putstr("\r\n");
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
 		die("tcsetattr", cmd->raw);
 	return (0);
@@ -45,8 +47,11 @@ char	*ft_strduptochar(const char *s1, char c)
 {
 	char	*dest;
 	int		i;
+	int		size;
 
-	dest = (char *)malloc(sizeof(char) * (ft_strlentochar((char *)s1, c) + 1));
+	size = ft_strlentochar((char *)s1, c);
+	dest = (char *)malloc(sizeof(char) * (size + 1));
+	ft_bzero(dest, size);
 	if (!dest)
 		return (NULL);
 	i = 0;
@@ -95,10 +100,12 @@ int	exec(char *str, t_cmd *cmd)
 	}
 	else if (pid == 0)
 	{
-		execve(str, parmList, cmd->env);
+		if (cmd->not_found == 0)
+			execve(str, parmList, cmd->env);
 		if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
 			die("tcsetattr", cmd->raw);
-		printf("%s: command not found\r\n", cmd->in);
+		if (cmd->not_found == 0)
+			printf("%s: command not found\r\n", cmd->in);
 		exit(0);
 	}
 	cmd->param = freelist(cmd->param);
