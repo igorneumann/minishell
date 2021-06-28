@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/25 19:33:26 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/28 17:55:00 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	ft_enter(t_cmd *cmd)
 	free(cmd->in);
 	cmd->in = ft_strdup("\x0D");
 	free(cmd->buff);
+	cmd->param = freelist(cmd->param);
 	cmd->buff = ft_strdup("\x0D");
 	cmd->i = 0;
 }

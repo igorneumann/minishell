@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/25 19:36:21 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/28 17:55:08 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,11 @@ int	exec(char *str, t_cmd *cmd)
 	}
 	else if (pid == 0)
 	{
-		if (cmd->not_found == 0)
-			execve(str, parmList, cmd->env);
+		execve(str, parmList, cmd->env);
 		if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
 			die("tcsetattr", cmd->raw);
-		if (cmd->not_found == 0)
-			printf("%s: command not found\r\n", cmd->in);
+		printf("%s: command not found\r\n", cmd->in);
 		exit(0);
 	}
-	cmd->param = freelist(cmd->param);
 	return (0);
 }
