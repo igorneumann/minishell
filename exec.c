@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/27 16:56:14 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/28 17:39:52 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	executor(t_cmd *cmd)
 {
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->orig) == -1)
 		die("tcsetattr", cmd->raw);
-	if (open(cmd->in, O_RDONLY) == -1)
+	if (open(cmd->in, O_RDONLY) == -1 && cmd->not_found == 0)
 	{
 		cmd->other_cmd = ft_strduptochar(cmd->in, 32);
 		ft_path(cmd);

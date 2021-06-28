@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 18:38:34 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/23 20:04:15 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/28 17:42:03 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	ft_export(t_cmd *cmd)
 		return ;
 	i += 6;
 	if (cmd->in[i] == '\0')
-		ft_sort_env(cmd);
+		//ft_sort_env(cmd);
+		ft_print_export(cmd->envp);
 	while (cmd->in[i] && bucle == 1)
 		bucle = new_env_element(cmd, i);
 }
