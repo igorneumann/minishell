@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/25 19:29:12 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/28 17:56:16 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	ft_read_arguments(t_cmd *cmd)
 		ft_echo(cmd);
 	else if (ft_strnstr(cmd->in, "cd", 2) != NULL)
 		ft_cd(cmd, i);
-//	else if (ft_strnstr(cmd->in, "pwd", 3))
-//		ft_pwd(cmd);
+	else if (ft_strnstr(cmd->in, "pwd", 3))
+		ft_pwd(cmd);
 	else if (ft_strnstr(cmd->in, "export", 6))
 		ft_export(cmd);
 	else if (ft_strnstr(cmd->in, "unset", 5) != NULL)
@@ -36,7 +36,8 @@ void	ft_read_arguments(t_cmd *cmd)
 		ft_exit(cmd, i);
 	else if (ft_strnstr(cmd->in, "env", 3))
 		ft_env(cmd);
-	executor(cmd); // RUN, FOREST, RUN
+	else if (cmd->not_found == 0)
+		executor(cmd); // RUN, FOREST, RUN
 }
 
 void	ft_lst_add_arguments(t_data **in, char *new)
