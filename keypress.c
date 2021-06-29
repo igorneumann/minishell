@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/29 18:44:11 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/29 19:16:37 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	ft_backspace(t_cmd *cmd)
 
 void	ft_enter(t_cmd *cmd)
 {
+	ft_lst_add_front(&cmd->list, ft_new(cmd->in)); // ADD TO HISTORY
 	cmd->buff = ft_strdup(cmd->in);
 	ft_semicolon(cmd);
 	printf("\r\n");
@@ -91,12 +92,10 @@ void	ft_enter(t_cmd *cmd)
 	{
 		cmd->in = ft_strdup(cmd->nexcom->in);
 		cmd->nexcom = cmd->nexcom->next;
-		ft_read_arguments(cmd);
-		if (cmd->buff)
-			cmd->list->in = ft_strdup(cmd->buff);
+		if (ft_strlen(cmd->in) > 0)
+			ft_read_arguments(cmd);
 		ft_reset(cmd);
 	}
-
 }
 
 void	noprintable(t_cmd *cmd, char c)

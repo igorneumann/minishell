@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/28 18:57:23 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/29 19:16:38 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	ft_read_arguments(t_cmd *cmd)
 	cmd->not_found = 0;
 	while (cmd->in[i] == ' ')
 		i++;
-	ft_lst_add_front(&cmd->list, ft_new(cmd->in)); // ADD TO HISTORY
 	ft_lst_add_arguments(&cmd->param, cmd->in); // GET ARGUMENTS AND CLEAN CMD
 	if (findpipes(cmd->in) > 0) // IF THERE ARE PIPES
 		pipes(cmd); // PREPARE AT cmd->nexpip
