@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/23 17:15:51 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/28 20:14:15 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,10 @@ int	pipes(t_cmd *cmd)
 		}
 		i--;
 	}
-	runpip(cmd);
 	return (0);
 }
 
-/*void	printpip(t_cmd *cmd) YA NO LO NECESITO
+/*void	printpip(t_cmd *cmd) //YA NO LO NECESITO
 {
 	int	i;
 
@@ -79,25 +78,28 @@ void	runpip(t_cmd *cmd)
 	int		pid;
 
 	pipe(fd);
-	pid = fork();
+	ft_putstr("YAY, PIPES!");
 	parmList = copyparam(cmd);
 	str = ft_strduptochar(cmd->in, 32);
-	//ft_putstr("YAY, PIPES!");
+	pid = fork();
 	if (pid == 0)
 	{
 		close(fd[READ_END]);
 		dup2(fd[WRITE_END], STDOUT_FILENO);
 		close(fd[WRITE_END]);
-		execve(str, parmList, cmd->env);
+		if (!ft_arguments(cmd, 0))
+			execve(str, parmList, cmd->env);
 	}
 	else
 		close(fd[WRITE_END]);
-	pid = fork();
+	str = ft_strdup(cmd->nexpip->in)
+		pid = fork();
 	if (pid == 0)
 	{
 		dup2(fd[READ_END], STDIN_FILENO);
 		close(fd[READ_END]);
-		execve(cmd->nexpip->in, parmList, cmd->env);
+		if (!ft_arguments(cmd, 0))
+			execve(str, parmList, cmd->env);
 	}
 	else
 		close(fd[READ_END]);

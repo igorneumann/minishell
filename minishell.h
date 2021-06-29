@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/25 19:19:13 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/28 18:56:40 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct s_command
 	char	*buff;
 	char	**env;
 	char	**path;
-	char	*other_cmd;
 	t_data	*list;
 	t_data	*param;
 	t_data	*nexcom;
@@ -193,6 +192,7 @@ int		ft_altarrow(t_cmd *cmd);
 */
 
 void	ft_read_arguments(t_cmd *cmd);
+int		ft_arguments(t_cmd *cmd, int i);
 void	ft_lst_add_arguments(t_data **in, char *new);
 void	ft_exit(t_cmd *cmd, int i);
 

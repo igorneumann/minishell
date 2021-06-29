@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/28 17:55:08 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/28 19:55:03 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ int	executor(t_cmd *cmd)
 		die("tcsetattr", cmd->raw);
 	if (open(cmd->in, O_RDONLY) == -1)
 	{
-		cmd->other_cmd = ft_strduptochar(cmd->in, 32);
+		cmd->buff = ft_strduptochar(cmd->in, 32);
 		ft_path(cmd);
 	}
-	if (findpipes(cmd->in) == 0)
-		exec(ft_strduptochar(cmd->in, 32), cmd);
+	if (cmd->nexpip != NULL)
+		runpip(cmd);
 	else
-		pipes(cmd);
+		exec(ft_strduptochar(cmd->in, 32), cmd);
 	wait (0);
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
 		die("tcsetattr", cmd->raw);
@@ -37,9 +37,7 @@ size_t	ft_strlentochar(const char *s, char c)
 
 	i = 0;
 	while (s[i] && s[i] != c)
-	{
 		i++;
-	}
 	return (i);
 }
 
@@ -101,8 +99,6 @@ int	exec(char *str, t_cmd *cmd)
 	else if (pid == 0)
 	{
 		execve(str, parmList, cmd->env);
-		if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
-			die("tcsetattr", cmd->raw);
 		printf("%s: command not found\r\n", cmd->in);
 		exit(0);
 	}
