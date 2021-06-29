@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/28 20:14:15 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/29 17:12:17 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	runpip(t_cmd *cmd)
 	}
 	else
 		close(fd[WRITE_END]);
-	str = ft_strdup(cmd->nexpip->in)
-		pid = fork();
+	str = ft_strdup(cmd->nexpip->in);
+	pid = fork();
 	if (pid == 0)
 	{
 		dup2(fd[READ_END], STDIN_FILENO);
