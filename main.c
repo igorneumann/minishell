@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/25 19:23:50 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/29 18:43:10 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@ void	ft_init(t_cmd *cmd, char **envp, t_raw *raw)
 	cmd->buff = ft_strdup("\x0D");
 	ft_save_env(cmd, envp);
 	enableRawMode(raw);
+}
+
+void	ft_reset(t_cmd *cmd)
+{
+	free(cmd->in);
+	cmd->in = ft_strdup("\x0D");
+	free(cmd->buff);
+	cmd->param = freelist(cmd->param);
+	cmd->nexpip = freelist(cmd->nexpip);
+	cmd->buff = ft_strdup("\x0D");
+	cmd->i = 0;
 }
 
 void	ft_presentation(void)

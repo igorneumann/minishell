@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/28 18:56:40 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/29 18:43:29 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_command
 	char	*outp;
 	char	*buff;
 	char	**env;
+	char	**envorg;
 	char	**path;
 	t_data	*list;
 	t_data	*param;
@@ -87,6 +88,7 @@ void	ft_cd(t_cmd *cmd, int i);
 */
 
 void	ft_init(t_cmd *cmd, char **envp, t_raw *raw);
+void	ft_reset(t_cmd *cmd);
 void	ft_presentation(void);
 void	ft_cmd_line(t_cmd *cmd);
 

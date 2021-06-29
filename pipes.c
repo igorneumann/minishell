@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/29 17:12:17 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/29 18:20:31 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,12 @@ void	runpip(t_cmd *cmd)
 {
 	int		fd[2];
 	int		status;
-	char	*str;
 	char	**parmList;
 	int		pid;
 
 	pipe(fd);
-	ft_putstr("YAY, PIPES!");
+	ft_putstr("YAY, PIPES!\r\n");
 	parmList = copyparam(cmd);
-	str = ft_strduptochar(cmd->in, 32);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -88,21 +86,23 @@ void	runpip(t_cmd *cmd)
 		dup2(fd[WRITE_END], STDOUT_FILENO);
 		close(fd[WRITE_END]);
 		if (!ft_arguments(cmd, 0))
-			execve(str, parmList, cmd->env);
+			execve(cmd->in, parmList, cmd->envorg);
 	}
 	else
 		close(fd[WRITE_END]);
-	str = ft_strdup(cmd->nexpip->in);
 	pid = fork();
 	if (pid == 0)
 	{
+		cmd->buff = ft_strduptochar(cmd->nexpip->in, 32);
+		ft_path(cmd);
 		dup2(fd[READ_END], STDIN_FILENO);
 		close(fd[READ_END]);
 		if (!ft_arguments(cmd, 0))
-			execve(str, parmList, cmd->env);
+			execve(cmd->in, parmList, cmd->envorg);
 	}
 	else
 		close(fd[READ_END]);
+	ft_putstr("\r\n");
 	wait(&status);
 	wait(&status);
 }
