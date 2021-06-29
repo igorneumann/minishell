@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/29 18:43:29 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/29 19:34:44 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,8 @@ int		ft_jumpword(t_cmd *cmd, char seq);
 
 void	ft_semicolon(t_cmd *cmd);
 int		prepstr(char *str, int pos, int qt);
-int		countquotes(char *str, int pos);
+int		countleft(char *str, int pos, char c, char d);
+int		countright(char *str, int pos, char c, char d);
 int		findpipes(char *str);
 
 /*
