@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/30 10:46:12 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/30 20:27:25 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,8 @@ void	ft_exit(t_cmd *cmd, int i);
 int		command_not_found(char *str, t_cmd *cmd);
 void	ft_printlist(t_data *x, char *buff);
 void	ft_print_env(t_envp *x);
-void	ft_sort_env(t_cmd *cmd);
+void	swap(t_envp *a, t_envp *b);
+void	ft_sort_env(t_envp *list);
 void	ft_print_export(t_envp *x);
 
 /*

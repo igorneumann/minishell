@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 10:47:23 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/28 18:34:00 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/30 20:37:04 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,26 +64,28 @@ void	ft_print_env(t_envp *x)
 	}
 }
 
-void	ft_sort_env(t_cmd *cmd)
+/*void	ft_sort_env(t_cmd *cmd)
 {
 	int		i;
 	int		j;
-	t_envp	*lst;
-	t_envp	*tmp;
+	int		k;
+	t_envp	*elem;
+	t_envp	*next_elem;
 	char	*key;
 	char	*value;
 
 	i = 0;
 	lst = copy_env(cmd->envp);
-	while (lst->prev)
-		lst = lst->prev;
 	while (i < lst_size(lst) - 1)
 	{
 		j = 0;
 		tmp = lst;
 		while (j < lst_size(lst) - i - 1)
 		{
-			if (lst->key[0] > lst->next->key[0])
+			//NO ORDENA BIEN
+			k = 0;
+			while (lst->key[k] && lst->next->key[k]
+				&& lst->key[k] > lst->next->key[k])
 			{
 				key = lst->key;
 				value = lst->value;
@@ -91,6 +93,7 @@ void	ft_sort_env(t_cmd *cmd)
 				lst->value = lst->next->value;
 				lst->next->key = key;
 				lst->next->value = value;
+				k++;
 			}
 			lst = lst->next;
 			j++;
@@ -99,6 +102,49 @@ void	ft_sort_env(t_cmd *cmd)
 		i++;
 	}
 	ft_print_export(lst);
+}*/
+
+void	swap(t_envp *a, t_envp *b)
+{
+	char	*key;
+	char	*value;
+
+	key = a->key;
+	value = a->value;
+	a->key = b->key;
+	a->value = b->value;
+	b->key = key;
+	b->value = value;
+}
+
+void	ft_sort_env(t_envp *list)
+{
+	t_envp	*elem;
+	t_envp	*next_elem;
+	int		swapped;
+
+	if (list == NULL)
+		return ;
+	swapped = 1;
+	next_elem = NULL;
+	while (list->prev)
+		list = list->prev;
+	while (swapped)
+	{
+		swapped = 0;
+		elem = list;
+		while (elem->next != next_elem)
+		{
+			if (((t_envp *)elem)->key[0] > ((t_envp *)elem->next)->key[0])
+			{
+				swap(elem, elem->next);
+				swapped = 1;
+			}
+			elem = elem->next;
+		}
+		next_elem = elem;
+	}
+	ft_print_export(elem);
 }
 
 void	ft_print_export(t_envp *x)
