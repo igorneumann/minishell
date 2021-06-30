@@ -6,7 +6,11 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/06/28 18:00:24 by narroyo-         ###   ########.fr       */
+=======
+/*   Updated: 2021/06/29 17:53:03 by ineumann         ###   ########.fr       */
+>>>>>>> c9eb00fcef48951ac895a593145f1e91694c730a
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +22,13 @@ int	executor(t_cmd *cmd)
 		die("tcsetattr", cmd->raw);
 	if (open(cmd->in, O_RDONLY) == -1 && cmd->not_found == 0)
 	{
-		cmd->other_cmd = ft_strduptochar(cmd->in, 32);
+		cmd->buff = ft_strduptochar(cmd->in, 32);
 		ft_path(cmd);
 	}
-	if (findpipes(cmd->in) == 0)
-		exec(ft_strduptochar(cmd->in, 32), cmd);
+	if (cmd->nexpip != NULL)
+		runpip(cmd);
 	else
-		pipes(cmd);
+		exec(ft_strduptochar(cmd->in, 32), cmd);
 	wait (0);
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
 		die("tcsetattr", cmd->raw);
@@ -37,9 +41,7 @@ size_t	ft_strlentochar(const char *s, char c)
 
 	i = 0;
 	while (s[i] && s[i] != c)
-	{
 		i++;
-	}
 	return (i);
 }
 
@@ -100,9 +102,7 @@ int	exec(char *str, t_cmd *cmd)
 	}
 	else if (pid == 0)
 	{
-		execve(str, parmList, cmd->env);
-		if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
-			die("tcsetattr", cmd->raw);
+		execve(str, parmList, cmd->envorg);
 		printf("%s: command not found\r\n", cmd->in);
 		exit(0);
 	}

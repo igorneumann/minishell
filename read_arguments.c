@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/28 17:56:16 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/29 19:21:49 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,32 @@ void	ft_read_arguments(t_cmd *cmd)
 	cmd->not_found = 0;
 	while (cmd->in[i] == ' ')
 		i++;
-	ft_lst_add_front(&cmd->list, ft_new(cmd->in)); // ADD TO HISTORY
-	ft_lst_add_arguments(&cmd->param, cmd->in); // GET ARGUMENTS AND CLEAN THE COMMAND LINE
-	if (ft_strnstr(cmd->in, "echo", 4) != NULL)
+	ft_lst_add_arguments(&cmd->param, cmd->in); // GET ARGUMENTS AND CLEAN CMD
+	if (findpipes(cmd->in) > 0) // IF THERE ARE PIPES
+		pipes(cmd); // PREPARE AT cmd->nexpip
+	if (!ft_arguments(cmd, i)) //if not in your functions
+		executor(cmd); // RUN, FOREST, RUN
+}
+
+int	ft_arguments(t_cmd *cmd, int i)
+{
+	if (ft_strnstr(cmd->in, "echo", 4))
 		ft_echo(cmd);
-	else if (ft_strnstr(cmd->in, "cd", 2) != NULL)
+	else if (ft_strnstr(cmd->in, "cd", 2))
 		ft_cd(cmd, i);
 	else if (ft_strnstr(cmd->in, "pwd", 3))
 		ft_pwd(cmd);
 	else if (ft_strnstr(cmd->in, "export", 6))
 		ft_export(cmd);
-	else if (ft_strnstr(cmd->in, "unset", 5) != NULL)
+	else if (ft_strnstr(cmd->in, "unset", 5))
 		ft_unset(cmd);
-	else if (ft_strnstr(cmd->in, "exit", 4) != NULL)
+	else if (ft_strnstr(cmd->in, "exit", 4))
 		ft_exit(cmd, i);
 	else if (ft_strnstr(cmd->in, "env", 3))
 		ft_env(cmd);
-	else if (cmd->not_found == 0)
-		executor(cmd); // RUN, FOREST, RUN
+	else
+		return (0);
+	return (1);
 }
 
 void	ft_lst_add_arguments(t_data **in, char *new)

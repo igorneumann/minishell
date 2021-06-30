@@ -6,7 +6,11 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/06/29 17:46:01 by narroyo-         ###   ########.fr       */
+=======
+/*   Updated: 2021/06/29 19:34:44 by ineumann         ###   ########.fr       */
+>>>>>>> c9eb00fcef48951ac895a593145f1e91694c730a
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +68,8 @@ typedef struct s_command
 	char	*outp;
 	char	*buff;
 	char	**env;
+	char	**envorg;
 	char	**path;
-	char	*other_cmd;
 	t_data	*list;
 	t_data	*param;
 	t_data	*nexcom;
@@ -88,6 +92,7 @@ void	ft_cd(t_cmd *cmd, int i);
 */
 
 void	ft_init(t_cmd *cmd, char **envp, t_raw *raw);
+void	ft_reset(t_cmd *cmd);
 void	ft_presentation(void);
 void	ft_cmd_line(t_cmd *cmd);
 
@@ -179,7 +184,8 @@ int		ft_jumpword(t_cmd *cmd, char seq);
 
 void	ft_semicolon(t_cmd *cmd);
 int		prepstr(char *str, int pos, int qt);
-int		countquotes(char *str, int pos);
+int		countleft(char *str, int pos, char c, char d);
+int		countright(char *str, int pos, char c, char d);
 int		findpipes(char *str);
 
 /*
@@ -195,6 +201,7 @@ int		ft_altarrow(t_cmd *cmd);
 */
 
 void	ft_read_arguments(t_cmd *cmd);
+int		ft_arguments(t_cmd *cmd, int i);
 void	ft_lst_add_arguments(t_data **in, char *new);
 void	ft_exit(t_cmd *cmd, int i);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 18:52:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/08 18:53:03 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/29 17:52:10 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	ft_save_env(t_cmd *cmd, char **envp)
 	i = 0;
 	if (envp != NULL)
 	{
+		cmd->envorg = envp;
 		while (envp[i])
 			i++;
 		i = 0;

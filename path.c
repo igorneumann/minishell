@@ -6,7 +6,11 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 19:10:00 by narroyo-          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/06/27 16:55:30 by narroyo-         ###   ########.fr       */
+=======
+/*   Updated: 2021/06/28 18:05:49 by ineumann         ###   ########.fr       */
+>>>>>>> c9eb00fcef48951ac895a593145f1e91694c730a
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +20,7 @@ int	addpath(t_cmd *cmd, char *tmp)
 {
 	char	*to_find;
 
-	to_find = ft_strjoin(tmp, cmd->other_cmd);
+	to_find = ft_strjoin(tmp, cmd->buff);
 	free(tmp);
 	tmp = NULL;
 	if (open(to_find, O_RDONLY) == -1)
@@ -27,12 +31,12 @@ int	addpath(t_cmd *cmd, char *tmp)
 	}
 	else
 	{
-		tmp = cmd->other_cmd;
+		tmp = cmd->buff;
 		free(tmp);
 		free (cmd->in);
 		cmd->in = to_find;
 		to_find = NULL;
-		cmd->other_cmd = NULL;
+		cmd->buff = NULL;
 		tmp = NULL;
 	}
 	return (0);
@@ -70,7 +74,7 @@ void	ft_path(t_cmd *cmd)
 	i = 0;
 	pid = fork();
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->orig);
-	command = ft_split(cmd->other_cmd, ' ');
+	command = ft_split(cmd->buff, ' ');
 	if (pid == -1)
 		perror("fork error");
 	while (cmd->envp->prev)

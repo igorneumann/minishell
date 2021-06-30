@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/28 17:55:00 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/29 19:16:37 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,24 +81,21 @@ void	ft_backspace(t_cmd *cmd)
 
 void	ft_enter(t_cmd *cmd)
 {
+	ft_lst_add_front(&cmd->list, ft_new(cmd->in)); // ADD TO HISTORY
 	cmd->buff = ft_strdup(cmd->in);
 	ft_semicolon(cmd);
 	printf("\r\n");
 	if (ft_strlen(cmd->in) > 0)
 		ft_read_arguments(cmd);
+	ft_reset(cmd);
 	while (cmd->nexcom != NULL)
 	{
 		cmd->in = ft_strdup(cmd->nexcom->in);
 		cmd->nexcom = cmd->nexcom->next;
-		ft_read_arguments(cmd);
-		cmd->list->in = ft_strdup(cmd->buff);
+		if (ft_strlen(cmd->in) > 0)
+			ft_read_arguments(cmd);
+		ft_reset(cmd);
 	}
-	free(cmd->in);
-	cmd->in = ft_strdup("\x0D");
-	free(cmd->buff);
-	cmd->param = freelist(cmd->param);
-	cmd->buff = ft_strdup("\x0D");
-	cmd->i = 0;
 }
 
 void	noprintable(t_cmd *cmd, char c)

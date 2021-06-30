@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 18:24:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/23 17:46:50 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/06/29 19:28:00 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_semicolon(t_cmd *cmd)
 	{
 		if ((cmd->in[i] == '&' && cmd->in[i + j] == '&') || cmd->in[i] == ';')
 		{
-			if (countquotes(cmd->in, i) % 2 == 0)
+			if (countleft(cmd->in, i, '\'', '\"') % 2 == 0)
 			{
 				cmd->in[i] = '\0';
 				if (cmd->in[i + j] == '&')
@@ -38,7 +38,7 @@ void	ft_semicolon(t_cmd *cmd)
 	}
 }
 
-int	countquotes(char *str, int pos)
+int	countleft(char *str, int pos, char c, char d)
 {
 	int	i;
 	int	qt;
@@ -46,8 +46,24 @@ int	countquotes(char *str, int pos)
 	qt = 0;
 	i = pos + 1;
 	while (--i >= 0)
-		if ((str[i] == '\"' || str[i] == '\''))
+		if ((str[i] == c || str[i] == d))
 			qt++;
+	return (qt);
+}
+
+int	countright(char *str, int pos, char c, char d)
+{
+	int	i;
+	int	qt;
+
+	qt = 0;
+	i = pos;
+	while (str[i])
+	{
+		if ((str[i] == c || str[i] == d))
+			qt++;
+		i++;
+	}
 	return (qt);
 }
 
