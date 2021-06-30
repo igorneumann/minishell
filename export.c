@@ -6,21 +6,45 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 18:38:34 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/28 17:42:03 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/29 17:56:50 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	check_existence(t_cmd *cmd, char *aux, int i)
+{
+	char	*key;
+	char	*new_value;
+
+	key = NULL;
+	key = ft_memcpy(key, aux, i + 1);
+	new_value = ft_strdup(&aux[i + 1]);
+	while (cmd->envp->prev)
+		cmd->envp = cmd->envp->prev;
+	while (cmd->envp->next)
+	{
+		printf("%s\r\n", key);
+		if (ft_strcmp(cmd->envp->key, key) == 0)
+		{
+			printf("ENTRA\n\n");
+			change_value(cmd->envp, new_value);
+			return (0);
+		}
+		cmd->envp = cmd->envp->next;
+	}
+	free(key);
+	free(new_value);
+	return (1);
+}
+
 void	ft_include(t_cmd *cmd, char *aux)
 {
-	int	i;
-	int	ok;
+	int		i;
+	int		ok;
 
 	i = 0;
 	ok = 1;
-	while (cmd->envp->next)
-		cmd->envp = cmd->envp->next;
 	if (!ft_isalpha(aux[0]))
 	{
 		printf("bash: export: `%s': not a valid identifier\r\n", aux);
@@ -37,6 +61,7 @@ void	ft_include(t_cmd *cmd, char *aux)
 		}
 		i++;
 	}
+	ok = check_existence(cmd, aux, i);
 	if (ok == 1)
 		ft_lst_add_back((t_data **)&cmd->envp, (t_data *)ft_new_env(aux));
 }

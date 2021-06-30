@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/27 16:55:25 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/29 17:46:01 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,9 @@ t_envp	*copy_env(t_envp *envp);
 *** export.c
 */
 
+int		check_existence(t_cmd *cmd, char *aux, int i);
 void	ft_include(t_cmd *cmd, char *aux);
+int		new_env_element(t_cmd *cmd, int i);
 void	ft_export(t_cmd *cmd);
 void	ft_unset(t_cmd *cmd);
 
