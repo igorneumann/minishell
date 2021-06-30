@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 18:38:34 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/29 17:56:50 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/30 10:53:45 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,23 @@
 
 int	check_existence(t_cmd *cmd, char *aux, int i)
 {
-	char	*key;
+	int		n;
+	char	key[i + 1];
 	char	*new_value;
 
-	key = NULL;
-	key = ft_memcpy(key, aux, i + 1);
+	n = 0;
+	while (n < i)
+	{
+		key[n] = aux[n];
+		n++;
+	}
+	key[n] = '\0';
 	new_value = ft_strdup(&aux[i + 1]);
 	while (cmd->envp->prev)
 		cmd->envp = cmd->envp->prev;
 	while (cmd->envp->next)
 	{
-		printf("%s\r\n", key);
+		printf("%s\r\n", cmd->envp->key);
 		if (ft_strcmp(cmd->envp->key, key) == 0)
 		{
 			printf("ENTRA\n\n");
@@ -33,7 +39,7 @@ int	check_existence(t_cmd *cmd, char *aux, int i)
 		}
 		cmd->envp = cmd->envp->next;
 	}
-	free(key);
+//	free(key);
 	free(new_value);
 	return (1);
 }
