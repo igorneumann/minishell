@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 10:47:23 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/01 15:37:15 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/01 19:08:21 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_print_env(t_envp *x)
 		x = x->prev;
 	while (x)
 	{
-		if (x->value == NULL)
+		if (x->value == NULL || x->value[0] == '\0')
 			x = x->next;
 		else
 		{
@@ -63,46 +63,6 @@ void	ft_print_env(t_envp *x)
 		}
 	}
 }
-
-/*void	ft_sort_env(t_cmd *cmd)
-{
-	int		i;
-	int		j;
-	int		k;
-	t_envp	*elem;
-	t_envp	*next_elem;
-	char	*key;
-	char	*value;
-
-	i = 0;
-	lst = copy_env(cmd->envp);
-	while (i < lst_size(lst) - 1)
-	{
-		j = 0;
-		tmp = lst;
-		while (j < lst_size(lst) - i - 1)
-		{
-			//NO ORDENA BIEN
-			k = 0;
-			while (lst->key[k] && lst->next->key[k]
-				&& lst->key[k] > lst->next->key[k])
-			{
-				key = lst->key;
-				value = lst->value;
-				lst->key = lst->next->key;
-				lst->value = lst->next->value;
-				lst->next->key = key;
-				lst->next->value = value;
-				k++;
-			}
-			lst = lst->next;
-			j++;
-		}
-		lst = tmp->next;
-		i++;
-	}
-	ft_print_export(lst);
-}*/
 
 void	swap(t_envp *a, t_envp *b)
 {
