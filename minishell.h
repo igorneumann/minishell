@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/01 17:37:01 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/01 19:10:35 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,9 +241,9 @@ int		addpath(t_cmd *cmd, char *tmp);
 *** pipes.c
 */
 int		pipes(t_cmd *cmd);
-void	ft_startpipe(t_cmd *cmd);
-void	ft_midpipe(t_cmd *cmd);
-void	ft_endpipe(t_cmd *cmd);
+void	ft_startpipe(t_cmd *cmd, char **parmList);
+void	ft_midpipe(t_cmd *cmd, char **parmList);
+void	ft_endpipe(t_cmd *cmd, char **parmList);
 void	pipenator(t_cmd *cmd);
 void	printpip(t_cmd *cmd);
 

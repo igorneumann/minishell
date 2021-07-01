@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/01 17:33:54 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/01 19:36:17 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,47 +40,16 @@ int	pipes(t_cmd *cmd)
 	return (0);
 }
 
-/*void	printpip(t_cmd *cmd) //YA NO LO NECESITO
-{
-	int	i;
-
-	i = 0;
-	if (cmd->nexpip != NULL)
-	{
-		while (cmd->nexpip->next != NULL)
-		{
-			i++;
-			ft_putstr("Pipe ");
-			ft_putstr(ft_itoa(i));
-			ft_putstr(cmd->nexpip->in);
-			ft_putstr("\r\n");
-			cmd->nexpip = cmd->nexpip->next;
-		}
-		ft_putstr("Pipe ");
-		ft_putstr(ft_itoa(++i));
-		ft_putstr(cmd->nexpip->in);
-		ft_putstr("\r\n");
-	}
-	if (cmd->outp != NULL)
-	{
-		ft_putstr("Output is ");
-		ft_putstr(cmd->outp);
-		ft_putstr("\r\n");
-	}
-}*/
-
-void	ft_midpipe(t_cmd *cmd)
+void	ft_midpipe(t_cmd *cmd, char **parmList)
 {
 	int		status;
-	char	**parmList;
 	int		pid;
 
 	pipe(cmd->fd2);
-	parmList = copyparam(cmd);
+	ft_putstr("YAY, MIDPIPE!\r\n");
 	pid = fork();
 	if (pid == 0 && !cmd->nexpip->next)
 	{
-		ft_putstr("YAY, MIDPIPE!\r\n");
 		cmd->buff = ft_strduptochar(cmd->nexpip->in, 32);
 		ft_path(cmd);
 		close(cmd->fd2[READ_END]);
@@ -89,7 +58,10 @@ void	ft_midpipe(t_cmd *cmd)
 		dup2(cmd->fd2[WRITE_END], STDOUT_FILENO);
 		close(cmd->fd2[WRITE_END]);
 		if (!ft_arguments(cmd))
+		{
 			execve(cmd->in, parmList, cmd->envorg);
+			exit(0); // previene que tenga q hacer doble exit si falla
+		}
 	}
 	else
 	{
@@ -99,69 +71,69 @@ void	ft_midpipe(t_cmd *cmd)
 	wait(&status);
 }
 
-void	ft_startpipe(t_cmd *cmd)
+void	ft_startpipe(t_cmd *cmd, char **parmList)
 {
 	int		status;
-	char	**parmList;
 	int		pid;
 
-	pipe(cmd->fd1);
-	parmList = NULL;
-	pid = fork();
-	parmList = copyparam(cmd);
-	if (pid == 0)
+	pid = fork(); //crea fork
+	if (pid == 0) // si PID0
 	{
-		ft_putstr("YAY, STARTPIPE!\r\n");
 		close(cmd->fd1[READ_END]);
 		dup2(cmd->fd1[WRITE_END], STDOUT_FILENO);
 		close(cmd->fd1[WRITE_END]);
-		if (!ft_arguments(cmd))
+		if (!ft_arguments(cmd)) //si no esta entre los comandos internos
+		{
 			execve(cmd->in, parmList, cmd->envorg);
+			exit(0); // previene que tenga q hacer doble exit si falla
+		}
 	}
 	else
 	{
 		close(cmd->fd1[READ_END]);
 		close(cmd->fd1[WRITE_END]);
 	}
-	wait(&status);
+	wait(&status); // espera que haga su magia
 }
 
-void	ft_endpipe(t_cmd *cmd)
+void	ft_endpipe(t_cmd *cmd, char **parmList)
 {
 	int		status;
-	char	**parmList;
 	int		pid;
 
-	pid = fork();
-	parmList = copyparam(cmd);
-	if (pid == 0 && !cmd->nexpip->next)
+	pid = fork(); //crea fork
+	if (pid == 0 && !cmd->nexpip->next) // SI PID0 y no hay siguiente comando
 	{
-		ft_putstr("YAY, ENDPIPE!\r\n");
-		cmd->buff = ft_strduptochar(cmd->nexpip->in, 32);
-		ft_path(cmd);
 		dup2(cmd->fd1[READ_END], STDIN_FILENO);
 		close(cmd->fd1[READ_END]);
-		if (!ft_arguments(cmd))
+		if (!ft_arguments(cmd)) //si no esta entre los comandos internos
+		{
 			execve(cmd->in, parmList, cmd->envorg);
+			exit(0); // previene que tenga q hacer doble exit si falla
+		}
 	}
 	else
 		close(cmd->fd1[READ_END]);
-	wait(&status);
+	wait(&status); // espera que haga su magia
 }
 
 void	pipenator(t_cmd *cmd)
 {
-	ft_startpipe(cmd);
-/*	while (cmd->nexpip->next)
+	pipe(cmd->fd1); //conecta FD1
+	ft_startpipe(cmd, copyparam(cmd));
+/*	while (cmd->nexpip->next) //mientras haya siguiente pipe, ejecuta eel medio
 	{
 		cmd->param = freelist(cmd->param);
 		ft_lst_add_arguments(&cmd->param, cmd->nexcom->in);
-		ft_midpipe(cmd);
+		ft_midpipe(cmd, copyparam(cmd));
 		cmd->nexpip = cmd->nexpip->next;
 	}*/
+	cmd->param = freelist(cmd->param); //borra listado de argumentos
+	if (cmd->nexpip->in) //si hay siguiente comando
+		ft_lst_add_arguments(&cmd->param, cmd->nexpip->in); //recoje argumentos de IN
+	cmd->buff = ft_strduptochar(cmd->in, 32); //duplica el comando sin argumentos a buffer
+	ft_path(cmd); // recoge path correcto
+	ft_endpipe(cmd, copyparam(cmd)); //ejecuta final del pipe
 	cmd->param = freelist(cmd->param);
-//	if (cmd->nexpip->in)
-//		ft_lst_add_arguments(&cmd->param, cmd->nexpip->in);
-	ft_endpipe(cmd);
 	cmd->nexpip = freelist(cmd->nexpip);
 }

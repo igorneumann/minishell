@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/01 17:32:08 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/01 18:18:28 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_read_arguments(t_cmd *cmd)
 {
-	int pip;
+	int	pip;
 
 	pip = findpipes(cmd->in);
 	cmd->not_found = 0;
