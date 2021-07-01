@@ -6,11 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/06/30 19:16:00 by ineumann         ###   ########.fr       */
-=======
-/*   Updated: 2021/06/30 20:27:25 by narroyo-         ###   ########.fr       */
->>>>>>> 50ddd9fb8751ce59624e7f7e48058d835e91c687
+/*   Updated: 2021/07/01 17:16:43 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +200,7 @@ int		ft_altarrow(t_cmd *cmd);
 */
 
 void	ft_read_arguments(t_cmd *cmd);
-int		ft_arguments(t_cmd *cmd, int i);
+int		ft_arguments(t_cmd *cmd);
 void	ft_lst_add_arguments(t_data **in, char *new);
 void	ft_exit(t_cmd *cmd, int i);
 
@@ -215,8 +211,7 @@ void	ft_exit(t_cmd *cmd, int i);
 int		command_not_found(char *str, t_cmd *cmd);
 void	ft_printlist(t_data *x, char *buff);
 void	ft_print_env(t_envp *x);
-void	swap(t_envp *a, t_envp *b);
-void	ft_sort_env(t_envp *list);
+void	ft_sort_env(t_cmd *cmd);
 void	ft_print_export(t_envp *x);
 
 /*

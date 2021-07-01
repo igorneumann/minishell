@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 18:38:34 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/30 10:53:45 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/30 20:25:49 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ int	check_existence(t_cmd *cmd, char *aux, int i)
 	new_value = ft_strdup(&aux[i + 1]);
 	while (cmd->envp->prev)
 		cmd->envp = cmd->envp->prev;
-	while (cmd->envp->next)
+	while (cmd->envp)
 	{
-		printf("%s\r\n", cmd->envp->key);
 		if (ft_strcmp(cmd->envp->key, key) == 0)
 		{
-			printf("ENTRA\n\n");
-			change_value(cmd->envp, new_value);
+			cmd->envp = change_value(cmd->envp, new_value);
 			return (0);
 		}
-		cmd->envp = cmd->envp->next;
+		else if (cmd->envp->next)
+			cmd->envp = cmd->envp->next;
+		else
+			break ;
 	}
-//	free(key);
 	free(new_value);
 	return (1);
 }
@@ -106,8 +106,7 @@ void	ft_export(t_cmd *cmd)
 		return ;
 	i += 6;
 	if (cmd->in[i] == '\0')
-		//ft_sort_env(cmd);
-		ft_print_export(cmd->envp);
+		ft_sort_env(cmd->envp);
 	while (cmd->in[i] && bucle == 1)
 		bucle = new_env_element(cmd, i);
 }

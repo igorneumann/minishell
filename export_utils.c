@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 16:11:11 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/11 17:50:30 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/01 10:03:32 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,15 @@ t_envp	*copy_env(t_envp *envp)
 
 	while (envp->prev)
 		envp = envp->prev;
-	while (envp)
+	while (envp->next)
 	{
 		copy = (t_envp *)malloc(sizeof(t_envp));
 		copy->prev = envp->prev;
 		copy->key = ft_strdup(envp->key);
-		copy->value = ft_strdup(envp->value);
+		if (envp->value != NULL)
+			copy->value = ft_strdup(envp->value);
+		else
+			copy->value = NULL;
 		copy->next = envp->next;
 		envp = envp->next;
 	}
