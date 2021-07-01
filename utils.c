@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 10:47:23 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/01 10:01:01 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/01 15:37:15 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,23 +119,20 @@ void	swap(t_envp *a, t_envp *b)
 
 void	ft_sort_env(t_envp *list)
 {
-	t_envp	*ex_list;
 	t_envp	*elem;
 	t_envp	*next_elem;
 	int		swapped;
 	int		i;
 
-	ex_list = copy_env(list);
-	if (ex_list == NULL)
+	if (list == NULL)
 		return ;
+	list = copy_env(list);
 	swapped = 1;
 	next_elem = NULL;
-	while (ex_list->prev)
-		ex_list = ex_list->prev;
 	while (swapped)
 	{
 		swapped = 0;
-		elem = ex_list;
+		elem = list;
 		while (elem->next != next_elem)
 		{
 			i = 0;
