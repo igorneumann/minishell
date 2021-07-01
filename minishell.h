@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/30 20:27:25 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/01 17:37:01 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ typedef struct s_command
 {
 	char	*in;
 	int		i;
+	int		fd1[2];
+	int		fd2[2];
+	t_list	*fdlist;
 	int		not_found;
 	char	*outp;
 	char	*buff;
@@ -197,7 +200,7 @@ int		ft_altarrow(t_cmd *cmd);
 */
 
 void	ft_read_arguments(t_cmd *cmd);
-int		ft_arguments(t_cmd *cmd, int i);
+int		ft_arguments(t_cmd *cmd);
 void	ft_lst_add_arguments(t_data **in, char *new);
 void	ft_exit(t_cmd *cmd, int i);
 
@@ -238,7 +241,10 @@ int		addpath(t_cmd *cmd, char *tmp);
 *** pipes.c
 */
 int		pipes(t_cmd *cmd);
-void	runpip(t_cmd *cmd);
+void	ft_startpipe(t_cmd *cmd);
+void	ft_midpipe(t_cmd *cmd);
+void	ft_endpipe(t_cmd *cmd);
+void	pipenator(t_cmd *cmd);
 void	printpip(t_cmd *cmd);
 
 #endif

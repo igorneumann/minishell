@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/30 10:46:23 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/06/30 19:24:40 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	executor(t_cmd *cmd)
 		ft_path(cmd);
 	}
 	if (cmd->nexpip != NULL)
-		runpip(cmd);
+		pipenator(cmd);
 	else
 		exec(ft_strduptochar(cmd->in, 32), cmd);
 	wait (0);

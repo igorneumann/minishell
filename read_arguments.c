@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/29 19:21:49 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/01 17:32:08 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,24 @@
 
 void	ft_read_arguments(t_cmd *cmd)
 {
-	int		i;
+	int pip;
 
-	i = 0;
+	pip = findpipes(cmd->in);
 	cmd->not_found = 0;
-	while (cmd->in[i] == ' ')
-		i++;
 	ft_lst_add_arguments(&cmd->param, cmd->in); // GET ARGUMENTS AND CLEAN CMD
-	if (findpipes(cmd->in) > 0) // IF THERE ARE PIPES
+	if (pip > 0) // IF THERE ARE PIPES
 		pipes(cmd); // PREPARE AT cmd->nexpip
-	if (!ft_arguments(cmd, i)) //if not in your functions
+	if (!ft_arguments(cmd)) //if not in your functions
 		executor(cmd); // RUN, FOREST, RUN
 }
 
-int	ft_arguments(t_cmd *cmd, int i)
+int	ft_arguments(t_cmd *cmd)
 {
+	int		i;
+
+	i = 0;
+	while (cmd->in[i] == ' ')
+		i++;
 	if (ft_strnstr(cmd->in, "echo", 4))
 		ft_echo(cmd);
 	else if (ft_strnstr(cmd->in, "cd", 2))
