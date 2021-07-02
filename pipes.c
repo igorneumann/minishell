@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/02 19:02:43 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/02 19:05:24 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	ft_endpipe(char *str, t_cmd *cmd)
 	int		status;
 	int		pid;
 	char	**parmList;
-
 
 	pid = fork();
 	parmList = copyparam(cmd);
