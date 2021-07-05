@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+         #
+#    By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 10:24:24 by narroyo-          #+#    #+#              #
-#    Updated: 2021/06/22 19:32:10 by narroyo-         ###   ########.fr        #
+#    Updated: 2021/07/05 17:50:53 by ineumann         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS			=	main.c ./includes/gnl/get_next_line.c ./f_rawmode.c \
 					lists.c env.c commandkeys.c keypress.c utils.c arguments.c \
 					lists_utils.c export.c envp.c read_arguments.c history.c \
 					semicolon.c morekeys.c exec.c export_utils.c pipes.c \
-					morelists.c path.c
+					morelists.c path.c pipenator.c
 LIBFT			=	./includes/libft
 OBJS 			=	$(SRCS:.c=.o)
 LIBS			=	./includes/libft/libft.a

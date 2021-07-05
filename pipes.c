@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/05 17:49:15 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/05 17:52:32 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_startpipe(char *str, t_cmd *cmd)
 	int		pid;
 	char	**parmList;
 
-	pipe(cmd->fd1); //conecta FD1
+	pipe(cmd->fd1);
 	pid = fork();
 	parmList = copyparam(cmd);
 	if (pid == 0)
@@ -68,24 +68,24 @@ void	ft_midpipe(char *str, t_cmd *cmd, int *fd_in, int *fd_out)
 	int		pid;
 	char	**parmList;
 
-	pid = fork(); //crea fork
-	parmList = copyparam(cmd); //copia parametros
-	if (pid == 0) // SI PID0
+	pid = fork();
+	parmList = copyparam(cmd);
+	if (pid == 0)
 	{
 		close(fd_out[READ_END]);
 		dup2(fd_in[READ_END], STDIN_FILENO);
 		close(fd_in[READ_END]);
 		dup2(fd_out[WRITE_END], STDOUT_FILENO);
 		close(fd_out[WRITE_END]);
-		if (!ft_arguments(cmd)) //si no esta entre los comandos internos
+		if (!ft_arguments(cmd))
 			execve(str, parmList, cmd->envorg);
 	}
-	else /* padre */
+	else
 	{
 		close(fd_in[READ_END]);
 		close(fd_out[WRITE_END]);
 	}
-	wait(&status); // espera que haga su magia
+	wait(&status);
 }
 
 void	ft_endpipe(char *str, t_cmd *cmd, int i)
@@ -130,30 +130,4 @@ void	middlepiper(char *str, t_cmd *cmd, int i)
 	}
 	pipe(fd_out);
 	ft_midpipe(str, cmd, fd_in, fd_out);
-}
-
-void	pipenator(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	ft_startpipe(ft_strduptochar(cmd->in, 32), cmd); //copia parametros y empieza pipe
-	while (cmd->nexpip->next) //mientras haya siguiente pipe, ejecuta el medio
-	{
-		cmd->param = freelist(cmd->param); //borra listado de argumentos
-		cmd->in = ft_strdup(cmd->nexpip->in); //copia siguiente comando
-		ft_lst_add_arguments(&cmd->param, cmd->nexpip->in); //recoje argumentos de IN
-		cmd->buff = ft_strduptochar(cmd->in, 32); //duplica el comando sin argumentos a buffer
-		ft_path(cmd); // recoge path correcto
-		middlepiper(ft_strduptochar(cmd->in, 32), cmd, ++i);
-		cmd->nexpip = cmd->nexpip->next;
-	}
-	cmd->param = freelist(cmd->param); //borra listado de argumentos
-	cmd->in = ft_strdup(cmd->nexpip->in);
-	ft_lst_add_arguments(&cmd->param, cmd->nexpip->in); //recoje argumentos de IN
-	cmd->buff = ft_strduptochar(cmd->in, 32); //duplica el comando sin argumentos a buffer
-	ft_path(cmd); // recoge path correcto
-	ft_endpipe(ft_strduptochar(cmd->in, 32), cmd, i); //ejecuta final del pipe
-	cmd->param = freelist(cmd->param);
-	cmd->nexpip = freelist(cmd->nexpip);
 }
