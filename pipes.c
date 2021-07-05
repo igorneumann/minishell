@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/02 19:05:24 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/05 17:25:42 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,18 +92,23 @@ void	ft_endpipe(char *str, t_cmd *cmd)
 	int		status;
 	int		pid;
 	char	**parmList;
+	int		*fd;
 
+	if (cmd->fd2[0] == 0)
+		fd = cmd->fd1;
+	else
+		fd = cmd->fd2;
 	pid = fork();
 	parmList = copyparam(cmd);
 	if (pid == 0 && !cmd->nexpip->next)
 	{
-		dup2(cmd->fd1[READ_END], STDIN_FILENO);
-		close(cmd->fd1[READ_END]);
+		dup2(fd[READ_END], STDIN_FILENO);
+		close(fd[READ_END]);
 		if (!ft_arguments(cmd))
 			execve(str, parmList, cmd->envorg);
 	}
 	else
-		close(cmd->fd1[READ_END]);
+		close(fd[READ_END]);
 	wait(&status);
 }
 
@@ -115,7 +120,7 @@ void	pipenator(t_cmd *cmd)
 	{
 		pipe(cmd->fd2); //conecta FDX
 		cmd->param = freelist(cmd->param); //borra listado de argumentos
-		cmd->in = ft_strdup(cmd->nexpip->in); //copia ssiguiente comando
+		cmd->in = ft_strdup(cmd->nexpip->in); //copia siguiente comando
 		ft_lst_add_arguments(&cmd->param, cmd->nexpip->in); //recoje argumentos de IN
 		cmd->buff = ft_strduptochar(cmd->in, 32); //duplica el comando sin argumentos a buffer
 		ft_path(cmd); // recoge path correcto
