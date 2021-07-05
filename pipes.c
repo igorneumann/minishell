@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/05 17:25:42 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/05 17:49:15 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	ft_startpipe(char *str, t_cmd *cmd)
 	int		pid;
 	char	**parmList;
 
+	pipe(cmd->fd1); //conecta FD1
 	pid = fork();
 	parmList = copyparam(cmd);
 	if (pid == 0)
@@ -61,7 +62,7 @@ void	ft_startpipe(char *str, t_cmd *cmd)
 	wait(&status);
 }
 
-void	ft_midpipe(char *str, t_cmd *cmd)
+void	ft_midpipe(char *str, t_cmd *cmd, int *fd_in, int *fd_out)
 {
 	int		status;
 	int		pid;
@@ -71,30 +72,30 @@ void	ft_midpipe(char *str, t_cmd *cmd)
 	parmList = copyparam(cmd); //copia parametros
 	if (pid == 0) // SI PID0
 	{
-		close(cmd->fd2[READ_END]);
-		dup2(cmd->fd1[READ_END], STDIN_FILENO);
-		close(cmd->fd1[READ_END]);
-		dup2(cmd->fd2[WRITE_END], STDOUT_FILENO);
-		close(cmd->fd2[WRITE_END]);
+		close(fd_out[READ_END]);
+		dup2(fd_in[READ_END], STDIN_FILENO);
+		close(fd_in[READ_END]);
+		dup2(fd_out[WRITE_END], STDOUT_FILENO);
+		close(fd_out[WRITE_END]);
 		if (!ft_arguments(cmd)) //si no esta entre los comandos internos
 			execve(str, parmList, cmd->envorg);
 	}
 	else /* padre */
 	{
-		close(cmd->fd1[READ_END]);
-		close(cmd->fd2[WRITE_END]);
+		close(fd_in[READ_END]);
+		close(fd_out[WRITE_END]);
 	}
 	wait(&status); // espera que haga su magia
 }
 
-void	ft_endpipe(char *str, t_cmd *cmd)
+void	ft_endpipe(char *str, t_cmd *cmd, int i)
 {
 	int		status;
 	int		pid;
 	char	**parmList;
 	int		*fd;
 
-	if (cmd->fd2[0] == 0)
+	if (i % 2 == 0)
 		fd = cmd->fd1;
 	else
 		fd = cmd->fd2;
@@ -112,19 +113,39 @@ void	ft_endpipe(char *str, t_cmd *cmd)
 	wait(&status);
 }
 
+void	middlepiper(char *str, t_cmd *cmd, int i)
+{
+	int	*fd_in;
+	int	*fd_out;
+
+	if (i % 2 == 1)
+	{
+		fd_in = cmd->fd1;
+		fd_out = cmd->fd2;
+	}
+	else
+	{
+		fd_in = cmd->fd2;
+		fd_out = cmd->fd1;
+	}
+	pipe(fd_out);
+	ft_midpipe(str, cmd, fd_in, fd_out);
+}
+
 void	pipenator(t_cmd *cmd)
 {
-	pipe(cmd->fd1); //conecta FD1
+	int	i;
+
+	i = 0;
 	ft_startpipe(ft_strduptochar(cmd->in, 32), cmd); //copia parametros y empieza pipe
 	while (cmd->nexpip->next) //mientras haya siguiente pipe, ejecuta el medio
 	{
-		pipe(cmd->fd2); //conecta FDX
 		cmd->param = freelist(cmd->param); //borra listado de argumentos
 		cmd->in = ft_strdup(cmd->nexpip->in); //copia siguiente comando
 		ft_lst_add_arguments(&cmd->param, cmd->nexpip->in); //recoje argumentos de IN
 		cmd->buff = ft_strduptochar(cmd->in, 32); //duplica el comando sin argumentos a buffer
 		ft_path(cmd); // recoge path correcto
-		ft_midpipe(ft_strduptochar(cmd->in, 32), cmd);
+		middlepiper(ft_strduptochar(cmd->in, 32), cmd, ++i);
 		cmd->nexpip = cmd->nexpip->next;
 	}
 	cmd->param = freelist(cmd->param); //borra listado de argumentos
@@ -132,7 +153,7 @@ void	pipenator(t_cmd *cmd)
 	ft_lst_add_arguments(&cmd->param, cmd->nexpip->in); //recoje argumentos de IN
 	cmd->buff = ft_strduptochar(cmd->in, 32); //duplica el comando sin argumentos a buffer
 	ft_path(cmd); // recoge path correcto
-	ft_endpipe(ft_strduptochar(cmd->in, 32), cmd); //ejecuta final del pipe
+	ft_endpipe(ft_strduptochar(cmd->in, 32), cmd, i); //ejecuta final del pipe
 	cmd->param = freelist(cmd->param);
 	cmd->nexpip = freelist(cmd->nexpip);
 }
