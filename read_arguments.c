@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/05 18:43:31 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/06 17:45:53 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,14 @@
 void	ft_read_arguments(t_cmd *cmd)
 {
 	int	pip;
+	int	red;
 
 	pip = findpipes(cmd->in);
+	red = findredir(cmd->in);
 	cmd->not_found = 0;
 	ft_lst_add_arguments(&cmd->param, cmd->in);
+	if (red > 0)
+		redir(cmd);
 	if (pip > 0)
 		pipes(cmd);
 	if (!ft_arguments(cmd))

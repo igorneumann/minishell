@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 18:24:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/29 19:28:00 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/06 17:22:04 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,25 @@ int	findpipes(char *str)
 	pp = 0;
 	while (st[0] != '\0')
 	{
-		if ((st[0] == '|' || st[0] == '>'))
+		if (st[0] == '|')
 			pp++;
 		st++;
 	}
 	return (pp);
+}
+
+int	findredir(char *str)
+{
+	int		rd;
+	char	*st;
+
+	st = str;
+	rd = 0;
+	while (st[0] != '\0')
+	{
+		if ((st[0] == '<' || st[0] == '>'))
+			rd++;
+		st++;
+	}
+	return (rd);
 }

@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/05 17:19:17 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/06 17:48:51 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	ft_init(t_cmd *cmd, char **envp, t_raw *raw)
 	cmd->i = 0;
 	cmd->list = NULL;
 	cmd->nexcom = NULL;
+	cmd->inpt = ft_strdup("\x0D");
+	cmd->outp = ft_strdup("\x0D");
 	cmd->in = ft_strdup("\x0D");
 	cmd->buff = ft_strdup("\x0D");
 	ft_save_env(cmd, envp);
@@ -29,6 +31,8 @@ void	ft_reset(t_cmd *cmd)
 {
 	free(cmd->in);
 	cmd->in = ft_strdup("\x0D");
+	cmd->inpt = ft_strdup("\x0D");
+	cmd->outp = ft_strdup("\x0D");
 	free(cmd->buff);
 	cmd->param = freelist(cmd->param);
 	cmd->nexpip = freelist(cmd->nexpip);

@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/05 17:51:32 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/06 17:38:46 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_command
 	t_list	*fdlist;
 	int		not_found;
 	char	*outp;
+	char	*inpt;
 	char	*buff;
 	char	**env;
 	char	**envorg;
@@ -186,6 +187,7 @@ int		prepstr(char *str, int pos, int qt);
 int		countleft(char *str, int pos, char c, char d);
 int		countright(char *str, int pos, char c, char d);
 int		findpipes(char *str);
+int		findredir(char *str);
 
 /*
 *** history.c
@@ -251,5 +253,11 @@ void	pipenator(t_cmd *cmd);
 *** pipenator.c
 */
 void	pipenator(t_cmd *cmd);
+
+/*
+*** redir.c
+*/
+int	redir(t_cmd *cmd);
+void	redirector(t_cmd *cmd);
 
 #endif

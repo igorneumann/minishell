@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/05 17:52:32 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/06 17:27:45 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,6 @@ int	pipes(t_cmd *cmd)
 			while (cmd->in[i + j] == ' ')
 				j++;
 			ft_lst_add_front(&cmd->nexpip, ft_new(&cmd->in[i + j]));
-		}
-		else if (cmd->in[i] == '>')
-		{
-			cmd->in[i] = '\0';
-			while (cmd->in[i + j] == ' ')
-				j++;
-			cmd->outp = ft_strdup(&cmd->in[i + j]);
 		}
 		i--;
 	}
