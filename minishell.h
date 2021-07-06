@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/06 17:38:46 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/06 20:11:28 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ typedef struct s_command
 	int		fd2[2];
 	t_list	*fdlist;
 	int		not_found;
+	int		out_fd;
 	char	*outp;
+	int		in_fd;
 	char	*inpt;
 	char	*buff;
 	char	**env;
@@ -257,7 +259,8 @@ void	pipenator(t_cmd *cmd);
 /*
 *** redir.c
 */
-int	redir(t_cmd *cmd);
+int		redir(t_cmd *cmd);
+void	redirout(t_cmd *cmd);
 void	redirector(t_cmd *cmd);
 
 #endif

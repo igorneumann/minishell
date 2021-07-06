@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/06 17:45:53 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/06 20:17:23 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,20 @@
 
 void	ft_read_arguments(t_cmd *cmd)
 {
-	int	pip;
-	int	red;
+	int		pip;
+	int		red;
 
 	pip = findpipes(cmd->in);
 	red = findredir(cmd->in);
 	cmd->not_found = 0;
-	ft_lst_add_arguments(&cmd->param, cmd->in);
 	if (red > 0)
 		redir(cmd);
+	ft_lst_add_arguments(&cmd->param, cmd->in);
+	if (cmd->inpt[0] != '\x0D')
+	{
+		ft_lst_add_arguments(&cmd->param, cmd->inpt);
+		cmd->inpt = ft_strdup("\x0D");
+	}
 	if (pip > 0)
 		pipes(cmd);
 	if (!ft_arguments(cmd))
@@ -64,7 +69,7 @@ void	ft_lst_add_arguments(t_data **in, char *new)
 	i = 0;
 	while (new[i] == ' ')
 		i++;
-	if (new[i] != '|')
+	if (new[i] != '|' && new[i] != '<' && new[i] != '>')
 	{
 		temp = ft_strduptochar(&new[i], 32);
 		ft_lst_add_front(in, ft_new(temp));
