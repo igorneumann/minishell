@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/06 20:21:32 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/20 18:06:35 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	redir(t_cmd *cmd)
 			while (cmd->in[i + j] == ' ' || cmd->in[i + j] == '>')
 				j++;
 			cmd->outp = ft_strduptochar(&cmd->in[i + j], 32);
+			return (redirector(cmd, i));
 		}
 		else if (cmd->in[i] == '<')
 		{
@@ -34,10 +35,10 @@ int	redir(t_cmd *cmd)
 			while (cmd->in[i + j] == ' ' || cmd->in[i + j] == '<')
 				j++;
 			cmd->inpt = ft_strduptochar(&cmd->in[i + j], 32);
+			return (redirector(cmd, i));
 		}
 		i--;
 	}
-	redirector(cmd);
 	return (0);
 }
 
@@ -50,7 +51,17 @@ void	redirout(t_cmd *cmd)
 	}
 }
 
-void	redirector(t_cmd *cmd)
+void	redirinfo(t_cmd *cmd, int *fPtr, char *str)
+{
+	if (fPtr[0] == -1)
+		printf("error al abrir archivo");
+	if (cmd->inpt[0] != '\x0D')
+		printf("Input is %s\r\n, fd is %i\r\n", str, cmd->in_fd);
+	else if (cmd->outp[0] != '\x0D')
+		printf("Output is %s\r\n fd is %i\r\n", str, cmd->out_fd);
+}
+
+int	redirector(t_cmd *cmd, int i)
 {
 	char	*str;
 	char	c;
@@ -64,17 +75,21 @@ void	redirector(t_cmd *cmd)
 		fPtr = &cmd->in_fd;
 	//	while (read(cmd->in_fd, &c, 1) != -1)
 	//		cmd->inpt = ft_strjoin(cmd->inpt, &c);
+		redirinfo(cmd, fPtr, str);
 	}
-	else
+	else if (cmd->outp[0] != '\x0D')
 	{
 		str = cmd->outp;
-		cmd->out_fd = open(str, O_WRONLY | O_CREAT | O_TRUNC | O_APPEND, 0644);
 		fPtr = &cmd->out_fd;
+		if (cmd->in[i - 1] == '>')
+		{
+			cmd->in[i - 1] = '\0';
+			*fPtr = open(str, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			printf ("doublequote");
+		}
+		else
+			*fPtr = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		redirinfo(cmd, fPtr, str);
 	}
-	if (fPtr[0] == -1)
-		printf("error al abrir archivo");
-	if (cmd->inpt[0] != '\x0D')
-		printf("Input is %s\r\n, fd is %i\r\n", str, cmd->in_fd);
-	else if (cmd->outp[0] != '\x0D')
-		printf("Output is %s\r\n fd is %i\r\n", str, cmd->out_fd);
+	return (0);
 }
