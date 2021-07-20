@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/20 17:59:34 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/20 19:10:27 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ void	ft_exit(t_cmd *cmd, int i);
 */
 
 int		command_not_found(char *str, t_cmd *cmd);
-void	ft_printlist(t_data *x, char *buff);
+void	ft_printlist(t_data *x);
 void	ft_print_env(t_envp *x);
 void	swap(t_envp *a, t_envp *b);
 void	ft_sort_env(t_envp *list);

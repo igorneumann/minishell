@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 18:38:34 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/01 19:05:28 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/20 19:34:34 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	ft_export(t_cmd *cmd)
 	i += 6;
 	if (cmd->in[i] == '\0')
 		ft_sort_env(cmd->envp);
-	while (cmd->in[i] && bucle == 1)
+	while (cmd->in[i] != '\0' && bucle == 1)
 		bucle = new_env_element(cmd, i);
 }
 
