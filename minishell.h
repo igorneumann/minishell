@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/20 17:59:34 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/20 19:23:09 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,9 +259,10 @@ void	pipenator(t_cmd *cmd);
 /*
 *** redir.c
 */
-int		redir(t_cmd *cmd);
+int		redir(t_cmd *cmd, int i);
 void	redirout(t_cmd *cmd);
-int	redirector(t_cmd *cmd, int i);
-void	redirinfo(t_cmd *cmd, int *fPtr, char *str);
+void	tempinput(t_cmd *cmd);
+int		redirector(t_cmd *cmd, int i);
+int		redirinfo(t_cmd *cmd, int *fPtr, char *str);
 
 #endif
