@@ -6,18 +6,16 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/20 18:06:35 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/20 19:47:34 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	redir(t_cmd *cmd)
+int	redir(t_cmd *cmd, int i)
 {
-	int		i;
 	int		j;
 
-	i = ft_strlen(cmd->in);
 	while (i > 0)
 	{
 		j = 1;
@@ -49,9 +47,14 @@ void	redirout(t_cmd *cmd)
 		dup2(cmd->out_fd, STDOUT_FILENO);
 		close(cmd->out_fd);
 	}
+	if (cmd->inpt[0] != '\x0D')
+	{
+		dup2(cmd->in_fd, STDIN_FILENO);
+		close(cmd->in_fd);
+	}
 }
 
-void	redirinfo(t_cmd *cmd, int *fPtr, char *str)
+int	redirinfo(t_cmd *cmd, int *fPtr, char *str)
 {
 	if (fPtr[0] == -1)
 		printf("error al abrir archivo");
@@ -59,24 +62,52 @@ void	redirinfo(t_cmd *cmd, int *fPtr, char *str)
 		printf("Input is %s\r\n, fd is %i\r\n", str, cmd->in_fd);
 	else if (cmd->outp[0] != '\x0D')
 		printf("Output is %s\r\n fd is %i\r\n", str, cmd->out_fd);
+	return (0);
+}
+
+void	tempinput(t_cmd *cmd)
+{
+	int		*fPtr;
+	int		size;
+	int		j;
+	char	*buff;
+	char	c;
+
+	fPtr = &cmd->in_fd;
+	*fPtr = open("tempAF.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	buff = ft_strdup("\x0D");
+	while (!ft_strnstr(buff, cmd->inpt, ft_strlen(buff)))
+	{
+		c = f_raw(cmd->raw);
+		buff = ft_strjoin(cmd->in, &c);
+		size = ft_strlen(buff);
+	}
+	size = (size - ft_strlen(cmd->inpt));
+	j = 0;
+	while (j <= size)
+	{
+		write (1, &buff[j], 1);
+		write (cmd->in_fd, &buff[j], 1);
+		j++;
+	}
+	write (cmd->in_fd, "\0", 1);
+	printf("tempAF.tmp creado");
 }
 
 int	redirector(t_cmd *cmd, int i)
 {
 	char	*str;
-	char	c;
 	int		*fPtr;
 
-	c = 0;
-	if (cmd->inpt[0] != '\x0D')
+	if (cmd->inpt[0] != '\x0D' && cmd->in[i - 1] != '<')
 	{
 		str = cmd->inpt;
 		cmd->in_fd = open(str, O_RDONLY);
 		fPtr = &cmd->in_fd;
-	//	while (read(cmd->in_fd, &c, 1) != -1)
-	//		cmd->inpt = ft_strjoin(cmd->inpt, &c);
 		redirinfo(cmd, fPtr, str);
 	}
+	else if (cmd->inpt[0] != '\x0D')
+		tempinput(cmd);
 	else if (cmd->outp[0] != '\x0D')
 	{
 		str = cmd->outp;
@@ -85,11 +116,9 @@ int	redirector(t_cmd *cmd, int i)
 		{
 			cmd->in[i - 1] = '\0';
 			*fPtr = open(str, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			printf ("doublequote");
 		}
 		else
 			*fPtr = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		redirinfo(cmd, fPtr, str);
 	}
 	return (0);
 }

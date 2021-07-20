@@ -6,7 +6,11 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/07/20 19:10:27 by narroyo-         ###   ########.fr       */
+=======
+/*   Updated: 2021/07/20 19:23:09 by ineumann         ###   ########.fr       */
+>>>>>>> 61b9033ea289986576948c581aff70fe54e9b020
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,9 +263,10 @@ void	pipenator(t_cmd *cmd);
 /*
 *** redir.c
 */
-int		redir(t_cmd *cmd);
+int		redir(t_cmd *cmd, int i);
 void	redirout(t_cmd *cmd);
-int	redirector(t_cmd *cmd, int i);
-void	redirinfo(t_cmd *cmd, int *fPtr, char *str);
+void	tempinput(t_cmd *cmd);
+int		redirector(t_cmd *cmd, int i);
+int		redirinfo(t_cmd *cmd, int *fPtr, char *str);
 
 #endif

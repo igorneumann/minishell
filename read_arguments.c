@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/06 20:17:23 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/20 18:09:40 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_read_arguments(t_cmd *cmd)
 	red = findredir(cmd->in);
 	cmd->not_found = 0;
 	if (red > 0)
-		redir(cmd);
+		redir(cmd, ft_strlen(cmd->in));
 	ft_lst_add_arguments(&cmd->param, cmd->in);
 	if (cmd->inpt[0] != '\x0D')
 	{
