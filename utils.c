@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 10:47:23 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/20 19:54:03 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/21 17:40:28 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ void	ft_printlist(t_data *x)
 	t_data	*y;
 
 	y = ft_lst_first(x);
-	while (y && y != x)
+	while (y)
 	{
 		printf("%s %p\r\n", y->in, x);
 		y = y->next;
 	}
-	ft_putstr("\x1B[33m");
 	while (x)
 	{
 		printf("%s %p\r\n", x->in, x);
 		x = x->next;
 	}
+	ft_putstr("\x1B[33m");
 }
 
 void	ft_print_env(t_envp *x)
@@ -84,9 +84,10 @@ void	ft_sort_env(t_envp *list)
 
 	if (list == NULL)
 		return ;
+	//ft_printlist((t_data *)list);
 	list = copy_env(list);
 	// SOLO COPIA HASTA EL PENULTIMO ELEMENTO, EL PROBLEMA ESTÁ EN LA COPIA
-	ft_printlist((t_data *)list);
+	//ft_printlist((t_data *)list);
 	swapped = 1;
 	next_elem = NULL;
 	while (swapped)
@@ -107,7 +108,7 @@ void	ft_sort_env(t_envp *list)
 		}
 		next_elem = elem;
 	}
-//	ft_print_export(elem);
+	ft_print_export(elem);
 }
 
 void	ft_print_export(t_envp *x)
