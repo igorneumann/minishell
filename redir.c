@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/20 19:47:34 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/21 20:08:16 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ int	redirinfo(t_cmd *cmd, int *fPtr, char *str)
 {
 	if (fPtr[0] == -1)
 		printf("error al abrir archivo");
-	if (cmd->inpt[0] != '\x0D')
+	if (cmd->inpt[0] != '\x0D' && str)
 		printf("Input is %s\r\n, fd is %i\r\n", str, cmd->in_fd);
 	else if (cmd->outp[0] != '\x0D')
 		printf("Output is %s\r\n fd is %i\r\n", str, cmd->out_fd);
 	return (0);
 }
 
-void	tempinput(t_cmd *cmd)
+int	tempinput(t_cmd *cmd)
 {
 	int		*fPtr;
 	int		size;
@@ -74,24 +74,26 @@ void	tempinput(t_cmd *cmd)
 	char	c;
 
 	fPtr = &cmd->in_fd;
-	*fPtr = open("tempAF.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	*fPtr = open(".tempAF.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	buff = ft_strdup("\x0D");
 	while (!ft_strnstr(buff, cmd->inpt, ft_strlen(buff)))
 	{
 		c = f_raw(cmd->raw);
-		buff = ft_strjoin(cmd->in, &c);
+		if (c == 13)
+			ft_putstr("\r\n");
+		write (1, &c, 1);
+		buff = ft_strjoin(buff, &c);
 		size = ft_strlen(buff);
 	}
 	size = (size - ft_strlen(cmd->inpt));
 	j = 0;
-	while (j <= size)
+	while (j < size)
 	{
-		write (1, &buff[j], 1);
-		write (cmd->in_fd, &buff[j], 1);
+		write(*fPtr, &buff[j], 1);
 		j++;
 	}
-	write (cmd->in_fd, "\0", 1);
-	printf("tempAF.tmp creado");
+	close(*fPtr);
+	return (*fPtr);
 }
 
 int	redirector(t_cmd *cmd, int i)
@@ -99,15 +101,23 @@ int	redirector(t_cmd *cmd, int i)
 	char	*str;
 	int		*fPtr;
 
-	if (cmd->inpt[0] != '\x0D' && cmd->in[i - 1] != '<')
+	fPtr = NULL;
+	if (cmd->inpt[0] != '\x0D' && cmd->in[i - 1] == '<')
+	{
+		tempinput(cmd);
+		cmd->inpt = ft_strdup(".tempAF.tmp");
+		str = cmd->inpt;
+	}
+	else if (cmd->inpt[0] != '\x0D')
 	{
 		str = cmd->inpt;
 		cmd->in_fd = open(str, O_RDONLY);
-		fPtr = &cmd->in_fd;
-		redirinfo(cmd, fPtr, str);
 	}
-	else if (cmd->inpt[0] != '\x0D')
-		tempinput(cmd);
+	if (cmd->inpt[0] != '\x0D' && cmd->in[i - 1] == '<')
+	{
+		cmd->in_fd = open(str, O_RDONLY);
+		fPtr = &cmd->in_fd;
+	}
 	else if (cmd->outp[0] != '\x0D')
 	{
 		str = cmd->outp;
@@ -120,5 +130,6 @@ int	redirector(t_cmd *cmd, int i)
 		else
 			*fPtr = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	}
+	close(*fPtr);
 	return (0);
 }
