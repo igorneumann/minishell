@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/22 19:14:13 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/22 19:45:45 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,24 +54,13 @@ void	redirout(t_cmd *cmd)
 	}
 }
 
-int	redirinfo(t_cmd *cmd, int *fPtr, char *str)
-{
-	if (fPtr[0] == -1)
-		printf("error al abrir archivo");
-	return (0);
-}
-
 int	tempinput(t_cmd *cmd)
 {
-	int		size;
-	int		j;
 	char	*buff;
 	char	*c;
 
 	cmd->in_fd = open(".tempAF.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	buff = ft_strdup("\x0D");
-	size = ft_strlen(cmd->inpt);
-	j = 0;
 	c = NULL;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->orig) == -1)
 		die("tcsetattr", cmd->raw);
@@ -83,10 +72,7 @@ int	tempinput(t_cmd *cmd)
 	}
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
 		die("tcsetattr", cmd->raw);
-	size = (ft_strlen(buff) - size);
-	j = 0;
-	while (j < size)
-		write(cmd->in_fd, &buff[j++], 1);
+	ft_putstr_fd(buff, cmd->in_fd);
 	return (close(cmd->in_fd));
 }
 
