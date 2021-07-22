@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/20 18:09:40 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/21 20:16:09 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	ft_read_arguments(t_cmd *cmd)
 		pipes(cmd);
 	if (!ft_arguments(cmd))
 		executor(cmd);
+	unlink(".tempAF.tmp");
 }
 
 int	ft_arguments(t_cmd *cmd)

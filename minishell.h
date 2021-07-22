@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/07/21 18:54:41 by narroyo-         ###   ########.fr       */
+=======
+/*   Updated: 2021/07/21 18:22:23 by ineumann         ###   ########.fr       */
+>>>>>>> 378accb3732983ad4d8e038adc6f1197b9c1d03e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,7 +267,7 @@ void	pipenator(t_cmd *cmd);
 */
 int		redir(t_cmd *cmd, int i);
 void	redirout(t_cmd *cmd);
-void	tempinput(t_cmd *cmd);
+int		tempinput(t_cmd *cmd);
 int		redirector(t_cmd *cmd, int i);
 int		redirinfo(t_cmd *cmd, int *fPtr, char *str);
 
