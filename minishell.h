@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/21 18:22:23 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/22 18:27:10 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,5 +264,10 @@ void	redirout(t_cmd *cmd);
 int		tempinput(t_cmd *cmd);
 int		redirector(t_cmd *cmd, int i);
 int		redirinfo(t_cmd *cmd, int *fPtr, char *str);
+
+/*
+*** get_next_line.c
+*/
+int	get_next_line(int fd, char **line);
 
 #endif
