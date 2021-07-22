@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/22 18:19:57 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/22 20:20:17 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,36 +25,19 @@ void	ft_pwd(t_cmd *cmd)
 void	ft_echo(t_cmd *cmd)
 {
 	int	i;
-	int	j;
 
-	j = 0;
 	i = 0;
 	cmd->not_found = 1;
 	if (command_not_found("echo", cmd))
 		return ;
 	i += 4;
-	while (cmd->in[i + j] != '\0')
-	{
-		if (cmd->in[i + j] == '\'' || cmd->in[i + j] == ' ')
-		{
-			if (cmd->in[i + j] == '\'')
-				cmd->quote_s++;
-			j++;
-		}
-	}
-	/*while (cmd->in[i] == ' ' || cmd->in[i] == '\'')
-	{
-		cmd->quote_s++;
+	while (cmd->in[i] == ' ' || cmd->in[i] == '\'')
 		i++;
-	}*/
 	if (ft_strnstr(cmd->in + i, "-n", 2) != NULL)
 	{
 		i += 2;
 		while (cmd->in[i] == ' ' || cmd->in[i] == '\'')
-		{
-			cmd->quote_s++;
 			i++;
-		}
 		if (cmd->in[i] != 0 && cmd->in[i] != '\'')
 			ft_putstr(&cmd->in[i]);
 		if (cmd->in[i] == '\'')

@@ -6,13 +6,13 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/22 19:48:37 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/22 20:23:21 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_read_arguments(t_cmd *cmd)
+void	 ft_read_arguments(t_cmd *cmd)
 {
 	int		pip;
 	int		red;
