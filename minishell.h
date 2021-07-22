@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/22 19:16:06 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/22 19:46:44 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,13 @@ int		findredir(char *str);
 int		ft_history(t_cmd *cmd, char *seq);
 void	ft_dupin(t_cmd *cmd, int src);
 int		ft_altarrow(t_cmd *cmd);
+
+/*
+*** quotes.c
+*/
+
+void	ft_dollar(t_cmd *cmd, char *in, int i);
+void	ft_quotes(t_cmd *cmd);
 
 /*
 *** read_arguments.c

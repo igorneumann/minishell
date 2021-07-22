@@ -6,11 +6,35 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/22 19:15:23 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/22 19:45:52 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_dollar(t_cmd *cmd, char *in, int i)
+{
+	int		ch;
+	char	*var;
+	int		j;
+
+	j = 0;
+	if (!(cmd->quote_s % 2))
+		return ;
+	if (!(cmd->quote_d % 2))
+	{
+		while (*in != '\0' || *in != ' ')
+		{
+			ch++;
+			in++;
+		}
+		var = (char *)malloc(sizeof(char) * ch + 1);
+		while (in[i] != '\0' || in[i] != ' ')
+			var[j++] = in[i++];
+		printf("%s\r\n", var);
+	}
+
+}
 
 void	ft_quotes(t_cmd *cmd)
 {
@@ -23,9 +47,8 @@ void	ft_quotes(t_cmd *cmd)
 			cmd->quote_s++;
 		if (cmd->in[i] == '\"')
 			cmd->quote_d++;
+		if (cmd->in[i] == '$')
+			ft_dollar(cmd, &cmd->in, i);
 		i++;
 	}
-	i = 0;
-	if (cmd->quote_s % 2)
-		cmd->quotes = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/22 19:16:01 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/22 19:39:29 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int	ft_arguments(t_cmd *cmd)
 	ft_quotes(cmd);
 	while (cmd->in[i] == ' ')
 		i++;
-	if (ft_strnstr(cmd->in, "$", 1) && cmd->quotes == 0)
-	else if (ft_strnstr(cmd->in, "echo", 4))
+	if (ft_strnstr(cmd->in, "echo", 4))
 		ft_echo(cmd);
 	else if (ft_strnstr(cmd->in, "cd", 2))
 		ft_cd(cmd, i);
