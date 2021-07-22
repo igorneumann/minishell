@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/22 19:07:11 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/22 19:16:01 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ void	ft_read_arguments(t_cmd *cmd)
 {
 	int		pip;
 	int		red;
+	int		noinp;
 
 	pip = findpipes(cmd->in);
 	red = findredir(cmd->in);
+	noinp = 0;
 	cmd->not_found = 0;
-	if (red > 0)
-		redir(cmd, ft_strlen(cmd->in));
+	if (red > 0 && redir(cmd, ft_strlen(cmd->in)) > 0)
+		noinp = 1;
 	ft_lst_add_arguments(&cmd->param, cmd->in);
 	if (cmd->inpt[0] != '\x0D')
 	{
@@ -30,7 +32,7 @@ void	ft_read_arguments(t_cmd *cmd)
 	}
 	if (pip > 0)
 		pipes(cmd);
-	if (!ft_arguments(cmd))
+	if (!ft_arguments(cmd) && noinp == 0)
 		executor(cmd);
 	unlink(".tempAF.tmp");
 }
