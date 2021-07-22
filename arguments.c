@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arguments.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/23 20:02:00 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/21 19:05:59 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,22 @@ void	ft_echo(t_cmd *cmd)
 		return ;
 	i += 4;
 	while (cmd->in[i] == ' ' || cmd->in[i] == '\'')
+	{
+		cmd->quote_s++;
 		i++;
+	}
 	if (ft_strnstr(cmd->in + i, "-n", 2) != NULL)
 	{
 		i += 2;
 		while (cmd->in[i] == ' ' || cmd->in[i] == '\'')
+		{
+			cmd->quote_s++;
 			i++;
-		if (cmd->in[i] != 0)
+		}
+		if (cmd->in[i] != 0 && cmd->in[i] != '\'')
 			ft_putstr(&cmd->in[i]);
+		if (cmd->in[i] == '\'')
+			i++;
 	}
 	else
 	{

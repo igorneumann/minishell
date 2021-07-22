@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/21 12:38:09 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/21 18:54:41 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ typedef struct s_command
 	char	**env;
 	char	**envorg;
 	char	**path;
+	int		quote_s;
+	int		quote_d;
 	t_data	*list;
 	t_data	*param;
 	t_data	*nexcom;
