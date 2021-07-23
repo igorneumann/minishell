@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_arguments.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/22 20:43:53 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/23 18:08:06 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@ void	 ft_read_arguments(t_cmd *cmd)
 	if (red > 0 && redir(cmd, ft_strlen(cmd->in)) > 0)
 		noinp = 1;
 	ft_lst_add_arguments(&cmd->param, cmd->in);
-	if (cmd->inpt[0] != '\x0D')
-	{
-		ft_lst_add_arguments(&cmd->param, cmd->inpt);
-		cmd->inpt = ft_strdup("\x0D");
-	}
 	if (pip > 0)
 		pipes(cmd);
 	if (!ft_arguments(cmd) && noinp == 0)
