@@ -1,3 +1,4 @@
+$HOME
 Makefile
 arguments.c
 arguments.o
@@ -39,6 +40,8 @@ pipenator.c
 pipenator.o
 pipes.c
 pipes.o
+quotes.c
+quotes.o
 read_arguments.c
 read_arguments.o
 redir.c
@@ -46,6 +49,5 @@ redir.o
 semicolon.c
 semicolon.o
 test.c
-test.txt
 utils.c
 utils.o
