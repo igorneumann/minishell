@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_arguments.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/23 18:09:21 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/23 19:16:11 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ int	ft_arguments(t_cmd *cmd)
 
 	k = 0;
 	i = 0;
-	ft_quotes(cmd);
+	ft_replace(cmd);
 	while (cmd->in[i] == ' ')
 		i++;
-	if (ft_strnstr(cmd->in, "$", 1))
-		k = ft_dollar(cmd, i, k);
-	else if (ft_strnstr(cmd->in, "echo", 4))
+//	if (ft_strnstr(cmd->in, "$", 1))
+//		k = ft_dollar(cmd, i, k);
+	if (ft_strnstr(cmd->in, "echo", 4))
 		ft_echo(cmd);
 	else if (ft_strnstr(cmd->in, "cd", 2))
 		ft_cd(cmd, i);

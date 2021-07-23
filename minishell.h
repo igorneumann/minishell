@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/23 17:39:07 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/23 19:16:08 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_command
 	char	**env;
 	char	**envorg;
 	char	**path;
+	char	*tmp_in;
 	int		quote_s;
 	int		quote_d;
 	int		quotes;
@@ -209,7 +210,8 @@ int		ft_altarrow(t_cmd *cmd);
 
 char	*search_value(char *elem, t_cmd *cmd);
 int		ft_dollar(t_cmd *cmd, int i, int k);
-void	ft_quotes(t_cmd *cmd);
+int		ft_quotes(t_cmd *cmd);
+void	ft_replace(t_cmd *cmd);
 
 /*
 *** read_arguments.c
