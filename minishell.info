@@ -27,7 +27,7 @@ void	ft_init(t_cmd *cmd, char **envp, t_raw *raw);
 		- Habilita Raw Mode > enableRawMode
 
 void	ft_reset(t_cmd *cmd)
-	? ejecuta despues de cada cadena de ejecucion para limpar para la siguiente
+	+ ejecuta en el enter
 		- Libera cmd->in y cmd->buff
 		- limpia listados > freelist
 		- borra strings con ft_strdup
@@ -161,16 +161,251 @@ void	ft_backspace(t_cmd *cmd);
 
 void	ft_enter(t_cmd *cmd)
 	+ ejecuta al presionar enter en la linea de comando
+		- añade el contenido de la linea de comando al historial > ft_lst_add_front
+		- copia in a tmp_in (imagino que sea lo tuyo)
+		- copia cmd->in a cmd->buff (no estoy seguro que aun lo uso)
+		- divide los programas por punto y coma > ft_semicolon
+		- imprime el salto de linea en pantalla
+(quizas lectura de argumentos y ejecucion deberian ser 2 comandos distintos, no esta claro)
+		- si no esta vacia, copia los argumentos (y ejecuta) > ft_read_arguments
+		- limpia las variables necesarias a ejecucion > ft_reset
+		- ejecuta todos los comandos en cmd->nexcom en un bucle:
+			- copia siguiente comando a IN
+			- mueve el listado de comandos una posicion
+			- Si no esta vacio copia argumentos
+			- copia argumentos y ejecuta > ft_read_arguments
+			- resetea las variables necesarias
+	USA VARIABLES:
+		cmd->list  (historial)
+		cmd->tmp_in (tuyo?)
+		cmd->buff (no estoy seguro si aun lo uso aqui...)
+		cmd->in (una estrella)
+		cmd->nexcom / ->in / ->next (siguientes comandos separados por el punto y comma)
 
-
+void	noprintable(t_cmd *cmd, char c)
+	+ ejecuta cuando se presiona un caracter no imprimible en el terminal
+		- llama la funcion correspondiente:
+			- > commandkeys (flechas, home/end, delete, alt-flechas)
+			- > die (salida)
+			- > ft_enter (enter)
+			- > ft_backspace (backspace)
+			- > ft_tab (tab)
+	USA VARIABLE:
+		cmd->i  (contador de posicion del cursor)
 /*
-*** commands.c
+*** history.c
 */
 
-int		ft_commands(t_cmd *cmd);
-int		ft_history(t_cmd *cmd, char *seq);
+int		ft_history(t_cmd *cmd, char *seq)
+	+ ejecuta al presionar flechas y copia historial a la pantalla
+		- verifica que la lista existe
+		- verifica que flecha has presionado
+		- compara con el elemento correspondiente del listado (si se ha editado)
+		- si es distinto añade elemento donde este > ft_lst_edit
+		- en flecha hacia abajo y no hay nada copia el cont al terminal con dupin
+		- mueve en el listtado con flechas ariba y abajo
+		- al final imprime el resultdo en pantalla
+	USA VARIABLES:
+		cmd->list  (historial)
+		cmd->tmp_in (tuyo?)
+		cmd->buff (no estoy seguro si aun lo uso aqui...)
+		cmd->in (una estrella)
+		cmd->nexcom / ->in / ->next (siguientes comandos separados por el punto y comma)
+
 void	ft_dupin(t_cmd *cmd, int src);
-void	ft_updatehist(t_cmd *cmd);
+	+ llamado por el historial
+		- si pasa 2 como argumento:
+			Limpia buffer y copia in a buffer
+		- caso contrario
+			- pilla el tamaño de in
+			- borra de la pantalla
+			- libera cmd->in
+			si le pasa 1 como parametro
+				- copia cmd->list->in a cmd->in
+			si le pasa 0
+				- copia cmd->buff a cmd->in
+				- libera cmd->buff
+	USA VARIABLES:
+		cmd->buff (no estoy seguro si aun lo uso aqui...)
+		cmd->in (una estrella)
+		cmd->list->in (primer elemento del historial)
+
+int	ft_altarrow(t_cmd *cmd);
+	+ ejecuta al presional alt mas flechas derecha / izquierda
+	+ ya no es necesario
+		- mueve una palabra a la vez
+	USA VARIABLE:
+		cmd->in (una estrella)
+
+/*
+*** semicolon.c
+*/
+void	ft_semicolon(t_cmd *cmd)
+	- recoge la string cmd->in
+	- al encontrar '&&' o ';'
+	- cuenta si hay pares o impares
+	- Si hay pares, sustituye por '\0' y añade a &cmd->nexcom
+	USA VARIABLES:
+		cmd->in (una estrella)
+		cmd->nexcom (listado de siguientes comandos)
+
+int	countleft(char *str, int pos, char c, char d)
+	- cuenta cuantos caracteres (hasta 2) hay a la izquierda de una posicion en una string
+int	countright(char *str, int pos, char c, char d)
+	- cuenta cuantos caracteres (hasta 2) hay a la derecha de una posicion en una string
+int	findpipes(char *str)
+	- cuenta cuantos '|' hay en una string
+int	findredir(char *str)
+	- Cuenta cuantos '>' o '<' hay en una string
+
+/*
+*** pipes.c
+*/
+int	pipes(t_cmd *cmd)
+	+ ejecuta al presionar enter
+	- conta el tamaño de cmd->in
+	- recoge la line abuscando por |
+	- al encontrar uno sustituye por '\0' y guarda lo siguiente en cmd->nexpip
+	USA VARIABLES:
+		cmd->in (una estrella)
+		cmd->nexpip (listado de pipes)
+
+void	ft_startpipe(char *str, t_cmd *cmd)
+	+ ejecuta durante la ejecucion del primer pipe
+		- crea un pipe con cmd->fd1 > pipe
+		- crea un fork
+		- copia los parametros > copyparam
+		- cierra extremo no necesario (lectura fd1)
+		- duplica la salida al nuevo FD (lectura fd1)
+		- cierra la salida anterior
+		- verifica que no sea comando interno >ft_arguments
+		- ejecuta con execve
+		- espera que termine
+	USA VARIABLES:
+		cmd->fd1 (primer FD)
+		cmd->envorg (environments?)
+
+void	middlepiper(char *str, t_cmd *cmd, int i)
+	+ es llamado antes de cada ejecucion de fd_midpipe para gestionar FDs
+		- verifica si es un pipe par o impar
+		- crea pipe
+		- invierte FDs si es par u impar
+		- llama > fd_midpipe
+
+void	ft_midpipe(char *str, t_cmd *cmd, int *fd_in, int *fd_out)
+	+ ejecuta durante la ejecucion de los pipes del medio si hay mas de 2
+		- redirecciona la entrada y la salida (similar a startpipe + endpipe)
+	USA VARIABLES:
+		cmd->fd_in (FD de entrada)
+		cmd->fd_ot (FD de salida)
+		cmd->envorg (environments?)
+
+void	ft_endpipe(char *str, t_cmd *cmd, int i)
+	+ ejecuta al ultimo pipe
+		- copia fd1 o 2 de acuerdo si le pasa 1 u 2 como parametro
+		- crea fork > fork
+		- copia los parametros > copyparam
+		- asegura que es el ultimo pipe antes de:
+			- duplicar el IN de lectura al stdin
+			- cerrar el IN de lectura
+			- redireccionar entradas y salidas > redirout
+			- verifica si no esta en comandos internos..
+				- si no esta ejecuta con execve
+		- espera q termine ejecucion
+	USA VARIABLES:
+		cmd->fd1 (primer FD)
+		cmd->fd12 (primer FD)
+		cmd->envorg (environments?)
+		cmd->nexpip->next (siguiente pipe)
+
+/*
+*** pipenator.c
+*/
+	+ llamado al ejecutar los pipes
+		- llama > ft_startpipe
+		- crea un bucle mientras haya siguiente pipe
+			- borra el listado de parametros > freelist
+			- duplica cmd->nexpip->in a cmd->in
+			- copia los argumentos > ft_lst_add_arguments
+			- copia cmd->in a cmd->buff hasta el espacio > ft_strduptochar
+			- verifica si esta en path de sistema > ft_path
+			- llama > middlepiper
+			- mueve listado una posicion
+		- libera listado de parametros > freelist
+		- duplica cmd->nexpip->in a cmd->in
+		- copia argumentos > ft_lst_add_arguments
+		- duplica cmd->in a cmd->buff hasta espacio > ft_strduptochar
+		- verifica si esta en path de sistema > ft_path
+		- llama > ft_endpipe
+		- borra cmd->param y cmd->nexpip > freelist
+	USA VARIABLES:
+		- cmd->in (una estrella)
+		- cmd->nexpip->next (siguiente pipe)
+		- cmd->param (listado de parametros)
+		- cmd->nexpip->in (comando del pipe)
+		- cmd->buff
+		- cmd->nexpip (pipe actual)
+
+/*
+*** redir.c
+*/
+int	redir(t_cmd *cmd, int i)
+	+ Ejecuta al presionar Enter para buscar pipes (creo)
+		- busca por > y <
+		- los sustituye por '\0' y copia el contenido siguiente hasta espacio a
+			- cmd->inpt '<'
+			- cmd->outp '>'
+		- llama a > redirector
+	USA VARIABLES:
+		- cmd->in (una estrella)
+		- cmd->inpt (guarda redireccion de entrada)
+		- cmd->outp (guarda redireccion de salida)
+
+void	redirout(t_cmd *cmd)
+	+ lo llama pipes y exec
+		- si hay redireccion redirecciona salida por defecto a cmd->out_fd
+		- si hay redireeccion redirecciona entrada a cmd->in_fd
+	USA VARIABLES:
+		- cmd->inpt (redireccion de entrada)
+		- cmd->outp (redirccion de salida)
+		- cmd->in_fd (fd de entrada)
+		- cmd->out_fd (fd de salida)
+
+int	tempinput(t_cmd *cmd)
+	+ lo llama redirector si detecta redireccion de entrada doble
+		- abre ".tempAF.tmp" en cmd->in_fd
+		- deshabilita raw mode
+		- usa > get_next_line en bucle hasta encontrar cmd->inpt
+			-	une la string cmd->buff a cmd-> c
+			-	libera c
+		- habilita raw mode
+		- volca todo el contenido de buffer al archivo > ft_putstr_fd
+		- cierra cmd->in_fd
+	USA VARIABLES:
+		- cmd->inpt (redireccion de entrada)
+		- cmd->raw (tabla raw mode)
+		- cmd->in_fd (fd de entrada)
+		- cmd->raw->raw (raw mode)
+		- cmd->raw->orig (original mode)
+
+int	redirector(t_cmd *cmd, int i)
+	+ lo llama redir
+		- SI ES INPUT
+			- verifica que inpt no este vacio (msg de error en ese caso)
+			- si es redireccion doble de entrada:
+				- llama > tempinput
+				- añade archivo temporal a cmd->inpt
+			- abre el archivo temporal a cmd->inpt
+		- SI ES OUTPUT
+			- Si es doble abre archivo a cmd->out_fd con O_append
+			- si es sencilla hace lo mismo con O_TRUNC
+	USA VARIABLES:
+		- cmd->in (una estrella)
+		- cmd->inpt (redireccion de entrada)
+		- cmd->outp (redirccion de salida)
+		- cmd->in_fd (fd de entrada)
+		- cmd->out_fd (fd de salida)
+
 
 /*
 *** read_arguments.c
