@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/23 17:03:20 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/23 19:14:31 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ int	ft_dollar(t_cmd *cmd, int i, int k)
 		return (0);
 	if (cmd->quote_s % 2 == 0)
 	{
-		while (cmd->in[i] != '\0' || cmd->in[i] != ' ')
+		while (cmd->tmp_in[i] != '\0' || cmd->tmp_in[i] != ' ')
 		{
-			if (cmd->in[i] == '\0')
+			if (cmd->tmp_in[i] == '\0')
 				break ;
 			ch++;
 			i++;
 		}
 		i -= ch;
-		var = ft_strdup(cmd->in + i + 1);
+		var = ft_strdup(cmd->tmp_in + i + 1);
 		var[ch - 1] = '\0';
 		cmd->dollar_value[k] = ft_strdup(search_value(var, cmd));
 		free(var);
@@ -49,27 +49,51 @@ int	ft_dollar(t_cmd *cmd, int i, int k)
 	return (k);
 }
 
-void	ft_quotes(t_cmd *cmd)
+int	ft_quotes(t_cmd *cmd)
 {
 	int	i;
+
+	i = 0;
+	if (cmd->tmp_in[i] == '\'')
+	{
+		cmd->quote_s++;
+		i++;
+	}
+	if (cmd->tmp_in[i] == '\"')
+	{
+		cmd->quote_d++;
+		i++;
+	}
+	return (i);
+}
+
+void	ft_replace(t_cmd *cmd)
+{
+	int	i;
+	int	j;
 	int	k;
 
 	i = 0;
 	k = 0;
-	while (cmd->in[i] != 0)
+	cmd->tmp_in = ft_strdup(cmd->in);
+	free(cmd->in);
+	while (cmd->tmp_in[i] != 0)
 	{
-		if (cmd->in[i] == '\'')
-		{
-			cmd->quote_s++;
+		j = 1;
+		if (cmd->tmp_in[i] == ' ')
 			i++;
-		}
-		if (cmd->in[i] == '\"')
+		ft_quotes(cmd);
+		if (cmd->tmp_in[i] == '$')
 		{
-			cmd->quote_d++;
-			i++;
+			k = ft_dollar(cmd, i, k);
+			if (cmd->quote_s % 2 == 0 && cmd->quote_s != 0)
+			{
+				while (cmd->tmp_in[i] != '\0' || cmd->tmp_in[i] != ' ')
+					j++;
+
+			}
+
 		}
-		if (cmd->in[i] == '$')
-			k++;
-		i++;
 	}
+	cmd->in = ft_strdup(cmd->tmp_in);
 }

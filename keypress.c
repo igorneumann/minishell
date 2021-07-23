@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keypress.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/05 18:43:38 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/23 18:00:08 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	ft_backspace(t_cmd *cmd)
 void	ft_enter(t_cmd *cmd)
 {
 	ft_lst_add_front(&cmd->list, ft_new(cmd->in));
+	cmd->tmp_in = ft_strdup(cmd->in);
 	cmd->buff = ft_strdup(cmd->in);
 	ft_semicolon(cmd);
 	printf("\r\n");
