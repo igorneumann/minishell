@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/23 11:00:39 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/23 11:32:10 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,18 @@ void	ft_echo(t_cmd *cmd)
 	}
 	else
 	{
-		if (cmd->in[i] != 0 && cmd->in[i] == '$'
-			&& cmd->dollar_value[j] != NULL)
+		while (cmd->in[i] != 0)
 		{
-			while (cmd->in[i] != ' ' && cmd->in[i] != 0)
-				i++;
-			ft_putstr(cmd->dollar_value[j]);
-			j++;
+			if (cmd->in[i] == '$' && cmd->dollar_value[j] != NULL)
+			{
+				while (cmd->in[i] != ' ' && cmd->in[i] != 0)
+					i++;
+				ft_putstr(cmd->dollar_value[j]);
+				j++;
+			}
+			else
+				ft_putchar_fd(cmd->in[i++], 1);
 		}
-		else
-			ft_putstr(&cmd->in[i]);
 		ft_putstr("\r\n");
 	}
 }

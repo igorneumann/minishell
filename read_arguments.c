@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/22 20:43:53 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/23 17:02:17 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,17 @@ void	 ft_read_arguments(t_cmd *cmd)
 
 int	ft_arguments(t_cmd *cmd)
 {
-	int		i;
+	int	i;
+	int	k;
 
+	k = 0;
 	i = 0;
 	ft_quotes(cmd);
 	while (cmd->in[i] == ' ')
 		i++;
-	if (ft_strnstr(cmd->in, "echo", 4))
+	if (ft_strnstr(cmd->in, "$", 1))
+		k = ft_dollar(cmd, i, k);
+	else if (ft_strnstr(cmd->in, "echo", 4))
 		ft_echo(cmd);
 	else if (ft_strnstr(cmd->in, "cd", 2))
 		ft_cd(cmd, i);
