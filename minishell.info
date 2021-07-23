@@ -1,0 +1,192 @@
+/*
+*** arguments.c
+*/
+
+void	ft_pwd(t_cmd *cmd);
+void	ft_echo(t_cmd *cmd);
+void	previous_folder(char *path, char *old_path, int j);
+void	ft_cd(t_cmd *cmd, int i);
+
+/*
+*** main.c
+*/
+
+int	main(int argc, char **argv, char **envp)
+	+ Funcion inicial
+		llama las funciones:
+			>ft_init
+			>ft_presentation
+			>ft_cmd_line (ahi se queda hasta la eternidad)
+			>die (sal del programa)
+
+void	ft_init(t_cmd *cmd, char **envp, t_raw *raw);
+	+ ejecuta al inicio
+		- resetea la pantalla > RefreshScreen
+		- resetea variables iniciales (ft_strdup para strings)
+		- guarda environment > ft_save_env
+		- Habilita Raw Mode > enableRawMode
+
+void	ft_reset(t_cmd *cmd)
+	? ejecuta despues de cada cadena de ejecucion para limpar para la siguiente
+		- Libera cmd->in y cmd->buff
+		- limpia listados > freelist
+		- borra strings con ft_strdup
+
+void	ft_presentation(void);
+	+ ejecutado al inicio
+		- imprime en pantalla la presentacion inicial
+
+void	ft_cmd_line(t_cmd *cmd);
+	+ ejecuta despues de ejecutar cada comando
+		- Libera cmd->in
+		- Imprime el prompt de comando
+		- libera cmd->in y cmd->buff
+
+
+/*
+*** f_rawmode
+*/
+
+void	die(const char *s, t_raw *raw);
+	+ ejecuta para salir del programa (en errores o al exit)
+		- Sal del raw mode
+		- getiona errores del exit con argumentos (que creo que no hace falta)
+
+void	editorRefreshScreen(void);
+	+ ejecuta al principio
+		- limpia la pantalla
+
+void	enableRawMode(t_raw *raw);
+	+ ejecuta al principio y despues de ejecutar cualquier programa
+		- copia la conf del terminal a cmd->orig
+		- configura el nuevo terminal
+		- aplica la nueva configuracion
+
+char	f_raw(t_raw *raw);
+	+ ejecuta todo el rato que se escribe en el terminal
+		- retorna la tecla digitada (1 caracter)
+
+/*
+*** lists_utils
+*/
+
+t_data	*ft_lst_last(t_data *elem);
+	- retorna ultimo elemento dde una lista
+
+t_data	*ft_lst_first(t_data *elem);
+	- retorna primer elemento de una lista
+
+t_envp	*search_elem(t_envp *elem, char *wanted);
+	- busca una string en una lista
+
+t_envp	*change_value(t_envp *elem, char *new_value);
+	- cambia el valor de un elemento de la lista
+
+t_envp	*remove_elem(t_envp *elem);
+	elimina uun elemento de una lista
+
+/*
+*** lists
+*/
+
+t_data	*ft_new(char *in);
+	- crea un nuevo elemento de una lista
+
+void	ft_lst_add_front(t_data **in, t_data *new);
+	- añade un elemento al principio de una lista
+
+void	ft_lst_remove_front(t_data *in);
+	- quita el primer elemento de una lista
+
+void	ft_lst_add_back(t_data **in, t_data *new);
+	- añade un elemento al final de una lista
+
+void	ft_lst_edit(t_data **in, t_data *new);
+	- añade un elemento en el medio de una lista
+
+int		lst_size(t_envp *lst)
+	- retorna el tamaño de una lista
+
+/*
+*** env.c
+*/
+
+t_envp	*ft_new_env_value(char *in, t_envp	*new, int i);
+t_envp	*ft_new_env(char *in);
+void	ft_save_env(t_cmd *cmd, char **envp);
+void	ft_options(t_cmd *cmd, int i);
+void	error_file_or_directory(t_cmd *cmd, int i);
+void	ft_env(t_cmd *cmd);
+
+/*
+*** export.c
+*/
+
+void	ft_include(t_cmd *cmd, char *aux);
+void	ft_export(t_cmd *cmd);
+void	ft_unset(t_cmd *cmd);
+
+/*
+*** keypress.c
+*/
+
+void	processkeypress(t_cmd *cmd);
+	+ Ejecuta siempre que se preesiona una tecla en shell
+		- recibe C > f_raw
+		(quizas ese while pueda ser un if)
+		- SI NO ES TECLA DE CONTROL Y ESTA AL FINAL DE LA LINEA
+			- une el contenido de cmd->in con c (teclado recibido con f_raw)
+		- NO ES TECLA DE CONTROL Y ESTAS EN EL MEDIO DE LA LINEA:
+			- > ft_editstring para insertar caracter en el medio
+		- SI ES TECLA DE CONTROL:
+			- > noprintable para gestionar teclas de comando
+	USA VARIABLES:
+		cmd->raw  (recibe contenido antes de IN)
+		cmd->in (input)
+		cmd->i (contador de posicion del cursor)
+
+void	ft_editstring(t_cmd *cmd, char c)
+	+ ejecuta cuando se escribe el caracter en el medio de una linea
+		- recontruye la linea para añadir un caracter en el medio
+	USA VARIABLES:
+		cmd->in (input)
+		cmd->i (contador de posicion del cursor)
+
+void	ft_backspace(t_cmd *cmd);
+	+ ejecuta cada vez que se usa el backspace (y creo que delete)
+		- borra un caracter de la pantalla y mueve el restante una posicion
+	USA VARIABLES:
+		cmd->in (input)
+		cmd->i (contador de posicion del cursor)
+
+void	ft_enter(t_cmd *cmd)
+	+ ejecuta al presionar enter en la linea de comando
+
+
+/*
+*** commands.c
+*/
+
+int		ft_commands(t_cmd *cmd);
+int		ft_history(t_cmd *cmd, char *seq);
+void	ft_dupin(t_cmd *cmd, int src);
+void	ft_updatehist(t_cmd *cmd);
+
+/*
+*** read_arguments.c
+*/
+
+void	arguments(t_cmd *cmd, int i);
+void	ft_read_arguments(t_cmd *cmd);
+
+/*
+*** utils.c
+*/
+
+int		command_not_found(char *str, t_cmd *cmd);
+void	ft_printlist(t_data *x, char *buff);
+void	ft_print_env(t_envp *x);
+void	ft_sort_env(t_cmd *cmd);
+void	ft_print_export(t_envp *x);
+
+#endif
