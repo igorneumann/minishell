@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/22 20:44:02 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/23 10:53:21 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_command
 	int		quote_s;
 	int		quote_d;
 	int		quotes;
+	char	**dollar_value;
 	t_data	*list;
 	t_data	*param;
 	t_data	*nexcom;
@@ -206,7 +207,8 @@ int		ft_altarrow(t_cmd *cmd);
 *** quotes.c
 */
 
-void	ft_dollar(t_cmd *cmd, int i);
+char	*search_value(char *elem, t_cmd *cmd);
+int		ft_dollar(t_cmd *cmd, int i, int k);
 void	ft_quotes(t_cmd *cmd);
 
 /*

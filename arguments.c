@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/22 20:20:17 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/23 11:00:39 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ void	ft_pwd(t_cmd *cmd)
 void	ft_echo(t_cmd *cmd)
 {
 	int	i;
+	int	j;
 
 	i = 0;
+	j = 0;
 	cmd->not_found = 1;
 	if (command_not_found("echo", cmd))
 		return ;
@@ -38,6 +40,14 @@ void	ft_echo(t_cmd *cmd)
 		i += 2;
 		while (cmd->in[i] == ' ' || cmd->in[i] == '\'')
 			i++;
+		if (cmd->in[i] != 0 && cmd->in[i] == '$'
+			&& cmd->dollar_value[j] != NULL)
+		{
+			while (cmd->in[i] != ' ' && cmd->in[i] != 0)
+				i++;
+			ft_putstr(cmd->dollar_value[j]);
+			j++;
+		}
 		if (cmd->in[i] != 0 && cmd->in[i] != '\'')
 			ft_putstr(&cmd->in[i]);
 		if (cmd->in[i] == '\'')
@@ -45,7 +55,16 @@ void	ft_echo(t_cmd *cmd)
 	}
 	else
 	{
-		ft_putstr(&cmd->in[i]);
+		if (cmd->in[i] != 0 && cmd->in[i] == '$'
+			&& cmd->dollar_value[j] != NULL)
+		{
+			while (cmd->in[i] != ' ' && cmd->in[i] != 0)
+				i++;
+			ft_putstr(cmd->dollar_value[j]);
+			j++;
+		}
+		else
+			ft_putstr(&cmd->in[i]);
 		ft_putstr("\r\n");
 	}
 }
