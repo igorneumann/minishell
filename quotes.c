@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/23 19:14:31 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/26 11:53:56 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	ft_replace(t_cmd *cmd)
 	while (cmd->tmp_in[i] != 0)
 	{
 		j = 1;
+		printf("%c\r\n", cmd->tmp_in[i]);
 		if (cmd->tmp_in[i] == ' ')
 			i++;
 		ft_quotes(cmd);
@@ -92,8 +93,11 @@ void	ft_replace(t_cmd *cmd)
 					j++;
 
 			}
-
+			i++;
 		}
+		else
+			i++;
 	}
+	printf("%s\r\n", cmd->tmp_in);
 	cmd->in = ft_strdup(cmd->tmp_in);
 }
