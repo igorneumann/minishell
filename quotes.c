@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/26 17:53:18 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/26 23:35:28 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,32 @@ char	*search_value(char *elem, t_cmd *cmd)
 	return (NULL);
 }
 
-int	look_for_closure(char quote, char searching, char *line, int position)
+int	look_for_closure(char quote, char searching, char *line)
 {
-	while (line[position])
+	while (*line)
 	{
-		if (line[position] == searching)
+		if (*line == searching)
 		{
-			while (line[position])
+			while (*line)
 			{
-				if (line[position] == quote)
+				if (*line == quote)
 				{
-					while (line[position])
+					while (*line)
 					{
-						if (line[position] == quote)
+						if (*line == quote)
 							return (1);
-						position++;
+						line++;
 					}
 				}
-				position--;
+				line--;
 			}
 		}
-		position++;
+		line++;
 	}
 	return (0);
 }
 
-int	ft_dollar(t_cmd *cmd, int i, int k)
+int	dollar(t_cmd *cmd, int k)
 {
 	int		ch;
 	char	*var;
@@ -57,15 +57,14 @@ int	ft_dollar(t_cmd *cmd, int i, int k)
 		return (0);
 	if (cmd->quote_s % 2 == 0)
 	{
-		while (cmd->tmp_in[i] != '\0' || cmd->tmp_in[i] != ' ')
+		while (*cmd->tmp_in != '\0' || *cmd->tmp_in != ' ')
 		{
-			if (cmd->tmp_in[i] == '\0')
+			if (*cmd->tmp_in == '\0')
 				break ;
 			ch++;
-			i++;
+			cmd->tmp_in++;
 		}
-		i -= ch;
-		var = ft_strdup(cmd->tmp_in + i + 1);
+		var = ft_strdup(&cmd->tmp_in + 1);
 		var[ch - 1] = '\0';
 		cmd->dollar_value[k] = ft_strdup(search_value(var, cmd));
 		free(var);
@@ -74,7 +73,7 @@ int	ft_dollar(t_cmd *cmd, int i, int k)
 	return (k);
 }
 
-int	ft_quotes(t_cmd *cmd)
+int	quotes(t_cmd *cmd)
 {
 	int	i;
 
@@ -92,26 +91,41 @@ int	ft_quotes(t_cmd *cmd)
 	return (i);
 }
 
-void	ft_replace(t_cmd *cmd)
+void	replace(t_cmd *cmd)
 {
-	int	i;
-	int	j;
+//	int	i;
+//	int	j;
 	int	k;
 
-	i = 0;
+//	i = 0;
 	k = 0;
 	cmd->tmp_in = ft_strdup(cmd->in);
 	free(cmd->in);
-	while (cmd->tmp_in[i] != 0)
+	while (*cmd->tmp_in)
+	{
+		if (quotes(cmd) != 0 && *cmd->tmp_in == '$')
+		{
+			if (look_for_closure("\"", "$", &cmd->tmp_in) == 1)
+			{
+				if (look_for_closure("\'", "$", &cmd->tmp_in) == 1)
+					cmd->tmp_in++;
+				else
+					k = dollar(cmd, k);
+			}
+		}
+		else if (quotes(cmd) == 0 && *cmd->tmp_in == '$')
+			k = dollar(cmd, k);
+	}
+
+/*	while (cmd->tmp_in[i] != 0)
 	{
 		j = 1;
-		printf("%c\r\n", cmd->tmp_in[i]);
 		if (cmd->tmp_in[i] == ' ')
 			i++;
-		ft_quotes(cmd);
+	//	quotes(cmd);
 		if (cmd->tmp_in[i] == '$')
 		{
-			k = ft_dollar(cmd, i, k);
+			k = dollar(cmd, i, k);
 			if (cmd->quote_s % 2 == 0 && cmd->quote_s != 0)
 			{
 				while (cmd->tmp_in[i] != '\0' || cmd->tmp_in[i] != ' ')
@@ -122,7 +136,7 @@ void	ft_replace(t_cmd *cmd)
 		}
 		else
 			i++;
-	}
+	}*/
 	printf("%s\r\n", cmd->tmp_in);
 	cmd->in = ft_strdup(cmd->tmp_in);
 }
