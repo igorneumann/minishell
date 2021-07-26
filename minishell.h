@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/23 19:16:08 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/26 18:39:59 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,10 +234,11 @@ void	ft_sort_env(t_envp *list);
 void	ft_print_export(t_envp *x);
 
 /*
-*** morekeys.c
+*** moreprompt.c
 */
 
 void	ft_tab(t_cmd *cmd);
+void	promptin(int i);
 
 /*
 *** exec.c

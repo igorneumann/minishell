@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/22 20:07:40 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/26 19:21:12 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	ft_presentation(void)
 
 void	ft_cmd_line(t_cmd *cmd)
 {
+	signal(SIGINT, promptin);
 	while (1)
 	{
 		if (cmd->i == 0 && cmd->in[0] == 13)

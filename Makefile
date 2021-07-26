@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+         #
+#    By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 10:24:24 by narroyo-          #+#    #+#              #
-#    Updated: 2021/07/23 09:44:04 by narroyo-         ###   ########.fr        #
+#    Updated: 2021/07/26 18:34:25 by ineumann         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ HEADER			=	-I ./includes/libft/
 SRCS			=	main.c ./includes/gnl/get_next_line.c ./f_rawmode.c \
 					lists.c env.c commandkeys.c keypress.c utils.c arguments.c \
 					lists_utils.c export.c envp.c read_arguments.c history.c \
-					semicolon.c morekeys.c exec.c export_utils.c pipes.c \
+					semicolon.c moreprompt.c exec.c export_utils.c pipes.c \
 					morelists.c path.c pipenator.c redir.c quotes.c
 LIBFT			=	./includes/libft
 OBJS 			=	$(SRCS:.c=.o)

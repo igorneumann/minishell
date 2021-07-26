@@ -407,6 +407,12 @@ int	redirector(t_cmd *cmd, int i)
 		- cmd->out_fd (fd de salida)
 
 
+moreprompt.c
+void	ft_tab(t_cmd *cmd)
+	- añade 5 espacios al presionar tab
+void	promptin(void)
+	- solamente imprime el prompt
+
 /*
 *** read_arguments.c
 */

@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/06 18:38:28 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/26 19:25:44 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	enableRawMode(t_raw *raw)
 	raw->raw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
 	raw->raw.c_oflag &= ~(OPOST);
 	raw->raw.c_cflag |= (CS8);
-	raw->raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
+	raw->raw.c_lflag &= ~(ECHO | ICANON | IEXTEN);
 	raw->raw.c_cc[VMIN] = 0;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw->raw) == -1)
 		die("tcsetattr", raw);

@@ -20,6 +20,7 @@
 		"files.associations": {
 			"__locale": "c",
 			"minishell.h": "c",
-			"__config": "c"
+			"__config": "c",
+			"signal.h": "c"
 		},
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keypress.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/26 10:32:59 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/26 19:10:33 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 void	processkeypress(t_cmd *cmd)
 {
 	char	c;
-	char	*tmp;
 
 	c = f_raw(cmd->raw);
 	while (!iscntrl(c))
 	{
-		tmp = (char *)cmd->raw;
 		if (cmd->i == (int)ft_strlen(cmd->in))
 		{
 			cmd->in = ft_strjoin(cmd->in, &c);
@@ -29,7 +27,6 @@ void	processkeypress(t_cmd *cmd)
 		}
 		else
 			ft_editstring(cmd, c);
-//		free(tmp);
 		c = '\0';
 	}
 	noprintable(cmd, c);
