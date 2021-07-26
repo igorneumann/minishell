@@ -15,12 +15,12 @@
 void	processkeypress(t_cmd *cmd)
 {
 	char	c;
-	char	*tmp;
+//	char	*tmp;
 
 	c = f_raw(cmd->raw);
 	while (!iscntrl(c))
 	{
-		tmp = cmd->raw;
+//		tmp = (char *)cmd->raw;
 		if (cmd->i == (int)ft_strlen(cmd->in))
 		{
 			cmd->in = ft_strjoin(cmd->in, &c);
@@ -29,7 +29,7 @@ void	processkeypress(t_cmd *cmd)
 		}
 		else
 			ft_editstring(cmd, c);
-		free(tmp);
+	//	free(tmp);
 		c = '\0';
 	}
 	noprintable(cmd, c);
