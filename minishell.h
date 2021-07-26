@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/26 18:39:59 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/07/26 19:27:22 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ int		ft_altarrow(t_cmd *cmd);
 */
 
 char	*search_value(char *elem, t_cmd *cmd);
+int		look_for_closure(char quote, char dollar, char *line, int position);
 int		ft_dollar(t_cmd *cmd, int i, int k);
 int		ft_quotes(t_cmd *cmd);
 void	ft_replace(t_cmd *cmd);

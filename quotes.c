@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/26 11:53:56 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/26 17:53:18 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,31 @@ char	*search_value(char *elem, t_cmd *cmd)
 	if (cmd->envp->value != NULL && ft_strcmp(elem, cmd->envp->key) == 0)
 		return (cmd->envp->value);
 	return (NULL);
+}
+
+int	look_for_closure(char quote, char searching, char *line, int position)
+{
+	while (line[position])
+	{
+		if (line[position] == searching)
+		{
+			while (line[position])
+			{
+				if (line[position] == quote)
+				{
+					while (line[position])
+					{
+						if (line[position] == quote)
+							return (1);
+						position++;
+					}
+				}
+				position--;
+			}
+		}
+		position++;
+	}
+	return (0);
 }
 
 int	ft_dollar(t_cmd *cmd, int i, int k)
