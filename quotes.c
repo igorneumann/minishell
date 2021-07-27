@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/27 19:02:29 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/27 19:06:00 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,11 @@ void	replace(t_cmd *cmd, int position, int old_len)
 			}
 		}
 		else
+		{
 			*cmd->in = *cmd->tmp_in;
 			cmd->tmp_in++;
 			cmd->in++;
+		}
 	}
 	*cmd->in = '\0';
 }
@@ -150,7 +152,7 @@ void	check_replacement(t_cmd *cmd)
 			k = dollar(cmd, k);
 		cmd->tmp_in++;
 	}
-	//printf("%s\r\n", cmd->tmp_in);
+	printf("%s\r\n", cmd->tmp_in);
 	if (k == 0)
 		cmd->in = ft_strdup(cmd->tmp_in);
 }
