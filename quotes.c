@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/27 18:31:45 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/27 19:02:29 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,11 +129,8 @@ int	quotes(t_cmd *cmd)
 
 void	check_replacement(t_cmd *cmd)
 {
-//	int	i;
-//	int	j;
 	int	k;
 
-//	i = 0;
 	k = 0;
 	cmd->tmp_in = ft_strdup(cmd->in);
 	free(cmd->in);
@@ -153,27 +150,7 @@ void	check_replacement(t_cmd *cmd)
 			k = dollar(cmd, k);
 		cmd->tmp_in++;
 	}
-
-/*	while (cmd->tmp_in[i] != 0)
-	{
-		j = 1;
-		if (cmd->tmp_in[i] == ' ')
-			i++;
-	//	quotes(cmd);
-		if (cmd->tmp_in[i] == '$')
-		{
-			k = dollar(cmd, i, k);
-			if (cmd->quote_s % 2 == 0 && cmd->quote_s != 0)
-			{
-				while (cmd->tmp_in[i] != '\0' || cmd->tmp_in[i] != ' ')
-					j++;
-
-			}
-			i++;
-		}
-		else
-			i++;
-	}*/
-	printf("%s\r\n", cmd->tmp_in);
-	cmd->in = ft_strdup(cmd->tmp_in);
+	//printf("%s\r\n", cmd->tmp_in);
+	if (k == 0)
+		cmd->in = ft_strdup(cmd->tmp_in);
 }
