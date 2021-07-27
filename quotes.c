@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/26 23:35:28 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/27 18:31:45 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,30 +46,66 @@ int	look_for_closure(char quote, char searching, char *line)
 	return (0);
 }
 
+void	replace(t_cmd *cmd, int position, int old_len)
+{
+	int	new_len;
+	int	diff;
+	int	counter;
+
+	counter = 0;
+	new_len = ft_strlen(cmd->dollar_value[position]);
+	diff = ft_strlen(cmd->tmp_in) + new_len - (old_len + 1);
+	cmd->in = (char *)malloc(sizeof(char) * diff + 1);
+	while (cmd->tmp_in != '\0')
+	{
+		if (*cmd->tmp_in == '$')
+		{
+			counter++;
+			if (counter == position)
+			{
+				while (*cmd->dollar_value[position])
+				{
+					*cmd->in = *cmd->dollar_value[position];
+					cmd->dollar_value[position]++;
+					cmd->in++;
+				}
+			}
+		}
+		else
+			*cmd->in = *cmd->tmp_in;
+			cmd->tmp_in++;
+			cmd->in++;
+	}
+	*cmd->in = '\0';
+}
+
 int	dollar(t_cmd *cmd, int k)
 {
+	int		i;
 	int		ch;
 	char	*var;
 
+	i = 0;
 	ch = 0;
 	cmd->dollar_value = (char **)malloc(sizeof(char *) * 5);
 	if (cmd->quote_s % 2 != 0)
 		return (0);
 	if (cmd->quote_s % 2 == 0)
 	{
-		while (*cmd->tmp_in != '\0' || *cmd->tmp_in != ' ')
+		while (cmd->tmp_in[i] != '\0' || cmd->tmp_in[i] != ' ')
 		{
-			if (*cmd->tmp_in == '\0')
+			if (cmd->tmp_in[i] == '\0')
 				break ;
 			ch++;
-			cmd->tmp_in++;
+			i++;
 		}
-		var = ft_strdup(&cmd->tmp_in + 1);
-		var[ch - 1] = '\0';
+		var = ft_strdup(cmd->tmp_in + i);
+		var[ch] = '\0';
 		cmd->dollar_value[k] = ft_strdup(search_value(var, cmd));
 		free(var);
 		k++;
 	}
+	replace(cmd, k, ch);
 	return (k);
 }
 
@@ -91,7 +127,7 @@ int	quotes(t_cmd *cmd)
 	return (i);
 }
 
-void	replace(t_cmd *cmd)
+void	check_replacement(t_cmd *cmd)
 {
 //	int	i;
 //	int	j;
@@ -105,9 +141,9 @@ void	replace(t_cmd *cmd)
 	{
 		if (quotes(cmd) != 0 && *cmd->tmp_in == '$')
 		{
-			if (look_for_closure("\"", "$", &cmd->tmp_in) == 1)
+			if (look_for_closure('\"', '$', cmd->tmp_in) == 1)
 			{
-				if (look_for_closure("\'", "$", &cmd->tmp_in) == 1)
+				if (look_for_closure('\'', '$', cmd->tmp_in) == 1)
 					cmd->tmp_in++;
 				else
 					k = dollar(cmd, k);
@@ -115,6 +151,7 @@ void	replace(t_cmd *cmd)
 		}
 		else if (quotes(cmd) == 0 && *cmd->tmp_in == '$')
 			k = dollar(cmd, k);
+		cmd->tmp_in++;
 	}
 
 /*	while (cmd->tmp_in[i] != 0)
