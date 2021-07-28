@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/28 22:28:10 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/28 22:54:02 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,24 @@ int	look_for_closure(char quote, char searching, char *line)
 
 void	replace(t_cmd *cmd, int position, int old_len)
 {
-	int	new_len;
-	int	diff;
 	int	counter;
 	int	i;
 	int	j;
+	int	k;
 
 	counter = 0;
 	i = 0;
 	j = 0;
+	k = 0;
 	position--;
-	new_len = ft_strlen(cmd->dollar_value[position]);
-	diff = ft_strlen(cmd->tmp_in) + new_len - (old_len + 1);
-	// LE ASIGNO MAL LA MEMORIA
-	cmd->in = (char *)malloc(sizeof(char) * diff + 100);
+	// ALOCO MAL LA MEMORIA
+	cmd->in = (char *)malloc(sizeof(char) * (ft_strlen(cmd->tmp_in)
+		+ ft_strlen(cmd->dollar_value[position]) - (old_len + 1)) + 1);
 	if (cmd->in == NULL)
 		return ;
-	while (*cmd->tmp_in != '\0')
+	while (cmd->tmp_in[k] && cmd->tmp_in[k] != '\0')
 	{
-		if (*cmd->tmp_in == '$')
+		if (cmd->tmp_in[k] == '$')
 		{
 			if (counter == position)
 			{
@@ -80,20 +79,21 @@ void	replace(t_cmd *cmd, int position, int old_len)
 					j++;
 					i++;
 				}
-				i += diff;
-				cmd->tmp_in++;
+				i += ft_strlen(cmd->tmp_in)
+					+ ft_strlen(cmd->dollar_value[position]) - (old_len + 1);
+			//	k++;
 				counter++;
 			}
 		}
-		else if (*cmd->tmp_in)
+		else if (cmd->tmp_in[k] && cmd->tmp_in[k] != '\0')
 		{
-			cmd->in[i] = *cmd->tmp_in;
+			cmd->in[i] = cmd->tmp_in[k];
 			printf("%c\n", cmd->in[i]);
-			cmd->tmp_in++;
+			k++;
 			i++;
 		}
 	}
-	*cmd->in = '\0';
+	cmd->in[i] = '\0';
 }
 
 int	dollar(t_cmd *cmd, int k)
