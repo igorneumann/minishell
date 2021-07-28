@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/28 17:19:33 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/28 22:28:10 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 char	*search_value(char *elem, t_cmd *cmd)
 {
-	elem++;
 	while (ft_strcmp(elem, cmd->envp->key) != 0)
 		cmd->envp = cmd->envp->next;
 	if (cmd->envp->value != NULL && ft_strcmp(elem, cmd->envp->key) == 0)
+	{
+		printf("%s\r\n", cmd->envp->value);
 		return (cmd->envp->value);
+	}
 	return (NULL);
 }
 
@@ -52,37 +54,43 @@ void	replace(t_cmd *cmd, int position, int old_len)
 	int	new_len;
 	int	diff;
 	int	counter;
+	int	i;
+	int	j;
 
 	counter = 0;
+	i = 0;
+	j = 0;
 	position--;
 	new_len = ft_strlen(cmd->dollar_value[position]);
-	printf("%s\n", cmd->tmp_in);
-	printf("%lu\n", ft_strlen(cmd->tmp_in) + new_len - old_len + 1);
 	diff = ft_strlen(cmd->tmp_in) + new_len - (old_len + 1);
-	cmd->in = (char *)malloc(sizeof(char) * diff + 1);
+	// LE ASIGNO MAL LA MEMORIA
+	cmd->in = (char *)malloc(sizeof(char) * diff + 100);
 	if (cmd->in == NULL)
 		return ;
-	while (cmd->tmp_in != '\0')
+	while (*cmd->tmp_in != '\0')
 	{
 		if (*cmd->tmp_in == '$')
 		{
 			if (counter == position)
 			{
-				while (*cmd->dollar_value[position])
+				while (cmd->dollar_value[position][j])
 				{
-					*cmd->in = *cmd->dollar_value[position];
-					cmd->dollar_value[position]++;
-					cmd->in++;
+					cmd->in[i] = cmd->dollar_value[position][j];
+					printf("%c\n", cmd->in[i]);
+					j++;
+					i++;
 				}
+				i += diff;
 				cmd->tmp_in++;
 				counter++;
 			}
 		}
-		else
+		else if (*cmd->tmp_in)
 		{
-			*cmd->in = *cmd->tmp_in;
+			cmd->in[i] = *cmd->tmp_in;
+			printf("%c\n", cmd->in[i]);
 			cmd->tmp_in++;
-			cmd->in++;
+			i++;
 		}
 	}
 	*cmd->in = '\0';
@@ -91,23 +99,34 @@ void	replace(t_cmd *cmd, int position, int old_len)
 int	dollar(t_cmd *cmd, int k)
 {
 	int		i;
+	int		j;
 	int		ch;
 	char	*var;
 
 	i = 0;
+	j = 0;
 	ch = 0;
 	if (cmd->quote_s % 2 != 0)
 		return (0);
 	if (cmd->quote_s % 2 == 0)
 	{
-		while (cmd->tmp_in[i] != '\0' || cmd->tmp_in[i] != ' ')
+		while (cmd->tmp_in[i] != '$' && (cmd->tmp_in[i] != '\0' || cmd->tmp_in[i] != ' '))
 		{
 			if (cmd->tmp_in[i] == '\0')
 				break ;
-			ch++;
 			i++;
 		}
-		var = ft_strdup(cmd->tmp_in);
+		i++;
+		while (cmd->tmp_in[i + ch] != '\0' && cmd->tmp_in[i + ch] != ' ')
+			ch++;
+		var = (char *)malloc(sizeof(char) * ch + 1);
+		while (cmd->tmp_in[i] && i < i + ch)
+		{
+			var[j] = cmd->tmp_in[i];
+			i++;
+			j++;
+		}
+		var[j] = '\0';
 		cmd->dollar_value[k] = ft_strdup(search_value(var, cmd));
 		free(var);
 		k++;
@@ -180,4 +199,5 @@ void	check_replacement(t_cmd *cmd)
 	}
 	if (ft_strchr(cmd->in, '$') != NULL)
 		cmd->in = ft_strdup(cmd->tmp_in);
+	free(cmd->tmp_in);
 }
