@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/28 22:54:02 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/29 10:58:41 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,34 +17,34 @@ char	*search_value(char *elem, t_cmd *cmd)
 	while (ft_strcmp(elem, cmd->envp->key) != 0)
 		cmd->envp = cmd->envp->next;
 	if (cmd->envp->value != NULL && ft_strcmp(elem, cmd->envp->key) == 0)
-	{
-		printf("%s\r\n", cmd->envp->value);
 		return (cmd->envp->value);
-	}
 	return (NULL);
 }
 
 int	look_for_closure(char quote, char searching, char *line)
 {
-	while (*line)
+	int	i;
+
+	i = 0;
+	while (line[i])
 	{
-		if (*line == searching)
+		if (line[i] == searching)
 		{
-			while (*line)
+			while (line[i])
 			{
-				if (*line == quote)
+				if (line[i] == quote)
 				{
-					while (*line)
+					while (line[i])
 					{
-						if (*line == quote)
+						if (line[i] == quote)
 							return (1);
-						line++;
+						i++;
 					}
 				}
-				line--;
+				i--;
 			}
 		}
-		line++;
+		i++;
 	}
 	return (0);
 }
@@ -69,26 +69,30 @@ void	replace(t_cmd *cmd, int position, int old_len)
 	while (cmd->tmp_in[k] && cmd->tmp_in[k] != '\0')
 	{
 		if (cmd->tmp_in[k] == '$')
+		//	&& (look_for_closure('\"', '$', cmd->tmp_in) == 1
+		//	|| look_for_closure('\'', '$', cmd->tmp_in) == 0))
 		{
 			if (counter == position)
 			{
 				while (cmd->dollar_value[position][j])
 				{
 					cmd->in[i] = cmd->dollar_value[position][j];
-					printf("%c\n", cmd->in[i]);
+					printf("%c", cmd->in[i]);
+					fflush(stdout);
 					j++;
 					i++;
 				}
 				i += ft_strlen(cmd->tmp_in)
 					+ ft_strlen(cmd->dollar_value[position]) - (old_len + 1);
-			//	k++;
+				k++;
 				counter++;
 			}
 		}
 		else if (cmd->tmp_in[k] && cmd->tmp_in[k] != '\0')
 		{
 			cmd->in[i] = cmd->tmp_in[k];
-			printf("%c\n", cmd->in[i]);
+			printf("%c", cmd->in[i]);
+			fflush(stdout);
 			k++;
 			i++;
 		}

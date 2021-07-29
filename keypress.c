@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/27 18:52:14 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/29 10:10:52 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 void	processkeypress(t_cmd *cmd)
 {
 	char	c;
-	char	*tmp;
 
 	c = f_raw(cmd->raw);
 	while (!iscntrl(c))
 	{
-		tmp = (char *)cmd->raw;
 		if (cmd->i == (int)ft_strlen(cmd->in))
 		{
 			cmd->in = ft_strjoin(cmd->in, &c);
