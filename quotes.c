@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/29 10:58:41 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/29 20:19:36 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	replace(t_cmd *cmd, int position, int old_len)
 				}
 				i += ft_strlen(cmd->tmp_in)
 					+ ft_strlen(cmd->dollar_value[position]) - (old_len + 1);
-				k++;
 				counter++;
 			}
 		}
