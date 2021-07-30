@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/30 12:54:01 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/30 20:59:06 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,25 +67,24 @@ void	replace(t_cmd *cmd, int position, int old_len)
 		return ;
 	while (cmd->tmp_in[k] && cmd->tmp_in[k] != '\0')
 	{
-		if (look_for_closure('\'', '$', cmd->tmp_in) == 0)
+		if (cmd->tmp_in[k] == '$')
 		{
-			if (cmd->tmp_in[k] == '$')
-			//	&& (look_for_closure('\"', '$', cmd->tmp_in) == 1)
+			if (counter == position)
 			{
-				if (counter == position)
+				while (cmd->dollar_value[position][j])
 				{
-					while (cmd->dollar_value[position][j])
-					{
-						cmd->in[i] = cmd->dollar_value[position][j];
-						j++;
-						i++;
-					}
-					k += old_len + 1;
-					counter++;
+					cmd->in[i] = cmd->dollar_value[position][j];
+					j++;
+					i++;
 				}
+				k += old_len + 1;
+				counter++;
 			}
-
 		}
+	//ESTO NO FUNCIONA, HAY QUE SALTAR LAS COMILLAS CUANDO LO REEMPLACE
+	//	if (cmd->tmp_in[k] == '\''
+	//		&& look_for_closure('\'', '$', cmd->tmp_in) == 1)
+	//		i++;
 		else if (cmd->tmp_in[k] && cmd->tmp_in[k] != '\0')
 		{
 			cmd->in[i] = cmd->tmp_in[k];
