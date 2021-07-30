@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/29 20:19:36 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/30 10:54:33 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,21 +77,16 @@ void	replace(t_cmd *cmd, int position, int old_len)
 				while (cmd->dollar_value[position][j])
 				{
 					cmd->in[i] = cmd->dollar_value[position][j];
-					printf("%c", cmd->in[i]);
-					fflush(stdout);
 					j++;
 					i++;
 				}
-				i += ft_strlen(cmd->tmp_in)
-					+ ft_strlen(cmd->dollar_value[position]) - (old_len + 1);
+				k += old_len + 1;
 				counter++;
 			}
 		}
 		else if (cmd->tmp_in[k] && cmd->tmp_in[k] != '\0')
 		{
 			cmd->in[i] = cmd->tmp_in[k];
-			printf("%c", cmd->in[i]);
-			fflush(stdout);
 			k++;
 			i++;
 		}
@@ -123,7 +118,7 @@ int	dollar(t_cmd *cmd, int k)
 		while (cmd->tmp_in[i + ch] != '\0' && cmd->tmp_in[i + ch] != ' ')
 			ch++;
 		var = (char *)malloc(sizeof(char) * ch + 1);
-		while (cmd->tmp_in[i] && i < i + ch)
+		while (cmd->tmp_in[i] && cmd->tmp_in[i] != ' ' && i < i + ch )
 		{
 			var[j] = cmd->tmp_in[i];
 			i++;
