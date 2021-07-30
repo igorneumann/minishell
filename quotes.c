@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/30 10:54:33 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/07/30 12:54:01 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,28 +61,30 @@ void	replace(t_cmd *cmd, int position, int old_len)
 	j = 0;
 	k = 0;
 	position--;
-	// ALOCO MAL LA MEMORIA
 	cmd->in = (char *)malloc(sizeof(char) * (ft_strlen(cmd->tmp_in)
 		+ ft_strlen(cmd->dollar_value[position]) - (old_len + 1)) + 1);
 	if (cmd->in == NULL)
 		return ;
 	while (cmd->tmp_in[k] && cmd->tmp_in[k] != '\0')
 	{
-		if (cmd->tmp_in[k] == '$')
-		//	&& (look_for_closure('\"', '$', cmd->tmp_in) == 1
-		//	|| look_for_closure('\'', '$', cmd->tmp_in) == 0))
+		if (look_for_closure('\'', '$', cmd->tmp_in) == 0)
 		{
-			if (counter == position)
+			if (cmd->tmp_in[k] == '$')
+			//	&& (look_for_closure('\"', '$', cmd->tmp_in) == 1)
 			{
-				while (cmd->dollar_value[position][j])
+				if (counter == position)
 				{
-					cmd->in[i] = cmd->dollar_value[position][j];
-					j++;
-					i++;
+					while (cmd->dollar_value[position][j])
+					{
+						cmd->in[i] = cmd->dollar_value[position][j];
+						j++;
+						i++;
+					}
+					k += old_len + 1;
+					counter++;
 				}
-				k += old_len + 1;
-				counter++;
 			}
+
 		}
 		else if (cmd->tmp_in[k] && cmd->tmp_in[k] != '\0')
 		{
