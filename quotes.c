@@ -6,20 +6,11 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/30 20:59:06 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/02 12:40:00 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*search_value(char *elem, t_cmd *cmd)
-{
-	while (ft_strcmp(elem, cmd->envp->key) != 0)
-		cmd->envp = cmd->envp->next;
-	if (cmd->envp->value != NULL && ft_strcmp(elem, cmd->envp->key) == 0)
-		return (cmd->envp->value);
-	return (NULL);
-}
 
 int	look_for_closure(char quote, char searching, char *line)
 {
@@ -47,91 +38,6 @@ int	look_for_closure(char quote, char searching, char *line)
 		i++;
 	}
 	return (0);
-}
-
-void	replace(t_cmd *cmd, int position, int old_len)
-{
-	int	counter;
-	int	i;
-	int	j;
-	int	k;
-
-	counter = 0;
-	i = 0;
-	j = 0;
-	k = 0;
-	position--;
-	cmd->in = (char *)malloc(sizeof(char) * (ft_strlen(cmd->tmp_in)
-		+ ft_strlen(cmd->dollar_value[position]) - (old_len + 1)) + 1);
-	if (cmd->in == NULL)
-		return ;
-	while (cmd->tmp_in[k] && cmd->tmp_in[k] != '\0')
-	{
-		if (cmd->tmp_in[k] == '$')
-		{
-			if (counter == position)
-			{
-				while (cmd->dollar_value[position][j])
-				{
-					cmd->in[i] = cmd->dollar_value[position][j];
-					j++;
-					i++;
-				}
-				k += old_len + 1;
-				counter++;
-			}
-		}
-	//ESTO NO FUNCIONA, HAY QUE SALTAR LAS COMILLAS CUANDO LO REEMPLACE
-	//	if (cmd->tmp_in[k] == '\''
-	//		&& look_for_closure('\'', '$', cmd->tmp_in) == 1)
-	//		i++;
-		else if (cmd->tmp_in[k] && cmd->tmp_in[k] != '\0')
-		{
-			cmd->in[i] = cmd->tmp_in[k];
-			k++;
-			i++;
-		}
-	}
-	cmd->in[i] = '\0';
-}
-
-int	dollar(t_cmd *cmd, int k)
-{
-	int		i;
-	int		j;
-	int		ch;
-	char	*var;
-
-	i = 0;
-	j = 0;
-	ch = 0;
-	if (cmd->quote_s % 2 != 0)
-		return (0);
-	if (cmd->quote_s % 2 == 0)
-	{
-		while (cmd->tmp_in[i] != '$' && (cmd->tmp_in[i] != '\0' || cmd->tmp_in[i] != ' '))
-		{
-			if (cmd->tmp_in[i] == '\0')
-				break ;
-			i++;
-		}
-		i++;
-		while (cmd->tmp_in[i + ch] != '\0' && cmd->tmp_in[i + ch] != ' ')
-			ch++;
-		var = (char *)malloc(sizeof(char) * ch + 1);
-		while (cmd->tmp_in[i] && cmd->tmp_in[i] != ' ' && i < i + ch )
-		{
-			var[j] = cmd->tmp_in[i];
-			i++;
-			j++;
-		}
-		var[j] = '\0';
-		cmd->dollar_value[k] = ft_strdup(search_value(var, cmd));
-		free(var);
-		k++;
-	}
-	replace(cmd, k, ch);
-	return (k);
 }
 
 int	quotes(t_cmd *cmd)

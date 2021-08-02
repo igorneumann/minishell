@@ -6,7 +6,7 @@
 #    By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 10:24:24 by narroyo-          #+#    #+#              #
-#    Updated: 2021/07/29 10:11:12 by narroyo-         ###   ########.fr        #
+#    Updated: 2021/08/02 12:40:17 by narroyo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS			=	main.c ./includes/gnl/get_next_line.c ./f_rawmode.c \
 					lists.c env.c commandkeys.c keypress.c utils.c arguments.c \
 					lists_utils.c export.c envp.c read_arguments.c history.c \
 					semicolon.c moreprompt.c exec.c export_utils.c pipes.c \
-					morelists.c path.c pipenator.c redir.c quotes.c
+					morelists.c path.c pipenator.c redir.c quotes.c dollar.c
 LIBFT			=	./includes/libft
 OBJS 			=	$(SRCS:.c=.o)
 LIBS			=	./includes/libft/libft.a

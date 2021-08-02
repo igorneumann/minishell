@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/27 18:19:03 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/02 13:13:44 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ typedef struct s_command
 /*
 *** arguments.c
 */
-
 void	ft_pwd(t_cmd *cmd);
 void	ft_echo(t_cmd *cmd);
 void	previous_folder(char *path, char *old_path, int j);
@@ -97,7 +96,6 @@ void	ft_cd(t_cmd *cmd, int i);
 /*
 *** main.c
 */
-
 void	ft_init(t_cmd *cmd, char **envp, t_raw *raw);
 void	ft_reset(t_cmd *cmd);
 void	ft_presentation(void);
@@ -106,7 +104,6 @@ void	ft_cmd_line(t_cmd *cmd);
 /*
 *** f_rawmode
 */
-
 void	die(const char *s, t_raw *raw);
 void	RefreshScreen(void);
 void	enableRawMode(t_raw *raw);
@@ -115,7 +112,6 @@ char	f_raw(t_raw *raw);
 /*
 *** lists_utils
 */
-
 t_data	*ft_lst_last(t_data *elem);
 t_data	*ft_lst_first(t_data *elem);
 t_envp	*search_elem(t_envp *elem, char *wanted);
@@ -125,7 +121,6 @@ t_envp	*remove_elem(t_envp *elem);
 /*
 *** lists
 */
-
 t_data	*ft_new(char *in);
 void	ft_lst_add_front(t_data **in, t_data *new);
 void	ft_lst_add_back(t_data **in, t_data *new);
@@ -135,13 +130,19 @@ int		lst_size(t_envp *lst);
 /*
 *** lists
 */
-
 t_data	*freelist(t_data *lst);
+
+/*
+*** dollar.c
+*/
+char	*search_value(char *elem, t_cmd *cmd);
+void	replace(t_cmd *cmd, int position, int old_len);
+int		cpy_global_var(t_cmd *cmd, int ch, int i, int k);
+int		dollar(t_cmd *cmd, int k);
 
 /*
 *** env.c
 */
-
 t_envp	*ft_new_env_value(char *in, t_envp	*new, int i);
 t_envp	*ft_new_env(char *in);
 void	ft_save_env(t_cmd *cmd, char **envp);
@@ -152,13 +153,11 @@ void	ft_env(t_cmd *cmd);
 /*
 *** export_utils.c
 */
-
 t_envp	*copy_env(t_envp *envp);
 
 /*
 *** export.c
 */
-
 int		check_existence(t_cmd *cmd, char *aux, int i);
 void	ft_include(t_cmd *cmd, char *aux);
 int		new_env_element(t_cmd *cmd, int i);
@@ -168,7 +167,6 @@ void	ft_unset(t_cmd *cmd);
 /*
 *** keypress.c
 */
-
 void	processkeypress(t_cmd *cmd);
 void	ft_backspace(t_cmd *cmd);
 void	ft_editstring(t_cmd *cmd, char c);
@@ -178,7 +176,6 @@ void	noprintable(t_cmd *cmd, char c);
 /*
 *** commandkeys.c
 */
-
 int		commandkeys(t_cmd *cmd);
 int		ft_arrows(t_cmd *cmd, char *seq);
 int		ft_homeend(t_cmd *cmd, char *seq);
@@ -188,7 +185,6 @@ int		ft_jumpword(t_cmd *cmd, char seq);
 /*
 *** semicolon.c
 */
-
 void	ft_semicolon(t_cmd *cmd);
 int		prepstr(char *str, int pos, int qt);
 int		countleft(char *str, int pos, char c, char d);
@@ -199,7 +195,6 @@ int		findredir(char *str);
 /*
 *** history.c
 */
-
 int		ft_history(t_cmd *cmd, char *seq);
 void	ft_dupin(t_cmd *cmd, int src);
 int		ft_altarrow(t_cmd *cmd);
@@ -207,7 +202,6 @@ int		ft_altarrow(t_cmd *cmd);
 /*
 *** quotes.c
 */
-
 char	*search_value(char *elem, t_cmd *cmd);
 int		look_for_closure(char quote, char dollar, char *line);
 void	replace(t_cmd *cmd, int position, int old_len);
@@ -218,7 +212,6 @@ void	check_replacement(t_cmd *cmd);
 /*
 *** read_arguments.c
 */
-
 void	ft_read_arguments(t_cmd *cmd);
 int		ft_arguments(t_cmd *cmd);
 void	ft_lst_add_arguments(t_data **in, char *new);
@@ -227,7 +220,6 @@ void	ft_exit(t_cmd *cmd, int i);
 /*
 *** utils.c
 */
-
 int		command_not_found(char *str, t_cmd *cmd);
 void	ft_printlist(t_data *x);
 void	ft_print_env(t_envp *x);
@@ -238,7 +230,6 @@ void	ft_print_export(t_envp *x);
 /*
 *** moreprompt.c
 */
-
 void	ft_tab(t_cmd *cmd);
 void	promptin(int i);
 
@@ -254,9 +245,13 @@ char	*ft_strduptochar(const char *s1, char c);
 /*
 *** path.c
 */
-
 void	ft_path(t_cmd *cmd);
 int		addpath(t_cmd *cmd, char *tmp);
+
+/*
+*** pipenator.c
+*/
+void	pipenator(t_cmd *cmd);
 
 /*
 *** pipes.c
@@ -266,12 +261,7 @@ void	ft_startpipe(char *str, t_cmd *cmd);
 void	ft_midpipe(char *str, t_cmd *cmd, int *ft_in, int *fd_out);
 void	middlepiper(char *str, t_cmd *cmd, int i);
 void	ft_endpipe(char *str, t_cmd *cmd, int i);
-void	pipenator(t_cmd *cmd);
 
-/*
-*** pipenator.c
-*/
-void	pipenator(t_cmd *cmd);
 
 /*
 *** redir.c
