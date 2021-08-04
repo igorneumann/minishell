@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/02 18:03:48 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/02 18:27:35 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	cpy_global_var(t_cmd *cmd, int ch, int i, int k)
 	var[j] = '\0';
 	if (search_value(var, cmd) == NULL)
 		printf("%s : command not found\r\n", var);
+	else if (look_for_closure('\'', '$', cmd->tmp_in, i) == 1)
+		cmd->dollar_value[k] = ft_strjoin("$", var);
 	else
 		cmd->dollar_value[k] = ft_strdup(search_value(var, cmd));
 	free(var);

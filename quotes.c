@@ -6,17 +6,14 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/02 12:40:00 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/02 19:47:50 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	look_for_closure(char quote, char searching, char *line)
+int	look_for_closure(char quote, char searching, char *line, int i)
 {
-	int	i;
-
-	i = 0;
 	while (line[i])
 	{
 		if (line[i] == searching)
@@ -88,18 +85,38 @@ void	check_replacement(t_cmd *cmd)
 	}
 	while (cmd->tmp_in[i])
 	{
-		if (quotes(cmd) != 0 && cmd->tmp_in[i] == '$')
-		{
-			if (look_for_closure('\"', '$', cmd->tmp_in) == 1)
-			{
-				if (look_for_closure('\'', '$', cmd->tmp_in) == 1)
-					i++;
-				else
-					k = dollar(cmd, k);
-			}
-		}
-		else if (quotes(cmd) == 0 && cmd->tmp_in[i] == '$')
-			k = dollar(cmd, k);
+		//COMPROBAR:
+		//1. Comillas simples
+		//	- Comillas simples rodeadas por comillas dobles
+		//2. Comillas dobles
+		//	- Comillas dobles rodeadas por comillas simples
+		if ((cmd->tmp_in[i] == '\''
+				&& look_for_closure('\'', '$', cmd->tmp_in, i) == 1)
+			&& ft_strchr(cmd->in, '$') != NULL)
+
+
+
+
+
+
+
+
+			|| (cmd->tmp_in[i] == '\"'
+			&& look_for_closure('\"', '$', cmd->tmp_in, i) == 1))
+			i++;
+
+	//	if (quotes(cmd) != 0 && cmd->tmp_in[i] == '$')
+	//	{
+	//		if (look_for_closure('\"', '$', cmd->tmp_in, i) == 1)
+	//		{
+	//			if (look_for_closure('\'', '$', cmd->tmp_in, i) == 1)
+	//				i++;
+	//			else
+	//				k = dollar(cmd, k);
+	//		}
+	//	}
+	//	else if (quotes(cmd) == 0 && cmd->tmp_in[i] == '$')
+	//		k = dollar(cmd, k);
 		i++;
 	}
 	if (ft_strchr(cmd->in, '$') != NULL)
