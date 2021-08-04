@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/02 19:47:50 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/04 20:22:51 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,26 +85,14 @@ void	check_replacement(t_cmd *cmd)
 	}
 	while (cmd->tmp_in[i])
 	{
-		//COMPROBAR:
-		//1. Comillas simples
-		//	- Comillas simples rodeadas por comillas dobles
-		//2. Comillas dobles
-		//	- Comillas dobles rodeadas por comillas simples
-		if ((cmd->tmp_in[i] == '\''
-				&& look_for_closure('\'', '$', cmd->tmp_in, i) == 1)
-			&& ft_strchr(cmd->in, '$') != NULL)
-
-
-
-
-
-
-
-
-			|| (cmd->tmp_in[i] == '\"'
-			&& look_for_closure('\"', '$', cmd->tmp_in, i) == 1))
-			i++;
-
+		if (cmd->tmp_in[i] == '$' && quotes(cmd) != 0)
+		{
+			if (look_for_closure('\'', '$', cmd->tmp_in, i) == 1)
+			{
+				if (look_for_closure('\"', '\'', cmd->tmp_in, i) == 1)
+					k = dollar(cmd, k);
+			}
+		}
 	//	if (quotes(cmd) != 0 && cmd->tmp_in[i] == '$')
 	//	{
 	//		if (look_for_closure('\"', '$', cmd->tmp_in, i) == 1)
@@ -115,11 +103,11 @@ void	check_replacement(t_cmd *cmd)
 	//				k = dollar(cmd, k);
 	//		}
 	//	}
-	//	else if (quotes(cmd) == 0 && cmd->tmp_in[i] == '$')
-	//		k = dollar(cmd, k);
+		else if (quotes(cmd) == 0 && cmd->tmp_in[i] == '$')
+			k = dollar(cmd, k);
 		i++;
 	}
-	if (ft_strchr(cmd->in, '$') != NULL)
+	if (k != 0)
 		cmd->in = ft_strdup(cmd->tmp_in);
 	free(cmd->tmp_in);
 }

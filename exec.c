@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/22 19:59:23 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/04 16:49:38 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,7 @@ int	exec(char *str, t_cmd *cmd)
 		printf("%s: command not found\r\n", cmd->in);
 		exit(0);
 	}
+	else
+		wait(&cmd->output_status);
 	return (0);
 }

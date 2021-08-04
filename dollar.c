@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/02 18:27:35 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/04 20:23:54 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,10 @@ int	dollar(t_cmd *cmd, int k)
 
 	ch = 0;
 	i = 0;
-	if (cmd->quote_s % 2 != 0)
-		return (0);
-	if (cmd->quote_s % 2 == 0)
-	{
+//	if (cmd->quote_s % 2 != 0)
+//		return (0);
+//	if (cmd->quote_s % 2 == 0)
+//	{
 		while (cmd->tmp_in[i] != '$' && (cmd->tmp_in[i] != '\0'
 				|| cmd->tmp_in[i] != ' '))
 		{
@@ -116,7 +116,7 @@ int	dollar(t_cmd *cmd, int k)
 		i++;
 		ch = cpy_global_var(cmd, ch, i, k);
 		k++;
-	}
+//	}
 	replace(cmd, k, ch);
 	return (k);
 }

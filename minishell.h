@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/02 18:58:54 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/04 16:42:02 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_command
 	int		quote_s;
 	int		quote_d;
 	int		quotes;
+	int		output_status;
 	char	**dollar_value;
 	t_data	*list;
 	t_data	*param;
