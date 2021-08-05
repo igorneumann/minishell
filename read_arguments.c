@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/04 20:16:26 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/05 19:07:16 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,6 @@ int	ft_arguments(t_cmd *cmd)
 	check_replacement(cmd);
 	while (cmd->in[i] == ' ')
 		i++;
-// FALTA POR INCLUIRLO DENTRO DE LA GESTIÓN DEL DOLLAR
-//	if (ft_strnstr(cmd->in, "$?", 2))
-//		printf("%d\r\n", cmd->output_status >> 8);
 	if (ft_strnstr(cmd->in, "echo", 4))
 		ft_echo(cmd);
 	else if (ft_strnstr(cmd->in, "cd", 2))
@@ -59,6 +56,8 @@ int	ft_arguments(t_cmd *cmd)
 		ft_exit(cmd, i);
 	else if (ft_strnstr(cmd->in, "env", 3))
 		ft_env(cmd);
+	else if (ft_strnstr(cmd->in, "$?", 2))
+		printf("%d : command not found\r\n", cmd->output_status >> 8);
 	else
 		return (0);
 	return (1);

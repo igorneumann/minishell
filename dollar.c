@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/04 20:23:54 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/05 19:05:14 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 char	*search_value(char *elem, t_cmd *cmd)
 {
+	char	*question_mark;
+
+	question_mark = ft_itoa(cmd->output_status >> 8);
+	if (ft_strnstr(elem, "?", 1))
+		return (question_mark);
 	while (cmd->envp && ft_strcmp(elem, cmd->envp->key) != 0)
 		cmd->envp = cmd->envp->next;
 	if (cmd->envp->value != NULL && ft_strcmp(elem, cmd->envp->key) == 0)
@@ -102,21 +107,21 @@ int	dollar(t_cmd *cmd, int k)
 
 	ch = 0;
 	i = 0;
-//	if (cmd->quote_s % 2 != 0)
-//		return (0);
-//	if (cmd->quote_s % 2 == 0)
-//	{
-		while (cmd->tmp_in[i] != '$' && (cmd->tmp_in[i] != '\0'
-				|| cmd->tmp_in[i] != ' '))
-		{
-			if (cmd->tmp_in[i] == '\0')
-				break ;
-			i++;
-		}
+	if (cmd->quote_s % 2 != 0)
+	{
+		printf("%s : command not found\r\n", cmd->tmp_in);
+		return (0);
+	}
+	while (cmd->tmp_in[i] != '$' && (cmd->tmp_in[i] != '\0'
+			|| cmd->tmp_in[i] != ' '))
+	{
+		if (cmd->tmp_in[i] == '\0')
+			break ;
 		i++;
-		ch = cpy_global_var(cmd, ch, i, k);
-		k++;
-//	}
+	}
+	i++;
+	ch = cpy_global_var(cmd, ch, i, k);
+	k++;
 	replace(cmd, k, ch);
 	return (k);
 }
