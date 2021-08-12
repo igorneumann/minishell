@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/05 19:07:16 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/12 16:23:47 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,10 @@ void	 ft_read_arguments(t_cmd *cmd)
 int	ft_arguments(t_cmd *cmd)
 {
 	int	i;
-	int	k;
 
-	k = 0;
 	i = 0;
-	check_replacement(cmd);
+	if (check_replacement(cmd) == 0)
+		return (0);
 	while (cmd->in[i] == ' ')
 		i++;
 	if (ft_strnstr(cmd->in, "echo", 4))

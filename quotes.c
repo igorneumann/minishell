@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/04 20:22:51 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/12 17:49:28 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,6 @@ int	look_for_closure(char quote, char searching, char *line, int i)
 	return (0);
 }
 
-int	quotes(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	if (cmd->tmp_in[i] == '\'')
-	{
-		cmd->quote_s++;
-		i++;
-	}
-	if (cmd->tmp_in[i] == '\"')
-	{
-		cmd->quote_d++;
-		i++;
-	}
-	return (i);
-}
-
 int	count_char(char *line, char character)
 {
 	int	i;
@@ -69,13 +51,52 @@ int	count_char(char *line, char character)
 	return (i);
 }
 
-void	check_replacement(t_cmd *cmd)
+int	check_quotes_error(t_cmd *cmd, int i)
+{
+	int	ok;
+
+	if (cmd->in[i] == '\'')
+	{
+		if (cmd->quote_s)
+		{
+			cmd->quote_s = 0;
+			cmd->quote_d = 0;
+		}
+		else
+			cmd->quote_s++;
+		return (0);
+	}
+	if (cmd->in[i] == '\"')
+	{
+		if (cmd->quote_d)
+		{
+			cmd->quote_s = 0;
+			cmd->quote_d = 0;
+		}
+		else
+			cmd->quote_d++;
+		return (0);
+	}
+	if (cmd->in[i] == 0 && (cmd->quote_s || cmd->quote_d))
+		return (-1);
+	if (ok == 0)
+		ok = check_quotes_error(cmd, i++);
+	else
+		return (ok);
+}
+
+int	check_replacement(t_cmd *cmd)
 {
 	int	k;
 	int	i;
 
 	k = 0;
 	i = 0;
+	if (check_quotes_error(cmd, 0) == -1)
+	{
+		printf("%s : command not found\r\n", cmd->in);
+		return (0);
+	}
 	if (ft_strchr(cmd->in, '$') != NULL)
 	{
 		cmd->tmp_in = ft_strdup(cmd->in);
@@ -110,4 +131,5 @@ void	check_replacement(t_cmd *cmd)
 	if (k != 0)
 		cmd->in = ft_strdup(cmd->tmp_in);
 	free(cmd->tmp_in);
+	return (1);
 }

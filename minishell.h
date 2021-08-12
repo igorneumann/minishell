@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/04 16:42:02 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/12 16:21:47 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ int		ft_altarrow(t_cmd *cmd);
 int		look_for_closure(char quote, char dollar, char *line, int i);
 int		quotes(t_cmd *cmd);
 int		count_char(char *line, char character);
-void	check_replacement(t_cmd *cmd);
+int		check_replacement(t_cmd *cmd);
 
 /*
 *** read_arguments.c
