@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/05 20:02:42 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/12 17:53:37 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	replace(t_cmd *cmd, int position, int old_len)
 		}
 		else if (cmd->tmp_in[k] && cmd->tmp_in[k] != '\0')
 		{
-			if (cmd->tmp_in[k] == '\'' && quotes(cmd) % 2)
+			if (cmd->tmp_in[k] == '\'')
 					k++;
 			cmd->in[i] = cmd->tmp_in[k];
 			k++;

@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/12 17:49:28 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/12 19:34:13 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	check_quotes_error(t_cmd *cmd, int i)
 {
 	int	ok;
 
+//	ok = 0;
 	if (cmd->in[i] == '\'')
 	{
 		if (cmd->quote_s)
@@ -77,12 +78,12 @@ int	check_quotes_error(t_cmd *cmd, int i)
 			cmd->quote_d++;
 		return (0);
 	}
-	if (cmd->in[i] == 0 && (cmd->quote_s || cmd->quote_d))
+	if (cmd->in[i] == '\0' && (cmd->quote_s != 0 || cmd->quote_d != 0 ))
 		return (-1);
-	if (ok == 0)
-		ok = check_quotes_error(cmd, i++);
-	else
-		return (ok);
+	ok = check_quotes_error(cmd, ++i);
+	if (ok != -1)
+		ok = check_quotes_error(cmd, ++i);
+	return (ok);
 }
 
 int	check_replacement(t_cmd *cmd)
@@ -106,7 +107,7 @@ int	check_replacement(t_cmd *cmd)
 	}
 	while (cmd->tmp_in[i])
 	{
-		if (cmd->tmp_in[i] == '$' && quotes(cmd) != 0)
+		if (cmd->tmp_in[i] == '$')
 		{
 			if (look_for_closure('\'', '$', cmd->tmp_in, i) == 1)
 			{
@@ -124,8 +125,8 @@ int	check_replacement(t_cmd *cmd)
 	//				k = dollar(cmd, k);
 	//		}
 	//	}
-		else if (quotes(cmd) == 0 && cmd->tmp_in[i] == '$')
-			k = dollar(cmd, k);
+	//	else if (quotes(cmd) == 0 && cmd->tmp_in[i] == '$')
+	//		k = dollar(cmd, k);
 		i++;
 	}
 	if (k != 0)
