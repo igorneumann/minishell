@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/12 19:34:13 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/12 20:04:11 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,39 +51,60 @@ int	count_char(char *line, char character)
 	return (i);
 }
 
-int	check_quotes_error(t_cmd *cmd, int i)
+int	quotes(t_cmd *cmd)
 {
-	int	ok;
+	int	i;
 
-//	ok = 0;
-	if (cmd->in[i] == '\'')
+	i = 0;
+	if (cmd->tmp_in[i] == '\'')
 	{
-		if (cmd->quote_s)
-		{
-			cmd->quote_s = 0;
-			cmd->quote_d = 0;
-		}
-		else
-			cmd->quote_s++;
-		return (0);
+		cmd->quote_s++;
+		i++;
 	}
-	if (cmd->in[i] == '\"')
+	if (cmd->tmp_in[i] == '\"')
 	{
-		if (cmd->quote_d)
-		{
-			cmd->quote_s = 0;
-			cmd->quote_d = 0;
-		}
-		else
-			cmd->quote_d++;
-		return (0);
+		cmd->quote_d++;
+		i++;
 	}
-	if (cmd->in[i] == '\0' && (cmd->quote_s != 0 || cmd->quote_d != 0 ))
+	return (i);
+}
+
+int	check_quotes_error(t_cmd *cmd)
+{
+	int	i;
+	int	simple;
+	int	doubl;
+
+	i = 0;
+	simple = 0;
+	doubl = 0;
+	while (cmd->in[i])
+	{
+		if (cmd->in[i] == '\'')
+		{
+			if (simple == -1)
+			{
+				simple = 0;
+				doubl = 0;
+			}
+			else
+				simple = -1;
+		}
+		if (cmd->in[i] == '\"')
+		{
+			if (doubl == -1)
+			{
+				doubl = 0;
+				simple = 0;
+			}
+			else
+				doubl = -1;
+		}
+		i++;
+	}
+	if (simple == -1 || doubl == -1)
 		return (-1);
-	ok = check_quotes_error(cmd, ++i);
-	if (ok != -1)
-		ok = check_quotes_error(cmd, ++i);
-	return (ok);
+	return (0);
 }
 
 int	check_replacement(t_cmd *cmd)
@@ -93,9 +114,9 @@ int	check_replacement(t_cmd *cmd)
 
 	k = 0;
 	i = 0;
-	if (check_quotes_error(cmd, 0) == -1)
+	if (check_quotes_error(cmd) == -1)
 	{
-		printf("%s : command not found\r\n", cmd->in);
+		printf("unexpected EOF while looking for matching \'\"\r\n");
 		return (0);
 	}
 	if (ft_strchr(cmd->in, '$') != NULL)
@@ -107,7 +128,7 @@ int	check_replacement(t_cmd *cmd)
 	}
 	while (cmd->tmp_in[i])
 	{
-		if (cmd->tmp_in[i] == '$')
+		if (cmd->tmp_in[i] == '$' && quotes(cmd) != 0)
 		{
 			if (look_for_closure('\'', '$', cmd->tmp_in, i) == 1)
 			{
@@ -125,8 +146,8 @@ int	check_replacement(t_cmd *cmd)
 	//				k = dollar(cmd, k);
 	//		}
 	//	}
-	//	else if (quotes(cmd) == 0 && cmd->tmp_in[i] == '$')
-	//		k = dollar(cmd, k);
+		else if (quotes(cmd) == 0 && cmd->tmp_in[i] == '$')
+			k = dollar(cmd, k);
 		i++;
 	}
 	if (k != 0)
