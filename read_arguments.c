@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/12 19:55:59 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/13 16:33:36 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,15 @@ int	ft_arguments(t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	if (check_replacement(cmd) == 0)
-		return (0);
+	cmd->quote_s = 0;
+	cmd->quote_d = 0;
+	cmd->quotes = 0;
+	cmd->output_status = 0;
 	while (cmd->in[i] == ' ')
 		i++;
-	if (ft_strnstr(cmd->in, "echo", 4))
+	if (check_replacement(cmd) == -1)
+		return (1);
+	else if (ft_strnstr(cmd->in, "echo", 4))
 		ft_echo(cmd);
 	else if (ft_strnstr(cmd->in, "cd", 2))
 		ft_cd(cmd, i);

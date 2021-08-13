@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/12 17:53:37 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/13 14:26:27 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,6 @@ int	dollar(t_cmd *cmd, int k)
 
 	ch = 0;
 	i = 0;
-//	if (cmd->quote_s % 2 != 0)
-//	{
-//		printf("%s : command not found\r\n", cmd->tmp_in);
-//		return (0);
-//	}
 	while (cmd->tmp_in[i] != '$' && (cmd->tmp_in[i] != '\0'
 			|| cmd->tmp_in[i] != ' '))
 	{

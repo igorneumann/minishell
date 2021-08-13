@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/04 16:43:10 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/13 16:33:28 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,6 @@ void	ft_init(t_cmd *cmd, char **envp, t_raw *raw)
 	RefreshScreen();
 	cmd->raw = raw;
 	cmd->i = 0;
-	cmd->quote_s = 0;
-	cmd->quote_d = 0;
-	cmd->quotes = 0;
-	cmd->output_status = 0;
 	cmd->list = NULL;
 	cmd->nexcom = NULL;
 	cmd->inpt = ft_strdup("\x0D");
@@ -52,7 +48,7 @@ void	ft_presentation(void)
 	ft_putstr("\x1b[35m ₒ \x1b[36m^\x1B[33m   ) (");
 	ft_putstr("\x1b[35m ✿\x1b[36m  ◠\x1b[35m ‿ \x1b[36m◠ \x1B[33m)\r\n\r\n");
 	ft_putstr("                         \e[1;32mMiniShell\e[0m\r\n");
-	ft_putstr("\x1b[36m                   narroyo- && ineumann\r\n\r\n\r\n");
+	ft_putstr("\x1b[36m                   ineumann && narroyo-\r\n\r\n\r\n");
 }
 
 void	ft_cmd_line(t_cmd *cmd)
