@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/13 18:39:46 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/13 19:15:29 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,15 +163,16 @@ int	check_replacement(t_cmd *cmd)
 	free(cmd->in);
 	while (cmd->tmp_in[i])
 	{
+		//Aqui da fallo cuando hay comillas
 		if (cmd->tmp_in[i] == '$' && cmd->quotes != 0)
 		{
-			if (look_for_closure('\'', '$', cmd->tmp_in, i) == 1)
+			if (cmd->tmp_in[i] == '\'' && look_for_closure('\'', '$', cmd->tmp_in, i) == 1)
 			{
 				if (look_for_closure('\"', '\'', cmd->tmp_in, i) == 1)
 					k = dollar(cmd, k);
 			}
 		}
-		else if (cmd->tmp_in[i] == '$' && cmd->quotes == 0)
+		else if (cmd->tmp_in[i] == '$')
 			k = dollar(cmd, k);
 		i++;
 	}

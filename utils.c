@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 10:47:23 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/21 17:40:28 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/13 19:01:44 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,7 @@ void	ft_sort_env(t_envp *list)
 
 	if (list == NULL)
 		return ;
-	//ft_printlist((t_data *)list);
 	list = copy_env(list);
-	// SOLO COPIA HASTA EL PENULTIMO ELEMENTO, EL PROBLEMA ESTÁ EN LA COPIA
-	//ft_printlist((t_data *)list);
 	swapped = 1;
 	next_elem = NULL;
 	while (swapped)
