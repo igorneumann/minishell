@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/23 19:16:14 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/17 17:43:27 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	redirout(t_cmd *cmd)
 int	tempinput(t_cmd *cmd)
 {
 	char	*buff;
+	char	*tmp;
 	char	*c;
 
 	cmd->in_fd = open(".tempAF.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -66,8 +67,10 @@ int	tempinput(t_cmd *cmd)
 		die("tcsetattr", cmd->raw);
 	while (get_next_line(0, &c) > 0 && ft_strcmp(c, cmd->inpt) != 0)
 	{
+		tmp = buff;
 		buff = ft_strjoin(buff, c);
 		free(c);
+		free(tmp);
 		c = NULL;
 	}
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)

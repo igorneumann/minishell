@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/17 16:05:47 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/17 19:09:27 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int	check_replacement(t_cmd *cmd)
 		printf("unexpected EOF while looking for matching \'\"\r\n");
 		return (-1);
 	}
-	cmd->tmp_in = ft_strdup(cmd->in);
+//	cmd->tmp_in = ft_strdup(cmd->in);
 	if (ft_strchr(cmd->in, '$') != NULL)
 		cmd->dollar_value = (char **)malloc(sizeof(char *)
 					* count_char(cmd->tmp_in, '$'));

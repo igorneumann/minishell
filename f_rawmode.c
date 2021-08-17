@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/26 19:25:44 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/17 17:33:04 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	die(const char *s, t_raw *raw)
 			error = s[1];
 		write(STDERR, &s[1], 1);
 	}
-//	system("leaks minishell");
+	system("leaks minishell");
 	exit(error);
 }
 
