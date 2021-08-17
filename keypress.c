@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/29 17:06:51 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/17 16:51:57 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,26 @@
 
 void	processkeypress(t_cmd *cmd)
 {
-	char	c;
+	char	c[2];
+	char	*temp;
 
-	c = f_raw(cmd->raw);
-	while (!iscntrl(c))
+	c[0] = f_raw(cmd->raw);
+	c[1] = '\0';
+	if (!iscntrl(c[0]))
 	{
 		if (cmd->i == (int)ft_strlen(cmd->in))
 		{
-			cmd->in = ft_strjoin(cmd->in, &c);
-			ft_putchar_fd(cmd->in[cmd->i], STDOUT);
+			temp = cmd->in;
+			cmd->in = ft_strjoin(cmd->in, &c[0]);
+			free(temp);
+			ft_putchar_fd(c[0], STDOUT);
 			cmd->i++;
 		}
 		else
-			ft_editstring(cmd, c);
-		c = '\0';
+			ft_editstring(cmd, c[0]);
+		c[0] = '\0';
 	}
-	noprintable(cmd, c);
+	noprintable(cmd, c[0]);
 }
 
 void	ft_editstring(t_cmd *cmd, char c)
@@ -45,6 +49,7 @@ void	ft_editstring(t_cmd *cmd, char c)
 	sizerest = (int)ft_strlen(rest);
 	cmd->in[cmd->i] = '\0';
 	res = ft_strjoin(cmd->in, ch);
+	free (cmd->in);
 	cmd->in = ft_strjoin(res, rest);
 	ft_putstr(&cmd->in[cmd->i]);
 	while (sizerest-- > 0)
