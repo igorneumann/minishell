@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/17 18:56:43 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/17 20:33:44 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void	ft_editstring(t_cmd *cmd, char c)
 	res = ft_strjoin(cmd->in, ch);
 	free (cmd->in);
 	cmd->in = ft_strjoin(res, rest);
+	free (rest);
+	free (res);
 	ft_putstr(&cmd->in[cmd->i]);
 	while (sizerest-- > 0)
 		ft_putstr("\033[D");
 	cmd->i++;
-	free (res);
-	free (rest);
 }
 
 void	ft_backspace(t_cmd *cmd)
@@ -86,7 +86,7 @@ void	ft_enter(t_cmd *cmd)
 	ft_lst_add_front(&cmd->list, ft_new(cmd->in));
 	cmd->tmp_in = ft_strdup(cmd->in);
 	free(cmd->buff);
-	cmd->buff = ft_strdup(cmd->in);
+	cmd->buff = ft_strdup(cmd->tmp_in);
 	ft_semicolon(cmd);
 	printf("\r\n");
 	if (ft_strlen(cmd->in) > 0)
