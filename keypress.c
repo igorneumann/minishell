@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/17 16:51:57 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/17 18:56:43 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	ft_enter(t_cmd *cmd)
 {
 	ft_lst_add_front(&cmd->list, ft_new(cmd->in));
 	cmd->tmp_in = ft_strdup(cmd->in);
+	free(cmd->buff);
 	cmd->buff = ft_strdup(cmd->in);
 	ft_semicolon(cmd);
 	printf("\r\n");

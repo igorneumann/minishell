@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/17 16:05:47 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/17 20:32:07 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,18 @@ int	check_quotes_error(t_cmd *cmd)
 		if (cmd->in[i] == '\'')
 		{
 			cmd->quote_s++;
-			if (simple == -1)
-			{
+			if ((doubl == -1 && look_for_closure('\"', '\'', cmd->in, i) == 1)
+				|| simple == -1)
 				simple = 0;
-				doubl = 0;
-			}
 			else
 				simple = -1;
 		}
 		if (cmd->in[i] == '\"')
 		{
 			cmd->quote_d++;
-			if (doubl == -1)
-			{
+			if ((simple == -1 && look_for_closure('\'', '\"', cmd->in, i) == 1)
+				|| doubl == -1)
 				doubl = 0;
-				simple = 0;
-			}
 			else
 				doubl = -1;
 		}
@@ -156,39 +152,19 @@ int	check_replacement(t_cmd *cmd)
 		printf("unexpected EOF while looking for matching \'\"\r\n");
 		return (-1);
 	}
-	cmd->tmp_in = ft_strdup(cmd->in);
 	if (ft_strchr(cmd->in, '$') != NULL)
 		cmd->dollar_value = (char **)malloc(sizeof(char *)
 					* count_char(cmd->tmp_in, '$'));
 	free(cmd->in);
 	while (cmd->tmp_in[i])
 	{
-		//Aqui da fallo cuando hay comillas
 		if (cmd->tmp_in[i] == '$')
 		{
-			if (ft_strchr(cmd->tmp_in, '\'') != NULL
-				&& look_for_closure('\'', '$', cmd->tmp_in, i) == 1)
-			{
-				if (ft_strchr(cmd->tmp_in, '\"') != NULL
-					&& look_for_closure('\"', '\'', cmd->tmp_in, i) == 1)
-					{
-						cmd->in = ft_strdup(replace_quotes(cmd->tmp_in));
-						free(cmd->tmp_in);
-						cmd->tmp_in = ft_strdup(cmd->in);
-						free(cmd->in);
-						k = dollar(cmd, k);
-					}
-				else
-					i++;
-			}
-			else
-			{
-				cmd->in = ft_strdup(replace_quotes(cmd->tmp_in));
-				free(cmd->tmp_in);
-				cmd->tmp_in = ft_strdup(cmd->in);
-				free(cmd->in);
-				k = dollar(cmd, k);
-			}
+			cmd->in = ft_strdup(replace_quotes(cmd->tmp_in));
+			free(cmd->tmp_in);
+			cmd->tmp_in = ft_strdup(cmd->in);
+			free(cmd->in);
+			k = dollar(cmd, k);
 		}
 		i++;
 	}
