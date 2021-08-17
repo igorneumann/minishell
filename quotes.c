@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/13 19:15:29 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/17 16:05:47 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,16 +164,32 @@ int	check_replacement(t_cmd *cmd)
 	while (cmd->tmp_in[i])
 	{
 		//Aqui da fallo cuando hay comillas
-		if (cmd->tmp_in[i] == '$' && cmd->quotes != 0)
+		if (cmd->tmp_in[i] == '$')
 		{
-			if (cmd->tmp_in[i] == '\'' && look_for_closure('\'', '$', cmd->tmp_in, i) == 1)
+			if (ft_strchr(cmd->tmp_in, '\'') != NULL
+				&& look_for_closure('\'', '$', cmd->tmp_in, i) == 1)
 			{
-				if (look_for_closure('\"', '\'', cmd->tmp_in, i) == 1)
-					k = dollar(cmd, k);
+				if (ft_strchr(cmd->tmp_in, '\"') != NULL
+					&& look_for_closure('\"', '\'', cmd->tmp_in, i) == 1)
+					{
+						cmd->in = ft_strdup(replace_quotes(cmd->tmp_in));
+						free(cmd->tmp_in);
+						cmd->tmp_in = ft_strdup(cmd->in);
+						free(cmd->in);
+						k = dollar(cmd, k);
+					}
+				else
+					i++;
+			}
+			else
+			{
+				cmd->in = ft_strdup(replace_quotes(cmd->tmp_in));
+				free(cmd->tmp_in);
+				cmd->tmp_in = ft_strdup(cmd->in);
+				free(cmd->in);
+				k = dollar(cmd, k);
 			}
 		}
-		else if (cmd->tmp_in[i] == '$')
-			k = dollar(cmd, k);
 		i++;
 	}
 	cmd->in = ft_strdup(replace_quotes(cmd->tmp_in));
