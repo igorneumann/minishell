@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/17 17:43:27 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/18 19:14:10 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@ int	redir(t_cmd *cmd, int i)
 	while (i > 0)
 	{
 		j = 1;
-		if (cmd->in[i] == '>')
+		if (cmd->in[i] == '>' || cmd->in[i] == '<')
 		{
-			cmd->in[i] = '\0';
-			while (cmd->in[i + j] == ' ' || cmd->in[i + j] == '>')
+			while (cmd->in[i + j] == ' ' || cmd->in[i + j] == '>'
+				|| cmd->in[i + j] == '<')
 				j++;
-			cmd->outp = ft_strduptochar(&cmd->in[i + j], 32);
-			return (redirector(cmd, i));
-		}
-		else if (cmd->in[i] == '<')
-		{
+			if (cmd->in[i] == '>')
+				free(cmd->outp);
+			if (cmd->in[i] == '<')
+				free(cmd->inpt);
+			if (cmd->in[i] == '>')
+				cmd->outp = ft_strduptochar(&cmd->in[i + j], 32);
+			if (cmd->in[i] == '<')
+				cmd->inpt = ft_strduptochar(&cmd->in[i + j], 32);
 			cmd->in[i] = '\0';
-			while (cmd->in[i + j] == ' ' || cmd->in[i + j] == '<')
-				j++;
-			cmd->inpt = ft_strduptochar(&cmd->in[i + j], 32);
 			return (redirector(cmd, i));
 		}
 		i--;
@@ -89,6 +89,7 @@ int	redirector(t_cmd *cmd, int i)
 	else if (cmd->inpt[0] != '\x0D' && cmd->in[i - 1] == '<')
 	{
 		tempinput(cmd);
+		free (cmd->inpt);
 		cmd->inpt = ft_strdup(".tempAF.tmp");
 	}
 	if (cmd->inpt[0] != '\x0D')
