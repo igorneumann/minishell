@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/17 20:33:37 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/18 14:00:35 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,15 +147,12 @@ int	check_replacement(t_cmd *cmd)
 
 	k = 0;
 	i = 0;
+	cmd->original = ft_strdup(cmd->in);
 	if (check_quotes_error(cmd) == -1)
 	{
 		printf("unexpected EOF while looking for matching \'\"\r\n");
 		return (-1);
 	}
-<<<<<<< HEAD
-=======
-//	cmd->tmp_in = ft_strdup(cmd->in);
->>>>>>> 8513bb716555c2af444b7522cc3e08ec9790b8e9
 	if (ft_strchr(cmd->in, '$') != NULL)
 		cmd->dollar_value = (char **)malloc(sizeof(char *)
 					* count_char(cmd->tmp_in, '$'));
