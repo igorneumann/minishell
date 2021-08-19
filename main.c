@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/17 18:10:54 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/19 18:28:06 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@ void	ft_reset(t_cmd *cmd)
 {
 	free(cmd->in);
 	cmd->in = ft_strdup("\x0D");
+	free(cmd->inpt);
 	cmd->inpt = ft_strdup("\x0D");
+	free(cmd->outp);
 	cmd->outp = ft_strdup("\x0D");
-	free(cmd->buff);
 	cmd->param = freelist(cmd->param);
 	cmd->nexpip = freelist(cmd->nexpip);
+	free(cmd->buff);
 	cmd->buff = ft_strdup("\x0D");
 	cmd->i = 0;
 	cmd->fd2[0] = 0;
