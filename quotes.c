@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/18 19:16:08 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/19 21:11:14 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,22 @@ int	check_quotes_error(t_cmd *cmd)
 	return (0);
 }
 
+int		look_for_open(char quote, char *str, int i)
+{
+	int	look;
+
+	look = 0;
+	while (str[i])
+	{
+		if (str[i] == quote)
+			look++;
+		i++;
+	}
+	if (look % 2 != 0)
+		return (1);
+	return (0);
+}
+
 char	*replace_quotes(char *with_quotes)
 {
 	char	*without;
@@ -101,35 +117,56 @@ char	*replace_quotes(char *with_quotes)
 	{
 		if (with_quotes[i] == '\"')
 		{
+			printf("%d\r\n", look_for_open('\'', with_quotes, i) == 1);
+			if (look_for_open('\'', with_quotes, i) == 1)
+			{
+				without[j] = with_quotes[i];
+				j++;
+			}
+			i++;
 			if (with_quotes[i] != '\0'
 				&& look_for_closure('\"', with_quotes[i + 1], with_quotes, i + 1) == 1)
 			{
-				i++;
 				while (with_quotes[i] != '\"')
 				{
 					without[j] = with_quotes[i];
 					j++;
 					i++;
 				}
+				if (look_for_open('\'', with_quotes, i) == 1)
+				{
+					without[j] = with_quotes[i];
+					j++;
+				}
 				i++;
 			}
 		}
 		if (with_quotes[i] == '\'')
 		{
+			if (look_for_open('\"', with_quotes, i) == 1)
+			{
+				without[j] = with_quotes[i];
+				j++;
+			}
+			i++;
 			if (with_quotes[i] != '\0'
 				&& look_for_closure('\'', with_quotes[i + 1], with_quotes, i + 1) == 1)
 			{
-				i++;
 				while (with_quotes[i] != '\'')
 				{
 					without[j] = with_quotes[i];
 					j++;
 					i++;
 				}
+				if (look_for_open('\"', with_quotes, i) == 1)
+				{
+					without[j] = with_quotes[i];
+					j++;
+				}
 				i++;
 			}
 		}
-		else if (with_quotes[i] != '\0')
+		if (with_quotes[i] != '\0')
 		{
 			without[j] = with_quotes[i];
 			j++;
