@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 18:36:03 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/21 19:58:04 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/20 18:15:14 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,29 @@
 
 t_data	*freelist(t_data *lst)
 {
-	t_data	*last;
 	t_data	*prev;
 
 	if (lst != NULL)
 	{
-		last = ft_lst_last(lst);
-		while (last->prev != NULL)
+		lst = ft_lst_last(lst);
+		while (lst->prev != NULL)
 		{
-			prev = last->prev;
-			free (last->in);
-			last->in = NULL;
-			last->next = NULL;
-			last->prev = NULL;
-			free (last);
-			last = prev;
+			prev = lst->prev;
+			free (lst->in);
+			free (lst->copy);
+			lst->in = NULL;
+			lst->copy = NULL;
+			lst->next = NULL;
+			lst->prev = NULL;
+			free (lst);
+			lst = prev;
 		}
-		last->next = NULL;
-		last->prev = NULL;
-		free (last->in);
-		last->in = NULL;
-		free(last);
+		lst->next = NULL;
+		free (lst->in);
+		lst->in = NULL;
+		free (lst->copy);
+		lst->copy = NULL;
+		free(lst);
 	}
 	return (NULL);
 }

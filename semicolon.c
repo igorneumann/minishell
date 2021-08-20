@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 18:24:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/06 17:22:04 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/20 17:44:04 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	ft_semicolon(t_cmd *cmd)
 	int		j;
 
 	i = ft_strlen(cmd->in);
-	j = 1;
 	while (i > 0)
 	{
+		j = 1;
 		if ((cmd->in[i] == '&' && cmd->in[i + j] == '&') || cmd->in[i] == ';')
 		{
 			if (countleft(cmd->in, i, '\'', '\"') % 2 == 0)
