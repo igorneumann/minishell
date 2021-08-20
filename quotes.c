@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/19 21:11:14 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/20 17:16:58 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ char	*replace_quotes(char *with_quotes)
 	{
 		if (with_quotes[i] == '\"')
 		{
-			printf("%d\r\n", look_for_open('\'', with_quotes, i) == 1);
 			if (look_for_open('\'', with_quotes, i) == 1)
 			{
 				without[j] = with_quotes[i];
