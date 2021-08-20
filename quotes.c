@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/20 18:45:00 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/20 18:49:48 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ int	check_replacement(t_cmd *cmd)
 			k = dollar(cmd, k);
 		i++;
 	}
+	free(cmd->in);
 	cmd->in = ft_strdup(cmd->tmp_in);
 	free(cmd->tmp_in);
 	return (1);
