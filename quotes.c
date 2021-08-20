@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/19 21:11:14 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/20 17:17:15 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ int	check_replacement(t_cmd *cmd)
 			cmd->tmp_in = ft_strdup(cmd->in);
 			free(cmd->in);
 			k = dollar(cmd, k);
+			i = -1;
 		}
 		i++;
 	}
