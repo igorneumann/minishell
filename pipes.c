@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/07/06 19:19:28 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/20 18:32:34 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	ft_startpipe(char *str, t_cmd *cmd)
 	}
 	else
 		close(cmd->fd1[WRITE_END]);
+	free(parmList);
 	wait(&status);
 }
 
@@ -78,6 +79,7 @@ void	ft_midpipe(char *str, t_cmd *cmd, int *fd_in, int *fd_out)
 		close(fd_in[READ_END]);
 		close(fd_out[WRITE_END]);
 	}
+	free(parmList);
 	wait(&status);
 }
 
@@ -104,6 +106,7 @@ void	ft_endpipe(char *str, t_cmd *cmd, int i)
 	}
 	else
 		close(fd[READ_END]);
+	free(parmList);
 	wait(&status);
 }
 

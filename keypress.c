@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/20 17:24:26 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/20 18:38:57 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	ft_enter(t_cmd *cmd)
 			ft_read_arguments(cmd);
 		ft_reset(cmd);
 	}
+	cmd->nexcom = freelist(cmd->nexcom);
 }
 
 void	noprintable(t_cmd *cmd, char c)
