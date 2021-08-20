@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/20 17:27:52 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/20 18:28:07 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ char	*replace_quotes(char *with_quotes)
 	{
 		if (with_quotes[i] == '\"')
 		{
-			printf("%d\r\n", look_for_open('\'', with_quotes, i) == 1);
 			if (look_for_open('\'', with_quotes, i) == 1)
 			{
 				without[j] = with_quotes[i];
@@ -194,19 +193,16 @@ int	check_replacement(t_cmd *cmd)
 		cmd->dollar_value = (char **)malloc(sizeof(char *)
 					* count_char(cmd->tmp_in, '$'));
 	free(cmd->in);
+	cmd->in = ft_strdup(replace_quotes(cmd->tmp_in));
+	free(cmd->tmp_in);
+	cmd->tmp_in = ft_strdup(cmd->in);
 	while (cmd->tmp_in[i])
 	{
 		if (cmd->tmp_in[i] == '$')
-		{
-			cmd->in = ft_strdup(replace_quotes(cmd->tmp_in));
-			free(cmd->tmp_in);
-			cmd->tmp_in = ft_strdup(cmd->in);
-			free(cmd->in);
 			k = dollar(cmd, k);
-		}
 		i++;
 	}
-	cmd->in = ft_strdup(replace_quotes(cmd->tmp_in));
+	cmd->in = ft_strdup(cmd->tmp_in);
 	free(cmd->tmp_in);
 	return (1);
 }
