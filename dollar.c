@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/22 14:56:05 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/22 16:14:20 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	replace(t_cmd *cmd, int position, int old_len)
 	j = 0;
 	k = 0;
 	position--;
+	free(cmd->in);
 	cmd->in = (char *)malloc(sizeof(char) * (ft_strlen(cmd->tmp_in)
 				+ ft_strlen(cmd->dollar_value[position]) - (old_len + 1)) + 1);
 	if (cmd->in == NULL)
@@ -52,7 +53,8 @@ void	replace(t_cmd *cmd, int position, int old_len)
 					j++;
 					i++;
 				}
-				k += old_len + 1;
+				//ESTO SIGUE SIN FUNCIONAR
+				k += old_len + look_for_open('\'', cmd->tmp_in, k);
 				position++;
 				counter++;
 			}
@@ -93,8 +95,18 @@ int	cpy_global_var(t_cmd *cmd, int ch, int i, int k)
 			ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1
 		&& (cmd->quote_d % 2 != 0 || cmd->quote_d == 0))
 			cmd->dollar_value[k++] = ft_strjoin("$", var);
+
+
+	//ESTO ESTÁ EN PRUEBAS POR ESO ESTÁ SEPARADO AUNQUE HAGA LO MISMO
+	else if (cmd->quote_s != 0 && cmd->quote_d != 0
+		&& look_for_closure('\'', '$', cmd->original, ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1
+		&& look_for_closure('\"', '$', cmd->original, ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1
+		&& look_for_open('\'', cmd->original, ft_strchr(cmd->original, '\"') - (cmd->original + 1)))
+			cmd->dollar_value[k] = ft_strjoin("$", var);
+
+
 	else
-		cmd->dollar_value[k++] = search_value(var, cmd);
+		cmd->dollar_value[k] = search_value(var, cmd);
 	if (question_mark)
 		free(question_mark);
 	free(var);
@@ -118,7 +130,6 @@ int	dollar(t_cmd *cmd, int k)
 	i++;
 	ch = cpy_global_var(cmd, ch, i, k);
 	k++;
-	free(cmd->in);
 	replace(cmd, k, ch);
 	return (k);
 }

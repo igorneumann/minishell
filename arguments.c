@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/22 14:52:04 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/22 15:04:58 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ void	ft_echo(t_cmd *cmd)
 		}
 		ft_putstr("\r\n");
 	}
-	if (cmd->dollar_value)
-		free(cmd->dollar_value);
 }
 
 void	previous_folder(char *path, char *old_path, int j)
