@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/17 17:58:41 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/22 14:52:04 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ void	ft_echo(t_cmd *cmd)
 	if (command_not_found("echo", cmd))
 		return ;
 	i += 4;
-	while (cmd->in[i] == ' ' || cmd->in[i] == '\'')
+	while (cmd->in[i] == ' ')
 		i++;
 	if (ft_strnstr(cmd->in + i, "-n", 2) != NULL)
 	{
 		i += 2;
-		while (cmd->in[i] == ' ' || cmd->in[i] == '\'')
+		while (cmd->in[i] == ' ')
 			i++;
 		if (cmd->in[i] != 0 && cmd->in[i] == '$'
 			&& cmd->dollar_value[j] != NULL)
@@ -46,12 +46,11 @@ void	ft_echo(t_cmd *cmd)
 			while (cmd->in[i] != ' ' && cmd->in[i] != 0)
 				i++;
 			ft_putstr(cmd->dollar_value[j]);
+			free(cmd->dollar_value[j]);
 			j++;
 		}
-		if (cmd->in[i] != 0 && cmd->in[i] != '\'')
+		if (cmd->in[i] != 0)
 			ft_putstr(&cmd->in[i]);
-		if (cmd->in[i] == '\'')
-			i++;
 	}
 	else
 	{
@@ -62,6 +61,7 @@ void	ft_echo(t_cmd *cmd)
 				while (cmd->in[i] != ' ' && cmd->in[i] != 0)
 					i++;
 				ft_putstr(cmd->dollar_value[j]);
+				free(cmd->dollar_value[j]);
 				j++;
 			}
 			else
@@ -69,6 +69,8 @@ void	ft_echo(t_cmd *cmd)
 		}
 		ft_putstr("\r\n");
 	}
+	if (cmd->dollar_value)
+		free(cmd->dollar_value);
 }
 
 void	previous_folder(char *path, char *old_path, int j)

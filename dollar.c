@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/20 17:48:23 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/22 14:56:05 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,12 @@
 
 char	*search_value(char *elem, t_cmd *cmd)
 {
-	char	*question_mark;
-
-	question_mark = ft_itoa(cmd->output_status >> 8);
 	if (ft_strnstr(elem, "?", 1))
-		return (question_mark);
+		return (ft_itoa(cmd->output_status >> 8));
 	while (cmd->envp && ft_strcmp(elem, cmd->envp->key) != 0)
 		cmd->envp = cmd->envp->next;
-	if (cmd->envp->value != NULL && ft_strcmp(elem, cmd->envp->key) == 0)
-		return (cmd->envp->value);
+	if (cmd->envp && cmd->envp->value != NULL && ft_strcmp(elem, cmd->envp->key) == 0)
+		return (ft_strdup(cmd->envp->value));
 	return (NULL);
 }
 
@@ -73,6 +70,7 @@ void	replace(t_cmd *cmd, int position, int old_len)
 int	cpy_global_var(t_cmd *cmd, int ch, int i, int k)
 {
 	char	*var;
+	char	*question_mark;
 	int		j;
 
 	j = 0;
@@ -81,20 +79,24 @@ int	cpy_global_var(t_cmd *cmd, int ch, int i, int k)
 		ch++;
 	var = (char *)malloc(sizeof(char) * ch + 1);
 	while (cmd->tmp_in[i] && cmd->tmp_in[i] != ' ' && cmd->tmp_in[i] != '\''
-		&& i < i + ch)
+		&& cmd->tmp_in[i] != '\"' && i < i + ch)
 	{
 		var[j] = cmd->tmp_in[i];
 		i++;
 		j++;
 	}
 	var[j] = '\0';
-	if (search_value(var, cmd) == NULL)
+	question_mark = search_value(var, cmd);
+	if (question_mark == NULL)
 		printf("%s : command not found\r\n", var);
-	else if (cmd->quote_s != 0 && look_for_closure('\'', '$', cmd->original, ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1
-			&& (cmd->quote_d % 2 != 0 || cmd->quote_d == 0))
-			cmd->dollar_value[k] = ft_strjoin("$", var);
+	else if (cmd->quote_s != 0 && look_for_closure('\'', '$', cmd->original,
+			ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1
+		&& (cmd->quote_d % 2 != 0 || cmd->quote_d == 0))
+			cmd->dollar_value[k++] = ft_strjoin("$", var);
 	else
-		cmd->dollar_value[k] = ft_strdup(search_value(var, cmd));
+		cmd->dollar_value[k++] = search_value(var, cmd);
+	if (question_mark)
+		free(question_mark);
 	free(var);
 	return (ch);
 }
@@ -116,6 +118,7 @@ int	dollar(t_cmd *cmd, int k)
 	i++;
 	ch = cpy_global_var(cmd, ch, i, k);
 	k++;
+	free(cmd->in);
 	replace(cmd, k, ch);
 	return (k);
 }
