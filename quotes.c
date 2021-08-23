@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/23 12:04:20 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/23 12:29:13 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	check_quotes_error(t_cmd *cmd)
 	return (0);
 }
 
-int		look_for_open(char quote, char *str, int i)
+int	look_for_open(char quote, char *str, int i)
 {
 	int	look;
 
@@ -111,49 +111,48 @@ int		look_for_open(char quote, char *str, int i)
 
 void	replace_quotes(t_cmd *cmd)
 {
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
+	cmd->c1 = 0;
+	cmd->c2 = 0;
 	free(cmd->in);
 	cmd->in = (char *)malloc(sizeof(char) * ft_strlen(cmd->tmp_in) + 1);
-	while(cmd->tmp_in[i] != '\0')
+	while (cmd->tmp_in[cmd->c1] != '\0')
 	{
-		if (cmd->tmp_in[i] == '\"')
+		if (cmd->tmp_in[cmd->c1] == '\"')
 		{
-			if (look_for_open('\'', cmd->tmp_in, i) == 1)
-				cmd->in[j++] = cmd->tmp_in[i];
-			i++;
-			if (cmd->tmp_in[i] != '\0'
-				&& look_for_closure('\"', cmd->tmp_in[i + 1], cmd->tmp_in, i + 1) == 1)
+			if (look_for_open('\'', cmd->tmp_in, cmd->c1) == 1)
+				cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1];
+			cmd->c1++;
+			if (cmd->tmp_in[cmd->c1] != '\0'
+				&& look_for_closure('\"', cmd->tmp_in[cmd->c1 + 1],
+					cmd->tmp_in, cmd->c1 + 1) == 1)
 			{
-				while (cmd->tmp_in[i] != '\"')
-					cmd->in[j++] = cmd->tmp_in[i++];
-				if (look_for_open('\'', cmd->tmp_in, i) == 1)
-					cmd->in[j++] = cmd->tmp_in[i];
-				i++;
+				while (cmd->tmp_in[cmd->c1] != '\"')
+					cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1++];
+				if (look_for_open('\'', cmd->tmp_in, cmd->c1) == 1)
+					cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1];
+				cmd->c1++;
 			}
 		}
-		if (cmd->tmp_in[i] == '\'')
+		if (cmd->tmp_in[cmd->c1] == '\'')
 		{
-			if (look_for_open('\"', cmd->tmp_in, i) == 1)
-				cmd->in[j++] = cmd->tmp_in[i];
-			i++;
-			if (cmd->tmp_in[i] != '\0'
-				&& look_for_closure('\'', cmd->tmp_in[i + 1], cmd->tmp_in, i + 1) == 1)
+			if (look_for_open('\"', cmd->tmp_in, cmd->c1) == 1)
+				cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1];
+			cmd->c1++;
+			if (cmd->tmp_in[cmd->c1] != '\0'
+				&& look_for_closure('\'', cmd->tmp_in[cmd->c1 + 1],
+					cmd->tmp_in, cmd->c1 + 1) == 1)
 			{
-				while (cmd->tmp_in[i] != '\'')
-					cmd->in[j++] = cmd->tmp_in[i++];
-				if (look_for_open('\"', cmd->tmp_in, i) == 1)
-					cmd->in[j++] = cmd->tmp_in[i];
-				i++;
+				while (cmd->tmp_in[cmd->c1] != '\'')
+					cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1++];
+				if (look_for_open('\"', cmd->tmp_in, cmd->c1) == 1)
+					cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1];
+				cmd->c1++;
 			}
 		}
-		if (cmd->tmp_in[i] != '\0')
-			cmd->in[j++] = cmd->tmp_in[i++];
+		if (cmd->tmp_in[cmd->c1] != '\0')
+			cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1++];
 	}
-	cmd->in[j] = '\0';
+	cmd->in[cmd->c2] = '\0';
 }
 
 int	check_replacement(t_cmd *cmd)
@@ -168,7 +167,7 @@ int	check_replacement(t_cmd *cmd)
 		return (-1);
 	if (ft_strchr(cmd->in, '$') != NULL)
 		cmd->dollar_value = (char **)malloc(sizeof(char *)
-					* count_char(cmd->tmp_in, '$') + 1);
+				* count_char(cmd->tmp_in, '$') + 1);
 	replace_quotes(cmd);
 	free(cmd->tmp_in);
 	cmd->tmp_in = ft_strdup(cmd->in);

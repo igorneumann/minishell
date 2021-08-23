@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/23 11:49:11 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/23 12:39:32 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ typedef struct s_command
 	char	**dollar_value;
 	char	*original;
 	int		check_replacement;
+	int		c1;
+	int		c2;
 	t_data	*list;
 	t_data	*param;
 	t_data	*nexcom;
@@ -216,6 +218,7 @@ int		check_replacement(t_cmd *cmd);
 *** read_arguments.c
 */
 void	ft_read_arguments(t_cmd *cmd);
+void	builtings(t_cmd *cmd, int i);
 int		ft_arguments(t_cmd *cmd);
 void	ft_lst_add_arguments(t_data **in, char *new);
 void	ft_exit(t_cmd *cmd, int i);

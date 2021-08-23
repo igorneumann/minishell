@@ -6,13 +6,13 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/22 13:53:10 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/23 12:40:28 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	 ft_read_arguments(t_cmd *cmd)
+void	ft_read_arguments(t_cmd *cmd)
 {
 	int		pip;
 	int		red;
@@ -32,17 +32,8 @@ void	 ft_read_arguments(t_cmd *cmd)
 	unlink(".tempAF.tmp");
 }
 
-int	ft_arguments(t_cmd *cmd)
+void	builtings(t_cmd *cmd, int i)
 {
-	int	i;
-
-	i = 0;
-	cmd->quote_s = 0;
-	cmd->quote_d = 0;
-	cmd->quotes = 0;
-	cmd->output_status = 0;
-	while (cmd->in[i] == ' ')
-		i++;
 	if (ft_strnstr(cmd->in, "echo", 4))
 		ft_echo(cmd);
 	else if (ft_strnstr(cmd->in, "cd", 2))
@@ -57,6 +48,24 @@ int	ft_arguments(t_cmd *cmd)
 		ft_exit(cmd, i);
 	else if (ft_strnstr(cmd->in, "env", 3))
 		ft_env(cmd);
+}
+
+int	ft_arguments(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	cmd->quote_s = 0;
+	cmd->quote_d = 0;
+	cmd->quotes = 0;
+	cmd->output_status = 0;
+	while (cmd->in[i] == ' ')
+		i++;
+	if (ft_strnstr(cmd->in, "echo", 4) || ft_strnstr(cmd->in, "cd", 2)
+		|| ft_strnstr(cmd->in, "pwd", 3) || ft_strnstr(cmd->in, "export", 6)
+		|| ft_strnstr(cmd->in, "unset", 5) || ft_strnstr(cmd->in, "exit", 4)
+		|| ft_strnstr(cmd->in, "env", 3))
+		builtings(cmd, i);
 	else if (ft_strnstr(cmd->in, "$?", 2))
 		printf("%d : command not found\r\n", cmd->output_status >> 8);
 	else
