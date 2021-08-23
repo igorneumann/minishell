@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/19 21:07:30 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/23 11:49:11 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_command
 	int		output_status;
 	char	**dollar_value;
 	char	*original;
+	int		check_replacement;
 	t_data	*list;
 	t_data	*param;
 	t_data	*nexcom;
@@ -208,7 +209,7 @@ int		look_for_closure(char quote, char dollar, char *line, int i);
 int		count_char(char *line, char character);
 int		check_quotes_error(t_cmd *cmd);
 int		look_for_open(char quote, char *str, int i);
-char	*replace_quotes(char *with_quotes);
+void	replace_quotes(t_cmd *cmd);
 int		check_replacement(t_cmd *cmd);
 
 /*

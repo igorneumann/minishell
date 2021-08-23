@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/22 15:04:58 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/23 11:57:18 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ void	ft_echo(t_cmd *cmd)
 	cmd->not_found = 1;
 	if (command_not_found("echo", cmd))
 		return ;
+	if (cmd->check_replacement == -1)
+	{
+		printf("unexpected EOF while looking for matching \'\"\r\n");
+		return ;
+	}
 	i += 4;
 	while (cmd->in[i] == ' ')
 		i++;

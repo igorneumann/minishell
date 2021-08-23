@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/22 15:09:56 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/23 12:04:20 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,76 +104,56 @@ int		look_for_open(char quote, char *str, int i)
 	return (0);
 }
 
-char	*replace_quotes(char *with_quotes)
+//void	looking_aperture(t_cmd *cmd, char quote, in)
+//{
+//
+//}
+
+void	replace_quotes(t_cmd *cmd)
 {
-	char	*without;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	without = (char *)malloc(sizeof(char) * ft_strlen(with_quotes) + 1);
-	while(with_quotes[i] != '\0')
+	free(cmd->in);
+	cmd->in = (char *)malloc(sizeof(char) * ft_strlen(cmd->tmp_in) + 1);
+	while(cmd->tmp_in[i] != '\0')
 	{
-		if (with_quotes[i] == '\"')
+		if (cmd->tmp_in[i] == '\"')
 		{
-			if (look_for_open('\'', with_quotes, i) == 1)
-			{
-				without[j] = with_quotes[i];
-				j++;
-			}
+			if (look_for_open('\'', cmd->tmp_in, i) == 1)
+				cmd->in[j++] = cmd->tmp_in[i];
 			i++;
-			if (with_quotes[i] != '\0'
-				&& look_for_closure('\"', with_quotes[i + 1], with_quotes, i + 1) == 1)
+			if (cmd->tmp_in[i] != '\0'
+				&& look_for_closure('\"', cmd->tmp_in[i + 1], cmd->tmp_in, i + 1) == 1)
 			{
-				while (with_quotes[i] != '\"')
-				{
-					without[j] = with_quotes[i];
-					j++;
-					i++;
-				}
-				if (look_for_open('\'', with_quotes, i) == 1)
-				{
-					without[j] = with_quotes[i];
-					j++;
-				}
+				while (cmd->tmp_in[i] != '\"')
+					cmd->in[j++] = cmd->tmp_in[i++];
+				if (look_for_open('\'', cmd->tmp_in, i) == 1)
+					cmd->in[j++] = cmd->tmp_in[i];
 				i++;
 			}
 		}
-		if (with_quotes[i] == '\'')
+		if (cmd->tmp_in[i] == '\'')
 		{
-			if (look_for_open('\"', with_quotes, i) == 1)
-			{
-				without[j] = with_quotes[i];
-				j++;
-			}
+			if (look_for_open('\"', cmd->tmp_in, i) == 1)
+				cmd->in[j++] = cmd->tmp_in[i];
 			i++;
-			if (with_quotes[i] != '\0'
-				&& look_for_closure('\'', with_quotes[i + 1], with_quotes, i + 1) == 1)
+			if (cmd->tmp_in[i] != '\0'
+				&& look_for_closure('\'', cmd->tmp_in[i + 1], cmd->tmp_in, i + 1) == 1)
 			{
-				while (with_quotes[i] != '\'')
-				{
-					without[j] = with_quotes[i];
-					j++;
-					i++;
-				}
-				if (look_for_open('\"', with_quotes, i) == 1)
-				{
-					without[j] = with_quotes[i];
-					j++;
-				}
+				while (cmd->tmp_in[i] != '\'')
+					cmd->in[j++] = cmd->tmp_in[i++];
+				if (look_for_open('\"', cmd->tmp_in, i) == 1)
+					cmd->in[j++] = cmd->tmp_in[i];
 				i++;
 			}
 		}
-		if (with_quotes[i] != '\0')
-		{
-			without[j] = with_quotes[i];
-			j++;
-			i++;
-		}
+		if (cmd->tmp_in[i] != '\0')
+			cmd->in[j++] = cmd->tmp_in[i++];
 	}
-	without[j] = '\0';
-	return (without);
+	cmd->in[j] = '\0';
 }
 
 int	check_replacement(t_cmd *cmd)
@@ -185,15 +165,11 @@ int	check_replacement(t_cmd *cmd)
 	i = 0;
 	cmd->original = ft_strdup(cmd->in);
 	if (check_quotes_error(cmd) == -1)
-	{
-		printf("unexpected EOF while looking for matching \'\"\r\n");
 		return (-1);
-	}
 	if (ft_strchr(cmd->in, '$') != NULL)
 		cmd->dollar_value = (char **)malloc(sizeof(char *)
 					* count_char(cmd->tmp_in, '$') + 1);
-	free(cmd->in);
-	cmd->in = replace_quotes(cmd->tmp_in);
+	replace_quotes(cmd);
 	free(cmd->tmp_in);
 	cmd->tmp_in = ft_strdup(cmd->in);
 	while (cmd->tmp_in[i])
