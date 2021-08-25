@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keypress.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/20 18:38:57 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/23 11:50:19 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ft_enter(t_cmd *cmd)
 	cmd->tmp_in = ft_strdup(cmd->in);
 	free(cmd->buff);
 	cmd->buff = ft_strdup(cmd->tmp_in);
-	check_replacement(cmd);
+	cmd->check_replacement = check_replacement(cmd);
 	ft_semicolon(cmd);
 	printf("\r\n");
 	if (ft_strlen(cmd->in) > 0)

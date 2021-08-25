@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 18:38:34 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/13 19:08:03 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/23 12:32:07 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,19 @@ int	check_existence(t_cmd *cmd, char *aux, int i)
 {
 	int		n;
 	char	*key;
-	char	*new_value;
 
 	n = -1;
 	key = (char *)malloc(sizeof(char) * i + 1);
 	while (++n < i)
 		key[n] = aux[n];
 	key[n] = '\0';
-	new_value = ft_strdup(&aux[i + 1]);
 	while (cmd->envp->prev)
 		cmd->envp = cmd->envp->prev;
 	while (cmd->envp)
 	{
 		if (ft_strcmp(cmd->envp->key, key) == 0)
 		{
-			cmd->envp = change_value(cmd->envp, new_value);
+			cmd->envp = change_value(cmd->envp, &aux[i + 1]);
 			return (0);
 		}
 		else if (cmd->envp->next)
@@ -38,7 +36,6 @@ int	check_existence(t_cmd *cmd, char *aux, int i)
 		else
 			break ;
 	}
-	free(new_value);
 	return (1);
 }
 
