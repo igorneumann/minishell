@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 19:10:00 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/19 15:40:06 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/25 17:33:01 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,12 @@ void	ft_path(t_cmd *cmd)
 		else
 			i++;
 	}
+	i = 0;
+	while (cmd->path[i])
+	{
+		free(cmd->path[i]);
+		i++;
+	}
+	free(cmd->path);
+	cmd->path = NULL;
 }
