@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/20 18:32:32 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/25 18:35:18 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ char	**copyparam(t_cmd *cmd)
 		i = 1;
 	if (i < 1)
 		i = 1;
-	arg = malloc (sizeof(char **) * i);
+	arg = malloc (sizeof(char *) * i + 1);
+	arg[i] = NULL;
 	if (cmd->param != NULL && cmd->param->in != NULL)
 		arg[--i] = cmd->param->in;
 	while (cmd->param != NULL && cmd->param->next != NULL && i > 0)
@@ -105,7 +106,7 @@ int	exec(char *str, t_cmd *cmd)
 	{
 		redirout(cmd);
 		execve(str, parmList, cmd->envorg);
-		printf("%s: command not found\r\n", cmd->in);
+		printf("%s: command not found\n", cmd->in);
 		exit(0);
 	}
 	else
