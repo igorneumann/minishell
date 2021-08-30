@@ -29,7 +29,7 @@ void	ft_init(t_cmd *cmd, char **envp, t_raw *raw);
 void	ft_reset(t_cmd *cmd)
 	+ ejecuta en el enter
 		- Libera cmd->in y cmd->buff
-		- limpia listados > freelist
+		- limpia listados > free_list
 		- borra strings con ft_strdup
 
 void	ft_presentation(void);
@@ -324,20 +324,20 @@ void	ft_endpipe(char *str, t_cmd *cmd, int i)
 	+ llamado al ejecutar los pipes
 		- llama > ft_startpipe
 		- crea un bucle mientras haya siguiente pipe
-			- borra el listado de parametros > freelist
+			- borra el listado de parametros > free_list
 			- duplica cmd->nexpip->in a cmd->in
 			- copia los argumentos > ft_lst_add_arguments
 			- copia cmd->in a cmd->buff hasta el espacio > ft_strduptochar
 			- verifica si esta en path de sistema > ft_path
 			- llama > middlepiper
 			- mueve listado una posicion
-		- libera listado de parametros > freelist
+		- libera listado de parametros > free_list
 		- duplica cmd->nexpip->in a cmd->in
 		- copia argumentos > ft_lst_add_arguments
 		- duplica cmd->in a cmd->buff hasta espacio > ft_strduptochar
 		- verifica si esta en path de sistema > ft_path
 		- llama > ft_endpipe
-		- borra cmd->param y cmd->nexpip > freelist
+		- borra cmd->param y cmd->nexpip > free_list
 	USA VARIABLES:
 		- cmd->in (una estrella)
 		- cmd->nexpip->next (siguiente pipe)

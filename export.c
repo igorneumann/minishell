@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 18:38:34 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/23 12:32:07 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/30 16:16:50 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	check_existence(t_cmd *cmd, char *aux, int i)
 		if (ft_strcmp(cmd->envp->key, key) == 0)
 		{
 			cmd->envp = change_value(cmd->envp, &aux[i + 1]);
+			free(key);
 			return (0);
 		}
 		else if (cmd->envp->next)
@@ -36,6 +37,7 @@ int	check_existence(t_cmd *cmd, char *aux, int i)
 		else
 			break ;
 	}
+	free(key);
 	return (1);
 }
 
@@ -83,7 +85,7 @@ int	new_env_element(t_cmd *cmd, int i)
 			ft_include(cmd, aux[j]);
 			j++;
 		}
-		free(aux);
+		free_split(aux);
 		return (0);
 	}
 	return (1);
@@ -111,6 +113,7 @@ void	ft_unset(t_cmd *cmd)
 	int		i;
 	int		j;
 	char	*erase;
+	t_envp	*env;
 
 	i = 0;
 	j = 0;
@@ -122,6 +125,14 @@ void	ft_unset(t_cmd *cmd)
 	while (cmd->in[i] != '\0')
 		erase[j++] = cmd->in[i++];
 	erase[j] = '\0';
-	cmd->envp = search_elem(cmd->envp, erase);
+	env = search_elem(cmd->envp, erase);
+	if (env)
+		cmd->envp = env;
+	else
+	{
+		free(erase);
+		return ;
+	}
 	cmd->envp = remove_elem(cmd->envp);
+	free(erase);
 }

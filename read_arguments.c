@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_arguments.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/25 18:18:31 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/30 16:19:38 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_read_arguments(t_cmd *cmd)
 	unlink(".tempAF.tmp");
 }
 
-void	builtings(t_cmd *cmd, int i)
+void	builtins(t_cmd *cmd, int i)
 {
 	if (ft_strnstr(cmd->in, "echo", 4))
 		ft_echo(cmd);
@@ -65,7 +65,7 @@ int	ft_arguments(t_cmd *cmd)
 		|| ft_strnstr(cmd->in, "pwd", 3) || ft_strnstr(cmd->in, "export", 6)
 		|| ft_strnstr(cmd->in, "unset", 5) || ft_strnstr(cmd->in, "exit", 4)
 		|| ft_strnstr(cmd->in, "env", 3))
-		builtings(cmd, i);
+		builtins(cmd, i);
 	else if (ft_strnstr(cmd->in, "$?", 2))
 		printf("%d : command not found\r\n", cmd->output_status >> 8);
 	else

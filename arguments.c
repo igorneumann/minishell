@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/30 15:42:39 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/30 15:48:15 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 
 void	ft_pwd(t_cmd *cmd)
 {
+	char	*pwd;
+
 	cmd->not_found = 1;
 	if (command_not_found("pwd", cmd))
 		return ;
+	pwd = getcwd(NULL, -1);
 	ft_putstr("¿Ya te has perdido? Estás en \033[1m");
-	ft_putstr(getcwd(NULL, -1));
+	ft_putstr(pwd);
+	free(pwd);
 	ft_putstr("\033[0m\r\n");
 }
 

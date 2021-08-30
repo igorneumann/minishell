@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/23 12:39:32 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/30 16:19:33 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,9 +133,12 @@ void	ft_lst_edit(t_data **in, t_data *new);
 int		lst_size(t_envp *lst);
 
 /*
-*** lists
+*** free.c
 */
-t_data	*freelist(t_data *lst);
+t_data	*free_list(t_data *lst);
+t_envp	*free_env(t_envp *lst);
+void	free_elem(t_envp *elem);
+void	free_split(char **split);
 
 /*
 *** dollar.c
@@ -218,7 +221,7 @@ int		check_replacement(t_cmd *cmd);
 *** read_arguments.c
 */
 void	ft_read_arguments(t_cmd *cmd);
-void	builtings(t_cmd *cmd, int i);
+void	builtins(t_cmd *cmd, int i);
 int		ft_arguments(t_cmd *cmd);
 void	ft_lst_add_arguments(t_data **in, char *new);
 void	ft_exit(t_cmd *cmd, int i);

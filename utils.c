@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 10:47:23 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/13 19:01:44 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/30 16:14:51 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	ft_sort_env(t_envp *list)
 		next_elem = elem;
 	}
 	ft_print_export(elem);
+	free_env(elem);
 }
 
 void	ft_print_export(t_envp *x)

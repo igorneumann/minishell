@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 09:35:29 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/01 11:04:26 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/30 16:15:39 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_envp	*search_elem(t_envp *elem, char *wanted)
 	{
 		while (elem->prev)
 			elem = elem->prev;
-		while (elem->next)
+		while (elem)
 		{
 			if (ft_strcmp(elem->key, wanted) != 0)
 				elem = elem->next;
@@ -59,22 +59,32 @@ t_envp	*change_value(t_envp *elem, char *new_value)
 	return (elem);
 }
 
+
+
 t_envp	*remove_elem(t_envp *elem)
 {
+	t_envp	*tmp;
+
 	if (elem->prev && elem->next && elem)
 	{
 		elem->prev->next = elem->next;
 		elem->next->prev = elem->prev;
+		tmp = elem;
+		free_elem(tmp);
 		elem = elem->prev;
 	}
 	if (!elem->prev && elem->next && elem)
 	{
 		elem->next->prev = NULL;
+		tmp = elem;
+		free_elem(tmp);
 		elem = elem->next;
 	}
 	if (elem->prev && !elem->next && elem)
 	{
 		elem->prev->next = NULL;
+		tmp = elem;
+		free_elem(tmp);
 		elem = elem->prev;
 	}
 	return (elem);

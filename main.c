@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/23 11:50:09 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/30 16:13:56 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	ft_reset(t_cmd *cmd)
 	cmd->inpt = ft_strdup("\x0D");
 	free(cmd->outp);
 	cmd->outp = ft_strdup("\x0D");
-	cmd->param = freelist(cmd->param);
-	cmd->nexpip = freelist(cmd->nexpip);
+	cmd->param = free_list(cmd->param);
+	cmd->nexpip = free_list(cmd->nexpip);
 	free(cmd->buff);
 	cmd->buff = ft_strdup("\x0D");
 	cmd->i = 0;

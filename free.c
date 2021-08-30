@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   morelists.c                                        :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/18 18:36:03 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/20 18:15:14 by ineumann         ###   ########.fr       */
+/*   Created: 2021/08/30 16:12:33 by narroyo-          #+#    #+#             */
+/*   Updated: 2021/08/30 16:28:34 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_data	*freelist(t_data *lst)
+t_data	*free_list(t_data *lst)
 {
 	t_data	*prev;
 
@@ -24,8 +24,6 @@ t_data	*freelist(t_data *lst)
 			prev = lst->prev;
 			free (lst->in);
 			free (lst->copy);
-			lst->in = NULL;
-			lst->copy = NULL;
 			lst->next = NULL;
 			lst->prev = NULL;
 			free (lst);
@@ -33,10 +31,47 @@ t_data	*freelist(t_data *lst)
 		}
 		lst->next = NULL;
 		free (lst->in);
-		lst->in = NULL;
 		free (lst->copy);
-		lst->copy = NULL;
 		free(lst);
 	}
 	return (NULL);
+}
+
+t_envp	*free_env(t_envp *lst)
+{
+	t_envp	*actual;
+	if (lst != NULL)
+	{
+		while (lst->prev != NULL)
+			lst = lst->prev;
+		while (lst)
+		{
+			actual = lst;
+			lst = lst->next;
+			free(actual->key);
+			free(actual->value);
+			free(actual);
+		}
+	}
+	return (NULL);
+}
+
+void	free_elem(t_envp *elem)
+{
+	free(elem->key);
+	free(elem->value);
+	free(elem);
+}
+
+void	free_split(char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 }

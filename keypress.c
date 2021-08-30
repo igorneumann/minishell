@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keypress.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/25 17:45:57 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/30 16:13:41 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	ft_enter(t_cmd *cmd)
 			ft_read_arguments(cmd);
 		ft_reset(cmd);
 	}
-	cmd->nexcom = freelist(cmd->nexcom);
+	cmd->nexcom = free_list(cmd->nexcom);
 	free(cmd->original);
 }
 
