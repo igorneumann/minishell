@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/22 16:14:20 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/30 15:34:41 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ void	replace(t_cmd *cmd, int position, int old_len)
 	position--;
 	free(cmd->in);
 	cmd->in = (char *)malloc(sizeof(char) * (ft_strlen(cmd->tmp_in)
-				+ ft_strlen(cmd->dollar_value[position]) - (old_len + 1)) + 1);
+				+ ft_strlen(cmd->dollar_value[position]) - (old_len)) + 1);
 	if (cmd->in == NULL)
 		return ;
-	while (cmd->tmp_in[k] && cmd->tmp_in[k] != '\0')
+	while (cmd->tmp_in[k])
 	{
 		if (cmd->tmp_in[k] == '$')
 		{
@@ -53,17 +53,19 @@ void	replace(t_cmd *cmd, int position, int old_len)
 					j++;
 					i++;
 				}
-				//ESTO SIGUE SIN FUNCIONAR
-				k += old_len + look_for_open('\'', cmd->tmp_in, k);
+				if (ft_strchr(cmd->dollar_value[position], '$'))
+					k += old_len;
+				else
+					k += old_len + 1;
 				position++;
 				counter++;
 			}
 		}
-		else if (cmd->tmp_in[k] && cmd->tmp_in[k] != '\0')
+		else if (cmd->tmp_in[k])
 		{
-				cmd->in[i] = cmd->tmp_in[k];
-				k++;
-				i++;
+			cmd->in[i] = cmd->tmp_in[k];
+			k++;
+			i++;
 		}
 	}
 	cmd->in[i] = '\0';
@@ -91,22 +93,14 @@ int	cpy_global_var(t_cmd *cmd, int ch, int i, int k)
 	question_mark = search_value(var, cmd);
 	if (question_mark == NULL)
 		printf("%s : command not found\r\n", var);
-	else if (cmd->quote_s != 0 && look_for_closure('\'', '$', cmd->original,
-			ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1
-		&& (cmd->quote_d % 2 != 0 || cmd->quote_d == 0))
-			cmd->dollar_value[k++] = ft_strjoin("$", var);
-
-
-	//ESTO ESTÁ EN PRUEBAS POR ESO ESTÁ SEPARADO AUNQUE HAGA LO MISMO
-	else if (cmd->quote_s != 0 && cmd->quote_d != 0
-		&& look_for_closure('\'', '$', cmd->original, ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1
-		&& look_for_closure('\"', '$', cmd->original, ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1
-		&& look_for_open('\'', cmd->original, ft_strchr(cmd->original, '\"') - (cmd->original + 1)))
-			cmd->dollar_value[k] = ft_strjoin("$", var);
-
-
-	else
+	if ((cmd->quote_s == 0 && cmd->quote_d == 0) || (look_for_closure('\'', '$', cmd->original,
+			ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 0
+			&& look_for_closure('\"', '$', cmd->original, ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1)
+			|| (look_for_closure('\'', '$', cmd->original, ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1
+			&& look_for_open('\"', cmd->original, ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1))
 		cmd->dollar_value[k] = search_value(var, cmd);
+	else
+		cmd->dollar_value[k++] = ft_strjoin("$", var);
 	if (question_mark)
 		free(question_mark);
 	free(var);

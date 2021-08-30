@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/23 11:57:18 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/30 15:42:39 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_echo(t_cmd *cmd)
 		return ;
 	if (cmd->check_replacement == -1)
 	{
-		printf("unexpected EOF while looking for matching \'\"\r\n");
+		ft_putstr_fd("unexpected EOF while looking for matching\'\"\r\n", 2);
 		return ;
 	}
 	i += 4;
@@ -45,33 +45,11 @@ void	ft_echo(t_cmd *cmd)
 		i += 2;
 		while (cmd->in[i] == ' ')
 			i++;
-		if (cmd->in[i] != 0 && cmd->in[i] == '$'
-			&& cmd->dollar_value[j] != NULL)
-		{
-			while (cmd->in[i] != ' ' && cmd->in[i] != 0)
-				i++;
-			ft_putstr(cmd->dollar_value[j]);
-			free(cmd->dollar_value[j]);
-			j++;
-		}
-		if (cmd->in[i] != 0)
-			ft_putstr(&cmd->in[i]);
+		ft_putstr(&cmd->in[i]);
 	}
 	else
 	{
-		while (cmd->in[i] != 0)
-		{
-			if (cmd->in[i] == '$' && cmd->dollar_value[j])
-			{
-				while (cmd->in[i] != ' ' && cmd->in[i] != 0)
-					i++;
-				ft_putstr(cmd->dollar_value[j]);
-				free(cmd->dollar_value[j]);
-				j++;
-			}
-			else
-				ft_putchar_fd(cmd->in[i++], 1);
-		}
+		ft_putstr(&cmd->in[i]);
 		ft_putstr("\r\n");
 	}
 }

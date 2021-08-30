@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/25 17:45:35 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/30 15:35:47 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	look_for_closure(char quote, char searching, char *line, int i)
 {
+	if (!ft_strchr(line, quote))
+		return (0);
 	while (line[i])
 	{
 		if (line[i] == searching)
@@ -103,11 +105,6 @@ int	look_for_open(char quote, char *str, int i)
 		return (1);
 	return (0);
 }
-
-//void	looking_aperture(t_cmd *cmd, char quote, in)
-//{
-//
-//}
 
 void	replace_quotes(t_cmd *cmd)
 {
