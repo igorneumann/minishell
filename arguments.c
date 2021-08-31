@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 12:08:17 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 13:55:43 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,22 @@ void	ft_pwd(t_cmd *cmd)
 	ft_putstr(pwd);
 	free(pwd);
 	ft_putstr("\033[0m\r\n");
+}
+
+void	print_echo(t_cmd *cmd, int i)
+{
+	if (ft_strnstr(cmd->in + i, "-n", 2) != NULL)
+	{
+		i += 2;
+		while (cmd->in[i] == ' ')
+			i++;
+		ft_putstr(&cmd->in[i]);
+	}
+	else
+	{
+		ft_putstr(&cmd->in[i]);
+		ft_putstr("\r\n");
+	}
 }
 
 void	ft_echo(t_cmd *cmd)
@@ -44,18 +60,7 @@ void	ft_echo(t_cmd *cmd)
 	i += 4;
 	while (cmd->in[i] == ' ')
 		i++;
-	if (ft_strnstr(cmd->in + i, "-n", 2) != NULL)
-	{
-		i += 2;
-		while (cmd->in[i] == ' ')
-			i++;
-		ft_putstr(&cmd->in[i]);
-	}
-	else
-	{
-		ft_putstr(&cmd->in[i]);
-		ft_putstr("\r\n");
-	}
+	print_echo(cmd, i);
 }
 
 void	previous_folder(char *path, char *old_path, int j)

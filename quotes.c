@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/30 15:35:47 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 13:44:35 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	replace_quotes(t_cmd *cmd)
 	{
 		if (cmd->tmp_in[cmd->c1] == '\"')
 		{
-			if (look_for_open('\'', cmd->tmp_in, cmd->c1) == 1)
+			if (cmd->tmp_in[cmd->c1] == '\'' && look_for_open('\'', cmd->tmp_in, cmd->c1) == 1)
 				cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1];
 			cmd->c1++;
 			if (cmd->tmp_in[cmd->c1] != '\0'
@@ -132,7 +132,7 @@ void	replace_quotes(t_cmd *cmd)
 		}
 		if (cmd->tmp_in[cmd->c1] == '\'')
 		{
-			if (look_for_open('\"', cmd->tmp_in, cmd->c1) == 1)
+			if (cmd->tmp_in[cmd->c1] == '\"' && look_for_open('\"', cmd->tmp_in, cmd->c1) == 1)
 				cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1];
 			cmd->c1++;
 			if (cmd->tmp_in[cmd->c1] != '\0'

@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 12:19:41 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 12:55:19 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	replace(t_cmd *cmd, int position, int old_len)
 	{
 		if (cmd->tmp_in[k] == '$')
 		{
+			k++;
 			if (counter == position)
 			{
 				j = 0;
@@ -54,10 +55,7 @@ void	replace(t_cmd *cmd, int position, int old_len)
 					j++;
 					i++;
 				}
-				if (ft_strchr(cmd->dollar_value[position], '$'))
-					k += old_len;
-				else
-					k += old_len + 1;
+				k += old_len;
 				position++;
 				counter++;
 			}
@@ -80,7 +78,7 @@ int	cpy_global_var(t_cmd *cmd, int ch, int i, int k)
 
 	j = 0;
 	while (cmd->tmp_in[i + ch] != '\'' && cmd->tmp_in[i + ch] != '\0'
-		&& cmd->tmp_in[i + ch] != ' ')
+		&& cmd->tmp_in[i + ch] != ' ' && cmd->tmp_in[i + ch] != '\"')
 		ch++;
 	var = (char *)malloc(sizeof(char) * ch + 1);
 	while (cmd->tmp_in[i] && cmd->tmp_in[i] != ' ' && cmd->tmp_in[i] != '\''
