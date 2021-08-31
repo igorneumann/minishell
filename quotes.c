@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 17:50:11 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 19:02:14 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,9 @@ void	replace_quotes(t_cmd *cmd)
 
 int	check_replacement(t_cmd *cmd)
 {
-	int	k;
 	int	i;
 
-	k = 0;
+	cmd->d_counter = 0;
 	i = -1;
 	if (check_quotes_error(cmd) == -1)
 		return (-1);
@@ -109,7 +108,7 @@ int	check_replacement(t_cmd *cmd)
 	while (cmd->tmp_in[++i])
 	{
 		if (cmd->tmp_in[i] == '$')
-			k = dollar(cmd, k);
+			dollar(cmd);
 	}
 	free(cmd->tmp_in);
 	free_split(cmd->dollar_value);

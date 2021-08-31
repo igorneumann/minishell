@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 17:31:23 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 19:01:54 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_command
 	int		quotes;
 	int		output_status;
 	char	**dollar_value;
+	int		d_counter;
 	char	*original;
 	int		check_replacement;
 	int		c1;
@@ -146,11 +147,11 @@ void	free_split(char **split);
 /*
 *** dollar.c
 */
-void	replace(t_cmd *cmd, int position, int old_len, int counter);
-void	replace_allocation(t_cmd *cmd, int position, int old_len);
-void	replace_global_var(t_cmd *cmd, char *var, int k);
-int		cpy_global_var(t_cmd *cmd, int ch, int i, int k);
-int		dollar(t_cmd *cmd, int k);
+void	replace(t_cmd *cmd, int old_len, int counter);
+void	replace_allocation(t_cmd *cmd, int old_len);
+void	replace_global_var(t_cmd *cmd, char *var);
+int		cpy_global_var(t_cmd *cmd, int ch, int i);
+void	dollar(t_cmd *cmd);
 
 /*
 *** env.c
