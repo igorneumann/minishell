@@ -6,11 +6,25 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 15:47:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 15:48:35 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 17:31:12 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	count_char(char *line, char character)
+{
+	int	i;
+
+	i = 0;
+	while (*line)
+	{
+		if (*line == character)
+			i++;
+		line++;
+	}
+	return (i);
+}
 
 int	look_for_closure(char quote, char searching, char *line, int i)
 {

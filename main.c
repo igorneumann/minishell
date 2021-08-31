@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 12:21:34 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 17:44:19 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ft_init(t_cmd *cmd, char **envp, t_raw *raw)
 	cmd->outp = ft_strdup("\x0D");
 	cmd->in = ft_strdup("\x0D");
 	cmd->buff = ft_strdup("\x0D");
+	cmd->dollar_value = NULL;
 	ft_save_env(cmd, envp);
 	enable_raw_mode(raw);
 }

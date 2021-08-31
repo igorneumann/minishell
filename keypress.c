@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/30 16:13:41 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 17:49:29 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	ft_enter(t_cmd *cmd)
 	cmd->tmp_in = ft_strdup(cmd->in);
 	free(cmd->buff);
 	cmd->buff = ft_strdup(cmd->tmp_in);
+	cmd->original = ft_strdup(cmd->in);
 	cmd->check_replacement = check_replacement(cmd);
 	ft_semicolon(cmd);
 	printf("\r\n");

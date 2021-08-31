@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 16:12:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 12:05:58 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 17:47:19 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	free_split(char **split)
 {
 	int	i;
 
+	if (!split || !*split)
+		return ;
 	i = 0;
 	while (split[i])
 	{

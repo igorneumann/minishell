@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 14:59:50 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 17:40:09 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	ft_echo(t_cmd *cmd)
 	if (cmd->check_replacement == -1)
 	{
 		ft_putstr_fd("unexpected EOF while looking for matching\'\"\r\n", 2);
-	/// AQUÍ HAY UN LEAK
 		return ;
 	}
 	i += 4;

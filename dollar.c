@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 15:28:24 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 17:52:29 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	replace(t_cmd *cmd, int position, int old_len, int counter)
 	int	k;
 
 	i = 0;
-	j = 0;
 	k = 0;
 	while (cmd->tmp_in[k])
 	{

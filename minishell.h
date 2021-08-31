@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 15:49:04 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 17:31:23 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ typedef struct s_command
 	int		check_replacement;
 	int		c1;
 	int		c2;
+	int		simple;
+	int		doubl;
 	t_data	*list;
 	t_data	*param;
 	t_data	*nexcom;
@@ -221,14 +223,15 @@ int		ft_altarrow(t_cmd *cmd);
 /*
 *** quotes.c
 */
-int		count_char(char *line, char character);
 int		check_quotes_error(t_cmd *cmd);
+void	omit_quotes(t_cmd *cmd, char q1, char q2);
 void	replace_quotes(t_cmd *cmd);
 int		check_replacement(t_cmd *cmd);
 
 /*
 *** quotes_utils.c
 */
+int		count_char(char *line, char character);
 int		look_for_closure(char quote, char dollar, char *line, int i);
 int		look_for_open(char quote, char *str, int i);
 
@@ -247,7 +250,7 @@ void	ft_exit(t_cmd *cmd, int i);
 int		command_not_found(char *str, t_cmd *cmd);
 void	ft_printlist(t_data *x);
 void	swap(t_envp *a, t_envp *b);
-void	ft_sort_env(t_envp *list);
+void	ft_sort_env(t_envp *list, t_envp *elem, t_envp *next_elem, int swapped);
 void	ft_print_export(t_envp *x);
 
 /*
