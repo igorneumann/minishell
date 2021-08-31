@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 13:46:10 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/03/14 13:23:48 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 12:26:45 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int	ft_output(int read_return, int fd, char **str, char **line)
 		str[fd] = NULL;
 		return (0);
 	}
-	*line = ft_substr(tmp, 0, ft_strlen(tmp) - ft_strlen(ft_strchr2(tmp, '\n')));
+	*line = ft_substr(tmp, 0,
+			ft_strlen(tmp) - ft_strlen(ft_strchr2(tmp, '\n')));
 	str[fd] = ft_strdup(ft_strchr2(tmp, '\n') + 1);
 	free(tmp);
 	return (1);

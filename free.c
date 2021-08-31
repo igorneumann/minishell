@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 16:12:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/30 16:28:34 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 12:05:58 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_data	*free_list(t_data *lst)
 t_envp	*free_env(t_envp *lst)
 {
 	t_envp	*actual;
+
 	if (lst != NULL)
 	{
 		while (lst->prev != NULL)

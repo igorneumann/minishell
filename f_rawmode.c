@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   f_rawmode.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/17 17:33:04 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/31 12:21:53 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void	die(const char *s, t_raw *raw)
 	exit(error);
 }
 
-void	RefreshScreen(void)
+void	refresh_screen(void)
 {
 	write(STDOUT_FILENO, "\x1b[2J", 4);
 	write(STDOUT_FILENO, "\x1b[H", 3);
 }
 
-void	enableRawMode(t_raw *raw)
+void	enable_raw_mode(t_raw *raw)
 {
 	if (tcgetattr(STDIN_FILENO, &raw->orig) == -1)
 		die("tcgetattr", raw);

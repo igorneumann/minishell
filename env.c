@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 10:28:08 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/25 11:02:17 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 10:48:09 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,21 @@ void	ft_options(t_cmd *cmd, int i)
 void	error_file_or_directory(t_cmd *cmd, int i)
 {
 	char	*fod;
+	char	*error;
 	int		j;
 
 	j = 0;
 	fod = (char *)malloc(sizeof(char) * (ft_strlen(cmd->in) - i + 1));
 	while (cmd->in[i] != '\0')
 		fod[j++] = cmd->in[i++];
+	error = ft_strjoin("env: ", fod);
+	free(fod);
+	fod = ft_strjoin(error, ": No such file or directory\r\n");
 	if (fod)
-		printf("env: %s: No such file or directory\r\n", fod);
+	{
+		ft_putstr_fd(fod, 2);
+		free(fod);
+	}
 }
 
 void	ft_env(t_cmd *cmd)

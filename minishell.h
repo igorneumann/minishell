@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/30 16:19:33 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 12:27:06 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ void	ft_cmd_line(t_cmd *cmd);
 *** f_rawmode
 */
 void	die(const char *s, t_raw *raw);
-void	RefreshScreen(void);
-void	enableRawMode(t_raw *raw);
+void	refresh_screen(void);
+void	enable_raw_mode(t_raw *raw);
 char	f_raw(t_raw *raw);
 
 /*
@@ -271,7 +271,6 @@ void	ft_midpipe(char *str, t_cmd *cmd, int *ft_in, int *fd_out);
 void	middlepiper(char *str, t_cmd *cmd, int i);
 void	ft_endpipe(char *str, t_cmd *cmd, int i);
 
-
 /*
 *** redir.c
 */
@@ -283,6 +282,6 @@ int		redirector(t_cmd *cmd, int i);
 /*
 *** get_next_line.c
 */
-int	get_next_line(int fd, char **line);
+int		get_next_line(int fd, char **line);
 
 #endif

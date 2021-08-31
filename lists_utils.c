@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 09:35:29 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/30 16:15:39 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 12:23:16 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ t_envp	*change_value(t_envp *elem, char *new_value)
 	}
 	return (elem);
 }
-
-
 
 t_envp	*remove_elem(t_envp *elem)
 {

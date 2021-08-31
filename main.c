@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/30 16:13:56 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 12:21:34 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_init(t_cmd *cmd, char **envp, t_raw *raw)
 {
-	RefreshScreen();
+	refresh_screen();
 	cmd->raw = raw;
 	cmd->i = 0;
 	cmd->check_replacement = 0;
@@ -25,7 +25,7 @@ void	ft_init(t_cmd *cmd, char **envp, t_raw *raw)
 	cmd->in = ft_strdup("\x0D");
 	cmd->buff = ft_strdup("\x0D");
 	ft_save_env(cmd, envp);
-	enableRawMode(raw);
+	enable_raw_mode(raw);
 }
 
 void	ft_reset(t_cmd *cmd)

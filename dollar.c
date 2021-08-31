@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/30 15:34:41 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 12:19:41 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ char	*search_value(char *elem, t_cmd *cmd)
 		return (ft_itoa(cmd->output_status >> 8));
 	while (cmd->envp && ft_strcmp(elem, cmd->envp->key) != 0)
 		cmd->envp = cmd->envp->next;
-	if (cmd->envp && cmd->envp->value != NULL && ft_strcmp(elem, cmd->envp->key) == 0)
+	if (cmd->envp && cmd->envp->value != NULL
+		&& ft_strcmp(elem, cmd->envp->key) == 0)
 		return (ft_strdup(cmd->envp->value));
 	return (NULL);
 }
@@ -93,11 +94,15 @@ int	cpy_global_var(t_cmd *cmd, int ch, int i, int k)
 	question_mark = search_value(var, cmd);
 	if (question_mark == NULL)
 		printf("%s : command not found\r\n", var);
-	if ((cmd->quote_s == 0 && cmd->quote_d == 0) || (look_for_closure('\'', '$', cmd->original,
-			ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 0
-			&& look_for_closure('\"', '$', cmd->original, ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1)
-			|| (look_for_closure('\'', '$', cmd->original, ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1
-			&& look_for_open('\"', cmd->original, ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1))
+	if ((cmd->quote_s == 0 && cmd->quote_d == 0)
+		|| (look_for_closure('\'', '$', cmd->original,
+				ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 0
+			&& look_for_closure('\"', '$', cmd->original,
+				ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1)
+		|| (look_for_closure('\'', '$', cmd->original,
+				ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1
+			&& look_for_open('\"', cmd->original,
+				ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1))
 		cmd->dollar_value[k] = search_value(var, cmd);
 	else
 		cmd->dollar_value[k++] = ft_strjoin("$", var);

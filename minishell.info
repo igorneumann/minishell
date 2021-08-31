@@ -21,10 +21,10 @@ int	main(int argc, char **argv, char **envp)
 
 void	ft_init(t_cmd *cmd, char **envp, t_raw *raw);
 	+ ejecuta al inicio
-		- resetea la pantalla > RefreshScreen
+		- resetea la pantalla > refresh_screen
 		- resetea variables iniciales (ft_strdup para strings)
 		- guarda environment > ft_save_env
-		- Habilita Raw Mode > enableRawMode
+		- Habilita Raw Mode > enable_raw_mode
 
 void	ft_reset(t_cmd *cmd)
 	+ ejecuta en el enter
@@ -52,11 +52,11 @@ void	die(const char *s, t_raw *raw);
 		- Sal del raw mode
 		- getiona errores del exit con argumentos (que creo que no hace falta)
 
-void	editorRefreshScreen(void);
+void	editor_refresh_screen(void);
 	+ ejecuta al principio
 		- limpia la pantalla
 
-void	enableRawMode(t_raw *raw);
+void	enable_raw_mode(t_raw *raw);
 	+ ejecuta al principio y despues de ejecutar cualquier programa
 		- copia la conf del terminal a cmd->orig
 		- configura el nuevo terminal

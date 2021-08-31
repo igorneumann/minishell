@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/25 18:35:18 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/31 12:05:00 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,12 @@ char	**copyparam(t_cmd *cmd)
 int	exec(char *str, t_cmd *cmd)
 {
 	pid_t	pid;
-	char	**parmList;
+	char	**parm_list;
+	char	*error;
 
 	pid = fork();
-	parmList = copyparam(cmd);
+	parm_list = copyparam(cmd);
+	error = NULL;
 	if (pid == -1)
 	{
 		perror("fork error");
@@ -105,12 +107,14 @@ int	exec(char *str, t_cmd *cmd)
 	else if (pid == 0)
 	{
 		redirout(cmd);
-		execve(str, parmList, cmd->envorg);
-		printf("%s: command not found\n", cmd->in);
+		execve(str, parm_list, cmd->envorg);
+		error = ft_strjoin(cmd->in, ": command not found\r\n");
+		ft_putstr_fd(error, 2);
+		free(error);
 		exit(0);
 	}
 	else
 		wait(&cmd->output_status);
-	free(parmList);
+	free(parm_list);
 	return (0);
 }

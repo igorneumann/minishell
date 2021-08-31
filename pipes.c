@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/20 18:32:34 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/08/31 12:24:16 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,22 @@ void	ft_startpipe(char *str, t_cmd *cmd)
 {
 	int		status;
 	int		pid;
-	char	**parmList;
+	char	**parm_list;
 
 	pipe(cmd->fd1);
 	pid = fork();
-	parmList = copyparam(cmd);
+	parm_list = copyparam(cmd);
 	if (pid == 0)
 	{
 		close(cmd->fd1[READ_END]);
 		dup2(cmd->fd1[WRITE_END], STDOUT_FILENO);
 		close(cmd->fd1[WRITE_END]);
 		 if (!ft_arguments(cmd))
-			execve(str, parmList, cmd->envorg);
+			execve(str, parm_list, cmd->envorg);
 	}
 	else
 		close(cmd->fd1[WRITE_END]);
-	free(parmList);
+	free(parm_list);
 	wait(&status);
 }
 
@@ -60,10 +60,10 @@ void	ft_midpipe(char *str, t_cmd *cmd, int *fd_in, int *fd_out)
 {
 	int		status;
 	int		pid;
-	char	**parmList;
+	char	**parm_list;
 
 	pid = fork();
-	parmList = copyparam(cmd);
+	parm_list = copyparam(cmd);
 	if (pid == 0)
 	{
 		close(fd_out[READ_END]);
@@ -72,14 +72,14 @@ void	ft_midpipe(char *str, t_cmd *cmd, int *fd_in, int *fd_out)
 		dup2(fd_out[WRITE_END], STDOUT_FILENO);
 		close(fd_out[WRITE_END]);
 		if (!ft_arguments(cmd))
-			execve(str, parmList, cmd->envorg);
+			execve(str, parm_list, cmd->envorg);
 	}
 	else
 	{
 		close(fd_in[READ_END]);
 		close(fd_out[WRITE_END]);
 	}
-	free(parmList);
+	free(parm_list);
 	wait(&status);
 }
 
@@ -87,7 +87,7 @@ void	ft_endpipe(char *str, t_cmd *cmd, int i)
 {
 	int		status;
 	int		pid;
-	char	**parmList;
+	char	**parm_list;
 	int		*fd;
 
 	if (i % 2 == 0)
@@ -95,18 +95,18 @@ void	ft_endpipe(char *str, t_cmd *cmd, int i)
 	else
 		fd = cmd->fd2;
 	pid = fork();
-	parmList = copyparam(cmd);
+	parm_list = copyparam(cmd);
 	if (pid == 0 && !cmd->nexpip->next)
 	{
 		dup2(fd[READ_END], STDIN_FILENO);
 		close(fd[READ_END]);
 		redirout(cmd);
 		if (!ft_arguments(cmd))
-			execve(str, parmList, cmd->envorg);
+			execve(str, parm_list, cmd->envorg);
 	}
 	else
 		close(fd[READ_END]);
-	free(parmList);
+	free(parm_list);
 	wait(&status);
 }
 
