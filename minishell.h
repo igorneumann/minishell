@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 13:56:53 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 15:49:04 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,9 @@ void	free_split(char **split);
 /*
 *** dollar.c
 */
-char	*search_value(char *elem, t_cmd *cmd);
-void	replace(t_cmd *cmd, int position, int old_len);
+void	replace(t_cmd *cmd, int position, int old_len, int counter);
+void	replace_allocation(t_cmd *cmd, int position, int old_len);
+void	replace_global_var(t_cmd *cmd, char *var, int k);
 int		cpy_global_var(t_cmd *cmd, int ch, int i, int k);
 int		dollar(t_cmd *cmd, int k);
 
@@ -158,6 +159,15 @@ void	ft_save_env(t_cmd *cmd, char **envp);
 void	ft_options(t_cmd *cmd, int i);
 void	error_file_or_directory(t_cmd *cmd, int i);
 void	ft_env(t_cmd *cmd);
+
+/*
+*** envp.c
+*/
+void	ft_print_env(t_envp *x);
+char	*search_value(char *elem, t_cmd *cmd);
+t_envp	*ft_new_env_value(char *in, t_envp	*new, int i);
+t_envp	*ft_new_env(char *in);
+void	ft_save_env(t_cmd *cmd, char **envp);
 
 /*
 *** export_utils.c
@@ -211,12 +221,16 @@ int		ft_altarrow(t_cmd *cmd);
 /*
 *** quotes.c
 */
-int		look_for_closure(char quote, char dollar, char *line, int i);
 int		count_char(char *line, char character);
 int		check_quotes_error(t_cmd *cmd);
-int		look_for_open(char quote, char *str, int i);
 void	replace_quotes(t_cmd *cmd);
 int		check_replacement(t_cmd *cmd);
+
+/*
+*** quotes_utils.c
+*/
+int		look_for_closure(char quote, char dollar, char *line, int i);
+int		look_for_open(char quote, char *str, int i);
 
 /*
 *** read_arguments.c
@@ -232,7 +246,6 @@ void	ft_exit(t_cmd *cmd, int i);
 */
 int		command_not_found(char *str, t_cmd *cmd);
 void	ft_printlist(t_data *x);
-void	ft_print_env(t_envp *x);
 void	swap(t_envp *a, t_envp *b);
 void	ft_sort_env(t_envp *list);
 void	ft_print_export(t_envp *x);

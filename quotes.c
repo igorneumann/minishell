@@ -6,38 +6,11 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 13:44:35 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 15:55:52 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	look_for_closure(char quote, char searching, char *line, int i)
-{
-	if (!ft_strchr(line, quote))
-		return (0);
-	while (line[i])
-	{
-		if (line[i] == searching)
-		{
-			while (line[i])
-			{
-				if (line[i] == quote)
-				{
-					while (line[i])
-					{
-						if (line[i] == quote)
-							return (1);
-						i++;
-					}
-				}
-				i--;
-			}
-		}
-		i++;
-	}
-	return (0);
-}
 
 int	count_char(char *line, char character)
 {
@@ -90,22 +63,6 @@ int	check_quotes_error(t_cmd *cmd)
 	return (0);
 }
 
-int	look_for_open(char quote, char *str, int i)
-{
-	int	look;
-
-	look = 0;
-	while (str[i])
-	{
-		if (str[i] == quote)
-			look++;
-		i++;
-	}
-	if (look % 2 != 0)
-		return (1);
-	return (0);
-}
-
 void	replace_quotes(t_cmd *cmd)
 {
 	cmd->c1 = 0;
@@ -116,7 +73,8 @@ void	replace_quotes(t_cmd *cmd)
 	{
 		if (cmd->tmp_in[cmd->c1] == '\"')
 		{
-			if (cmd->tmp_in[cmd->c1] == '\'' && look_for_open('\'', cmd->tmp_in, cmd->c1) == 1)
+			if (cmd->tmp_in[cmd->c1] == '\''
+				&& look_for_open('\'', cmd->tmp_in, cmd->c1) == 1)
 				cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1];
 			cmd->c1++;
 			if (cmd->tmp_in[cmd->c1] != '\0'
@@ -132,7 +90,8 @@ void	replace_quotes(t_cmd *cmd)
 		}
 		if (cmd->tmp_in[cmd->c1] == '\'')
 		{
-			if (cmd->tmp_in[cmd->c1] == '\"' && look_for_open('\"', cmd->tmp_in, cmd->c1) == 1)
+			if (cmd->tmp_in[cmd->c1] == '\"'
+				&& look_for_open('\"', cmd->tmp_in, cmd->c1) == 1)
 				cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1];
 			cmd->c1++;
 			if (cmd->tmp_in[cmd->c1] != '\0'

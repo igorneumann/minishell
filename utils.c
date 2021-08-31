@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 10:47:23 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/30 16:14:51 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/08/31 15:35:30 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 
 int	command_not_found(char *str, t_cmd *cmd)
 {
-	int	i;
+	int		i;
+	char	*error;
 
 	i = ft_strlen(str);
+	error = NULL;
 	if (ft_strnstr(cmd->in, str, ft_strlen(str)))
 	{
 		if (cmd->in[i] != ' ' && cmd->in[i] != '\0')
 		{
-			printf("%s : command not found\r\n", cmd->in);
+			error = ft_strjoin(cmd->in, " : command not found\r\n");
+			ft_putstr_fd(error, 2);
+			free(error);
 			return (1);
 		}
 	}
@@ -44,22 +48,6 @@ void	ft_printlist(t_data *x)
 		x = x->next;
 	}
 	ft_putstr("\x1B[33m");
-}
-
-void	ft_print_env(t_envp *x)
-{
-	while (x->prev)
-		x = x->prev;
-	while (x)
-	{
-		if (x->value == NULL || x->value[0] == '\0')
-			x = x->next;
-		else
-		{
-			printf("%s=%s\r\n", x->key, x->value);
-			x = x->next;
-		}
-	}
 }
 
 void	swap(t_envp *a, t_envp *b)
