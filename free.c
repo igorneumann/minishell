@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 16:12:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 17:37:26 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/01 18:24:47 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,17 @@ void	free_split(char **split)
 	free(split);
 }
 
-void	free_semicolon(t_cmd *cmd)
+t_data	*free_first(t_data *data)
 {
 	t_data	*temp;
 
-	temp = cmd->nexcom;
-	cmd->nexcom = temp->next;
+	temp = data;
+	data = temp->next;
 	temp->next = NULL;
 	temp->prev = NULL;
-	temp = free_list(temp);
+	data->prev = NULL;
+	free (temp->in);
+	free (temp->copy);
+	free(temp);
+	return (data);
 }
