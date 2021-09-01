@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 19:39:44 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/01 20:03:30 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	replace_allocation(t_cmd *cmd, int old_len)
 
 void	replace_global_var(t_cmd *cmd, char *var)
 {
-	if ((cmd->quote_s == 0 && (cmd->quote_d % 2 == 0 || cmd->quote_d == 0))
+	if ((cmd->quote_s == 0 && (cmd->quote_d == 0 || cmd->quote_d % 2 == 0))
 		|| (look_for_closure('\'', '$', cmd->original, cmd->c_d) == 0
 			&& look_for_closure('\"', '$', cmd->original, cmd->c_d) == 1)
 		|| (look_for_closure('\'', '$', cmd->original, cmd->c_d) == 1
@@ -74,18 +74,20 @@ int	cpy_global_var(t_cmd *cmd, int ch)
 	char	*var;
 	char	*question_mark;
 	int		j;
+	int		i;
 
 	j = 0;
+	i = cmd->c_d;
 	while (cmd->tmp_in[cmd->c_d + ch] != '\''
 		&& cmd->tmp_in[cmd->c_d + ch] != '\0'
 		&& cmd->tmp_in[cmd->c_d + ch] != ' '
 		&& cmd->tmp_in[cmd->c_d + ch] != '\"')
 		ch++;
 	var = (char *)malloc(sizeof(char) * ch + 1);
-	while (cmd->tmp_in[cmd->c_d] && cmd->tmp_in[cmd->c_d] != ' '
-		&& cmd->tmp_in[cmd->c_d] != '\'' && cmd->tmp_in[cmd->c_d] != '\"'
-		&& cmd->c_d < cmd->c_d + ch)
-		var[j++] = cmd->tmp_in[cmd->c_d++];
+	while (cmd->tmp_in[i] && cmd->tmp_in[i] != ' '
+		&& cmd->tmp_in[i] != '\'' && cmd->tmp_in[i] != '\"'
+		&& i < i + ch)
+		var[j++] = cmd->tmp_in[i++];
 	var[j] = '\0';
 	question_mark = search_value(var, cmd);
 	if (question_mark == NULL)
