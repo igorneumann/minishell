@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 16:12:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 18:24:47 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/01 19:59:53 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,9 @@ t_data	*free_first(t_data *data)
 	t_data	*temp;
 
 	temp = data;
+	if (temp->next != NULL)
+		temp->next->prev = NULL;
 	data = temp->next;
-	temp->next = NULL;
-	temp->prev = NULL;
-	data->prev = NULL;
 	free (temp->in);
 	free (temp->copy);
 	free(temp);

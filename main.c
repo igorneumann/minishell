@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 19:45:22 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/01 20:02:19 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	ft_reset(t_cmd *cmd)
 	cmd->i = 0;
 	cmd->fd2[0] = 0;
 	cmd->fd1[0] = 0;
-	cleanfds(cmd, 3);
+	if (cmd->nexcom)
+		cleanfds(cmd, 3);
 }
 
 void	ft_presentation(void)
