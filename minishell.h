@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 11:27:57 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/01 18:46:37 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ t_data	*free_list(t_data *lst);
 t_envp	*free_env(t_envp *lst);
 void	free_elem(t_envp *elem);
 void	free_split(char **split);
+t_data	*free_first(t_data *data);
 
 /*
 *** dollar.c
@@ -280,6 +281,7 @@ int		addpath(t_cmd *cmd, char *tmp);
 /*
 *** pipenator.c
 */
+int		pipewhiler(t_cmd *cmd, int i);
 void	pipenator(t_cmd *cmd);
 
 /*
