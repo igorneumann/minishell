@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_arguments.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/30 16:19:38 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/01 18:51:30 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,11 @@ int	ft_arguments(t_cmd *cmd)
 		|| ft_strnstr(cmd->in, "env", 3))
 		builtins(cmd, i);
 	else if (ft_strnstr(cmd->in, "$?", 2))
-		printf("%d : command not found\r\n", cmd->output_status >> 8);
+	{
+		i = cmd->output_status >> 8;
+		ft_putstr_fd(ft_itoa(i), 2);
+		ft_putstr_fd(": command not found\r\n", 2);
+	}
 	else
 		return (0);
 	return (1);
