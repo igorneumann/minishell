@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 20:23:30 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/01 21:26:10 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_command
 	int		output_status;
 	char	**dollar_value;
 	int		d_counter;
+	int		counter;
 	int		c_d;
 	char	*original;
 	char	*without_quotes;
@@ -150,7 +151,7 @@ t_data	*free_first(t_data *data);
 /*
 *** dollar.c
 */
-void	replace(t_cmd *cmd, int old_len, int counter);
+void	replace(t_cmd *cmd, int old_len);
 void	replace_allocation(t_cmd *cmd, int old_len);
 void	replace_global_var(t_cmd *cmd, char *var);
 int		cpy_global_var(t_cmd *cmd, int ch, int i);

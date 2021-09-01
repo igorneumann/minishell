@@ -6,13 +6,13 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 20:49:41 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/01 21:26:22 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	replace(t_cmd *cmd, int old_len, int counter)
+void	replace(t_cmd *cmd, int old_len)
 {
 	int	i;
 	int	j;
@@ -25,14 +25,14 @@ void	replace(t_cmd *cmd, int old_len, int counter)
 		if (cmd->tmp_in[k] == '$')
 		{
 			k++;
-			if (counter == cmd->d_counter)
+			if (cmd->counter == cmd->d_counter)
 			{
 				j = 0;
 				while (cmd->dollar_value[cmd->d_counter][j])
 					cmd->in[i++] = cmd->dollar_value[cmd->d_counter][j++];
 				k += old_len;
-				cmd->d_counter++;
-				counter++;
+				cmd->counter++;
+				break ;
 			}
 		}
 		else if (cmd->tmp_in[k])
@@ -43,9 +43,6 @@ void	replace(t_cmd *cmd, int old_len, int counter)
 
 void	replace_allocation(t_cmd *cmd, int old_len)
 {
-	int	counter;
-
-	counter = 0;
 	cmd->d_counter--;
 	free(cmd->in);
 	cmd->in = (char *)malloc(sizeof(char) * (ft_strlen(cmd->tmp_in)
@@ -53,7 +50,7 @@ void	replace_allocation(t_cmd *cmd, int old_len)
 			+ 1);
 	if (cmd->in == NULL)
 		return ;
-	replace(cmd, old_len, counter);
+	replace(cmd, old_len);
 }
 
 void	replace_global_var(t_cmd *cmd, char *var)
