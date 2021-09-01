@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   f_rawmode.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/31 12:21:53 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/01 19:36:25 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	die(const char *s, t_raw *raw)
 		write(STDERR, &s[1], 1);
 	}
 	system("leaks minishell");
+	system("lsof -c minishell");
 	exit(error);
 }
 

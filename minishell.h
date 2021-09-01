@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 18:44:54 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/01 19:42:05 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,6 +297,7 @@ void	ft_endpipe(char *str, t_cmd *cmd, int i);
 int		redir(t_cmd *cmd, int i);
 void	redirout(t_cmd *cmd);
 int		tempinput(t_cmd *cmd);
+int		cleanfds(t_cmd *cmd, int i);
 int		redirector(t_cmd *cmd, int i);
 
 /*
