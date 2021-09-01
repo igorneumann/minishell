@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 19:01:54 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/01 11:27:57 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ typedef struct s_command
 	int		output_status;
 	char	**dollar_value;
 	int		d_counter;
+	int		c_d;
 	char	*original;
+	char	*without_quotes;
 	int		check_replacement;
 	int		c1;
 	int		c2;
@@ -150,7 +152,7 @@ void	free_split(char **split);
 void	replace(t_cmd *cmd, int old_len, int counter);
 void	replace_allocation(t_cmd *cmd, int old_len);
 void	replace_global_var(t_cmd *cmd, char *var);
-int		cpy_global_var(t_cmd *cmd, int ch, int i);
+int		cpy_global_var(t_cmd *cmd, int ch);
 void	dollar(t_cmd *cmd);
 
 /*
@@ -226,7 +228,7 @@ int		ft_altarrow(t_cmd *cmd);
 */
 int		check_quotes_error(t_cmd *cmd);
 void	omit_quotes(t_cmd *cmd, char q1, char q2);
-void	replace_quotes(t_cmd *cmd);
+char	*replace_quotes(t_cmd *cmd);
 int		check_replacement(t_cmd *cmd);
 
 /*

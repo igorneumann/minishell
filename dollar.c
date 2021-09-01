@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 19:06:12 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/01 11:36:07 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,34 +59,33 @@ void	replace_allocation(t_cmd *cmd, int old_len)
 void	replace_global_var(t_cmd *cmd, char *var)
 {
 	if ((cmd->quote_s == 0 && cmd->quote_d == 0)
-		|| (look_for_closure('\'', '$', cmd->original,
-				ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 0
-			&& look_for_closure('\"', '$', cmd->original,
-				ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1)
-		|| (look_for_closure('\'', '$', cmd->original,
-				ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1
-			&& look_for_open('\"', cmd->original,
-				ft_strchr(cmd->original, '$') - (cmd->original + 1)) == 1))
+		|| (look_for_closure('\'', '$', cmd->original, cmd->c_d) == 0
+			&& look_for_closure('\"', '$', cmd->original, cmd->c_d) == 1)
+		|| (look_for_closure('\'', '$', cmd->original, cmd->c_d) == 1
+			&& look_for_open('\"', cmd->original, cmd->c_d) == 1))
 		cmd->dollar_value[cmd->d_counter] = search_value(var, cmd);
 	else
 		cmd->dollar_value[cmd->d_counter] = ft_strjoin("$", var);
 	cmd->d_counter++;
 }
 
-int	cpy_global_var(t_cmd *cmd, int ch, int i)
+int	cpy_global_var(t_cmd *cmd, int ch)
 {
 	char	*var;
 	char	*question_mark;
 	int		j;
 
 	j = 0;
-	while (cmd->tmp_in[i + ch] != '\'' && cmd->tmp_in[i + ch] != '\0'
-		&& cmd->tmp_in[i + ch] != ' ' && cmd->tmp_in[i + ch] != '\"')
+	while (cmd->tmp_in[cmd->c_d + ch] != '\''
+		&& cmd->tmp_in[cmd->c_d + ch] != '\0'
+		&& cmd->tmp_in[cmd->c_d + ch] != ' '
+		&& cmd->tmp_in[cmd->c_d + ch] != '\"')
 		ch++;
 	var = (char *)malloc(sizeof(char) * ch + 1);
-	while (cmd->tmp_in[i] && cmd->tmp_in[i] != ' ' && cmd->tmp_in[i] != '\''
-		&& cmd->tmp_in[i] != '\"' && i < i + ch)
-		var[j++] = cmd->tmp_in[i++];
+	while (cmd->tmp_in[cmd->c_d] && cmd->tmp_in[cmd->c_d] != ' '
+		&& cmd->tmp_in[cmd->c_d] != '\'' && cmd->tmp_in[cmd->c_d] != '\"'
+		&& cmd->c_d < cmd->c_d + ch)
+		var[j++] = cmd->tmp_in[cmd->c_d++];
 	var[j] = '\0';
 	question_mark = search_value(var, cmd);
 	if (question_mark == NULL)
@@ -100,19 +99,17 @@ int	cpy_global_var(t_cmd *cmd, int ch, int i)
 
 void	dollar(t_cmd *cmd)
 {
-	int		i;
-	int		ch;
+	int	ch;
 
 	ch = 0;
-	i = 0;
-	while (cmd->tmp_in[i] != '$' && (cmd->tmp_in[i] != '\0'
-			|| cmd->tmp_in[i] != ' '))
+	while (cmd->tmp_in[cmd->c_d] != '$' && (cmd->tmp_in[cmd->c_d] != '\0'
+			|| cmd->tmp_in[cmd->c_d] != ' '))
 	{
-		if (cmd->tmp_in[i] == '\0')
+		if (cmd->tmp_in[cmd->c_d] == '\0')
 			break ;
-		i++;
+		cmd->c_d++;
 	}
-	i++;
-	ch = cpy_global_var(cmd, ch, i);
+	cmd->c_d++;
+	ch = cpy_global_var(cmd, ch);
 	replace_allocation(cmd, ch);
 }
