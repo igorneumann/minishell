@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 19:11:22 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/01 20:24:02 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	check_quotes_error(t_cmd *cmd)
 void	omit_quotes(t_cmd *cmd, char q1, char q2)
 {
 	if (cmd->tmp_in[cmd->c1] == q1
-		&& look_for_open(q1, cmd->tmp_in, cmd->c1) == 1)
+		&& look_for_open(q1, q2, cmd->tmp_in, cmd->c1) == 1)
 		cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1];
 	cmd->c1++;
 	if (cmd->tmp_in[cmd->c1] != '\0'
@@ -64,7 +64,7 @@ void	omit_quotes(t_cmd *cmd, char q1, char q2)
 	{
 		while (cmd->tmp_in[cmd->c1] != q2)
 			cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1++];
-		if (look_for_open(q1, cmd->tmp_in, cmd->c1) == 1)
+		if (look_for_open(q1, q2, cmd->tmp_in, cmd->c1) == 1)
 			cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1];
 		cmd->c1++;
 	}

@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 15:47:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 17:31:12 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/01 20:38:23 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,15 @@ int	look_for_closure(char quote, char searching, char *line, int i)
 	return (0);
 }
 
-int	look_for_open(char quote, char *str, int i)
+int	look_for_open(char quote, char quote_2, char *str, int i)
 {
 	int	look;
 
 	look = 0;
 	while (str[i])
 	{
+		if (str[i] == quote_2)
+			break ;
 		if (str[i] == quote)
 			look++;
 		i++;

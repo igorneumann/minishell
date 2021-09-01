@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 19:47:57 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/01 20:23:30 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ t_data	*free_first(t_data *data);
 void	replace(t_cmd *cmd, int old_len, int counter);
 void	replace_allocation(t_cmd *cmd, int old_len);
 void	replace_global_var(t_cmd *cmd, char *var);
-int		cpy_global_var(t_cmd *cmd, int ch);
+int		cpy_global_var(t_cmd *cmd, int ch, int i);
 void	dollar(t_cmd *cmd);
 
 /*
@@ -237,7 +237,7 @@ int		check_replacement(t_cmd *cmd);
 */
 int		count_char(char *line, char character);
 int		look_for_closure(char quote, char dollar, char *line, int i);
-int		look_for_open(char quote, char *str, int i);
+int		look_for_open(char quote, char quote_2, char *str, int i);
 
 /*
 *** read_arguments.c
