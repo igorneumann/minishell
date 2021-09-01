@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/18 19:14:10 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/01 19:43:48 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	tempinput(t_cmd *cmd)
 	char	*tmp;
 	char	*c;
 
+	if (cmd->in_fd)
+		close(cmd->in_fd);
 	cmd->in_fd = open(".tempAF.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	buff = ft_strdup("\x0D");
 	c = NULL;
@@ -79,6 +81,15 @@ int	tempinput(t_cmd *cmd)
 	return (close(cmd->in_fd));
 }
 
+int	cleanfds(t_cmd *cmd, int i)
+{
+	if ((i == 1 || i == 3) && cmd->in_fd)
+		close(cmd->in_fd);
+	if ((i == 2 || i == 3) && cmd->out_fd)
+		close(cmd->out_fd);
+	return (1);
+}
+
 int	redirector(t_cmd *cmd, int i)
 {
 	if (ft_strlen(cmd->inpt) < 1 && cmd->in[i - 1] == '<')
@@ -92,9 +103,9 @@ int	redirector(t_cmd *cmd, int i)
 		free (cmd->inpt);
 		cmd->inpt = ft_strdup(".tempAF.tmp");
 	}
-	if (cmd->inpt[0] != '\x0D')
+	if (cmd->inpt[0] != '\x0D' && cleanfds(cmd, 1))
 		cmd->in_fd = open(cmd->inpt, O_RDONLY);
-	else if (cmd->outp[0] != '\x0D')
+	else if (cmd->outp[0] != '\x0D' && cleanfds(cmd, 2))
 	{
 		if (cmd->in[i - 1] == '>')
 		{

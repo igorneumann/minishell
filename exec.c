@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/31 12:05:00 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/01 19:33:47 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 
 int	executor(t_cmd *cmd)
 {
+	int	i;
+
+	i = open(cmd->in, O_RDONLY);
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->orig) == -1)
 		die("tcsetattr", cmd->raw);
-	if (open(cmd->in, O_RDONLY) == -1 && cmd->not_found == 0)
+	if (i == -1 && cmd->not_found == 0)
 	{
 		free(cmd->buff);
 		cmd->buff = ft_strduptochar(cmd->in, 32);
 		ft_path(cmd);
 	}
+	close(i);
 	if (cmd->nexpip != NULL)
 		pipenator(cmd);
 	else

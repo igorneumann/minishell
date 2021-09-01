@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 19:10:00 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/25 17:33:01 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/01 19:34:44 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 int	addpath(t_cmd *cmd, char *tmp)
 {
 	char	*to_find;
+	int		i;
 
 	to_find = ft_strjoin(tmp, cmd->buff);
 	free(tmp);
 	tmp = NULL;
-	if (open(to_find, O_RDONLY) == -1)
+	i = open(to_find, O_RDONLY);
+	if (i == -1)
 	{
 		free(to_find);
 		to_find = NULL;
@@ -35,6 +37,7 @@ int	addpath(t_cmd *cmd, char *tmp)
 		cmd->buff = NULL;
 		tmp = NULL;
 	}
+	close(i);
 	return (0);
 }
 

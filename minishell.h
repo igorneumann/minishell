@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 18:46:37 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/01 19:47:57 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,6 +299,7 @@ void	ft_endpipe(char *str, t_cmd *cmd, int i);
 int		redir(t_cmd *cmd, int i);
 void	redirout(t_cmd *cmd);
 int		tempinput(t_cmd *cmd);
+int		cleanfds(t_cmd *cmd, int i);
 int		redirector(t_cmd *cmd, int i);
 
 /*
