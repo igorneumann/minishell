@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 16:12:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 17:47:19 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/01 17:37:26 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,15 @@ void	free_split(char **split)
 		i++;
 	}
 	free(split);
+}
+
+void	free_semicolon(t_cmd *cmd)
+{
+	t_data	*temp;
+
+	temp = cmd->nexcom;
+	cmd->nexcom = temp->next;
+	temp->next = NULL;
+	temp->prev = NULL;
+	temp = free_list(temp);
 }

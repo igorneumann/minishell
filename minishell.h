@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 19:01:54 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/01 17:31:54 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ t_data	*free_list(t_data *lst);
 t_envp	*free_env(t_envp *lst);
 void	free_elem(t_envp *elem);
 void	free_split(char **split);
+void	free_semicolon(t_cmd *cmd);
 
 /*
 *** dollar.c

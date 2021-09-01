@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+         #
+#    By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 10:24:24 by narroyo-          #+#    #+#              #
-#    Updated: 2021/08/31 15:47:55 by narroyo-         ###   ########.fr        #
+#    Updated: 2021/09/01 17:36:13 by ineumann         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,12 @@ $(NAME): $(OBJS)
 	@$(MAKE) -s bonus -C $(LIBFT)
 	$(CC) $(SRCS) $(LIBS) -o $(NAME)
 
+run: re
+	@reset
+	@./minishell
+
 norm:
-	norminette -R ./
+	@norminette -R ./
 
 clean:
 	@rm -f $(OBJS)
@@ -40,8 +44,9 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
+	@rm -Rf minishell.dSYM
 	@$(MAKE) -s fclean -C $(LIBFT)
 
 re: fclean all
 
-.PHONY: all clean fclean re norm
+.PHONY: all clean fclean re norm run

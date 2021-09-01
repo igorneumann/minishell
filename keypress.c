@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keypress.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/31 17:49:29 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/01 17:31:29 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	ft_backspace(t_cmd *cmd)
 
 void	ft_enter(t_cmd *cmd)
 {
+
 	ft_lst_add_front(&cmd->list, ft_new(cmd->in));
 	cmd->tmp_in = ft_strdup(cmd->in);
 	free(cmd->buff);
@@ -96,13 +97,13 @@ void	ft_enter(t_cmd *cmd)
 	ft_reset(cmd);
 	while (cmd->nexcom != NULL)
 	{
+		free(cmd->in);
 		cmd->in = ft_strdup(cmd->nexcom->in);
-		cmd->nexcom = cmd->nexcom->next;
+		free_semicolon(cmd);
 		if (ft_strlen(cmd->in) > 0)
 			ft_read_arguments(cmd);
 		ft_reset(cmd);
 	}
-	cmd->nexcom = free_list(cmd->nexcom);
 	free(cmd->original);
 }
 
