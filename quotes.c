@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/02 14:00:42 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/02 19:37:19 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,7 @@ char	*replace_quotes(t_cmd *cmd)
 
 int	check_replacement(t_cmd *cmd)
 {
-	cmd->d_counter = 0;
-	cmd->c_replace = 0;
-	cmd->c2_replace = 0;
-	cmd->counter = 0;
-	cmd->alvaro = 0;
-	cmd->c_d = -1;
+	init_counters(cmd);
 	if (check_quotes_error(cmd) == -1)
 		return (-1);
 	if (ft_strchr(cmd->in, '$') != NULL)

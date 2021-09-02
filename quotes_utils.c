@@ -6,11 +6,21 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 15:47:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 20:38:23 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/02 19:37:12 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	init_counters(t_cmd *cmd)
+{
+	cmd->d_counter = 0;
+	cmd->c_replace = 0;
+	cmd->c2_replace = 0;
+	cmd->counter = 0;
+	cmd->d_read = 0;
+	cmd->c_d = -1;
+}
 
 int	count_char(char *line, char character)
 {
