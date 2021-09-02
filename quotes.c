@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/02 13:18:28 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/02 14:00:42 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int	check_replacement(t_cmd *cmd)
 	cmd->d_counter = 0;
 	cmd->c_replace = 0;
 	cmd->c2_replace = 0;
+	cmd->counter = 0;
+	cmd->alvaro = 0;
 	cmd->c_d = -1;
 	if (check_quotes_error(cmd) == -1)
 		return (-1);
@@ -114,5 +116,6 @@ int	check_replacement(t_cmd *cmd)
 	free(cmd->tmp_in);
 	free_split(cmd->dollar_value);
 	cmd->dollar_value = NULL;
+	cmd->tmp_in = NULL;
 	return (1);
 }

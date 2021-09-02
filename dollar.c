@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/02 13:35:44 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/02 14:00:31 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,16 @@ void	replace_allocation(t_cmd *cmd, int old_len)
 	aux = ft_strdup(cmd->in);
 	free(cmd->in);
 	cmd->in = (char *)malloc(sizeof(char) * (ft_strlen(aux)
-				+ (ft_strlen(cmd->dollar_value[cmd->d_counter]) - (old_len))
+				+ (ft_strlen(cmd->dollar_value[cmd->alvaro]) - (old_len))
 				+ 1));
 	if (cmd->in == NULL)
 		return ;
-	ft_memset(cmd->in, ' ', ft_strlen(aux) + (ft_strlen(cmd->dollar_value[cmd->d_counter]) - (old_len)));
-	cmd->in[ft_strlen(aux) + (ft_strlen(cmd->dollar_value[cmd->d_counter]) - (old_len))] = '\0';
+	ft_memset(cmd->in, ' ', ft_strlen(aux) + (ft_strlen(cmd->dollar_value[cmd->alvaro]) - (old_len)));
+	cmd->in[ft_strlen(aux) + (ft_strlen(cmd->dollar_value[cmd->alvaro]) - (old_len))] = '\0';
 	cmd->in = ft_strjoin(aux, cmd->in);
 	replace(cmd, old_len);
 	free(aux);
+	cmd->alvaro++;
 }
 
 void	replace_global_var(t_cmd *cmd, char *var)

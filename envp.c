@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 18:52:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 21:09:19 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/02 13:52:23 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ char	*search_value(char *elem, t_cmd *cmd)
 {
 	if (ft_strnstr(elem, "?", 1))
 		return (ft_itoa(cmd->output_status >> 8));
+	while (cmd->envp->prev)
+		cmd->envp = cmd->envp->prev;
 	while (cmd->envp && ft_strcmp(elem, cmd->envp->key) != 0)
 		cmd->envp = cmd->envp->next;
 	if (cmd->envp && cmd->envp->value != NULL

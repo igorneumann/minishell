@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/02 13:18:04 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/02 13:38:00 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_command
 	int		c_d;
 	int		c_replace;
 	int		c2_replace;
+	int		alvaro;
 	char	*original;
 	char	*without_quotes;
 	int		check_replacement;
