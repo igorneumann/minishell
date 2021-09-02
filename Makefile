@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+         #
+#    By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 10:24:24 by narroyo-          #+#    #+#              #
-#    Updated: 2021/09/01 17:36:13 by ineumann         ###   ########.fr        #
+#    Updated: 2021/09/02 13:25:25 by narroyo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRCS			=	main.c ./includes/gnl/get_next_line.c ./f_rawmode.c \
 LIBFT			=	./includes/libft
 OBJS 			=	$(SRCS:.c=.o)
 LIBS			=	./includes/libft/libft.a
-CC				=	@gcc -g -Wall -Wextra -Werror
+CC				=	@gcc -g -Wall -Wextra -Werror -g3 -fsanitize=address
 
 #  al final de CC -g3 -fsanitize=address
 

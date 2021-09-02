@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 20:24:02 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/02 13:18:28 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,16 @@ char	*replace_quotes(t_cmd *cmd)
 int	check_replacement(t_cmd *cmd)
 {
 	cmd->d_counter = 0;
+	cmd->c_replace = 0;
+	cmd->c2_replace = 0;
 	cmd->c_d = -1;
 	if (check_quotes_error(cmd) == -1)
 		return (-1);
 	if (ft_strchr(cmd->in, '$') != NULL)
 	{
 		cmd->dollar_value = (char **)malloc(sizeof(char *)
-				* count_char(cmd->tmp_in, '$') + 1);
-		cmd->dollar_value[count_char(cmd->tmp_in, '$')] = NULL;
+				* (count_char(cmd->original, '$') + 1));
+		cmd->dollar_value[count_char(cmd->original, '$')] = NULL;
 	}
 	cmd->without_quotes = ft_strdup(replace_quotes(cmd));
 	free(cmd->tmp_in);

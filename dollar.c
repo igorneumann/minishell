@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 21:26:22 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/02 13:35:44 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,45 @@
 void	replace(t_cmd *cmd, int old_len)
 {
 	int	i;
-	int	j;
-	int	k;
 
-	i = 0;
-	k = 0;
-	while (cmd->tmp_in[k])
+	while (cmd->tmp_in[cmd->c2_replace])
 	{
-		if (cmd->tmp_in[k] == '$')
+		if (cmd->tmp_in[cmd->c2_replace] == '$')
 		{
-			k++;
-			if (cmd->counter == cmd->d_counter)
+			cmd->c2_replace++;
+			if (cmd->counter++ == cmd->d_counter)
 			{
-				j = 0;
-				while (cmd->dollar_value[cmd->d_counter][j])
-					cmd->in[i++] = cmd->dollar_value[cmd->d_counter][j++];
-				k += old_len;
-				cmd->counter++;
+				i = 0;
+				while (cmd->dollar_value[cmd->d_counter][i])
+					cmd->in[cmd->c_replace++] = cmd->dollar_value[cmd->d_counter][i++];
+				cmd->c2_replace += old_len;
+				cmd->d_counter++;
 				break ;
 			}
 		}
-		else if (cmd->tmp_in[k])
-			cmd->in[i++] = cmd->tmp_in[k++];
+		else if (cmd->tmp_in[cmd->c2_replace])
+			cmd->in[cmd->c_replace++] = cmd->tmp_in[cmd->c2_replace++];
 	}
-	cmd->in[i] = '\0';
+	cmd->in[cmd->c_replace] = '\0';
 }
 
 void	replace_allocation(t_cmd *cmd, int old_len)
 {
+	char	*aux;
+
 	cmd->d_counter--;
+	aux = ft_strdup(cmd->in);
 	free(cmd->in);
-	cmd->in = (char *)malloc(sizeof(char) * (ft_strlen(cmd->tmp_in)
-				+ (ft_strlen(cmd->dollar_value[cmd->d_counter]) - (old_len)))
-			+ 1);
+	cmd->in = (char *)malloc(sizeof(char) * (ft_strlen(aux)
+				+ (ft_strlen(cmd->dollar_value[cmd->d_counter]) - (old_len))
+				+ 1));
 	if (cmd->in == NULL)
 		return ;
+	ft_memset(cmd->in, ' ', ft_strlen(aux) + (ft_strlen(cmd->dollar_value[cmd->d_counter]) - (old_len)));
+	cmd->in[ft_strlen(aux) + (ft_strlen(cmd->dollar_value[cmd->d_counter]) - (old_len))] = '\0';
+	cmd->in = ft_strjoin(aux, cmd->in);
 	replace(cmd, old_len);
+	free(aux);
 }
 
 void	replace_global_var(t_cmd *cmd, char *var)
@@ -58,10 +61,9 @@ void	replace_global_var(t_cmd *cmd, char *var)
 	if ((cmd->quote_s == 0 && (cmd->quote_d == 0 || cmd->quote_d % 2 == 0))
 		|| (look_for_closure('\"', '$', cmd->original, cmd->c_d) == 1
 			&& look_for_open('\'', '\"', cmd->original, cmd->c_d) == 1))
-		cmd->dollar_value[cmd->d_counter] = search_value(var, cmd);
+		cmd->dollar_value[cmd->d_counter++] = search_value(var, cmd);
 	else
-		cmd->dollar_value[cmd->d_counter] = ft_strjoin("$", var);
-	cmd->d_counter++;
+		cmd->dollar_value[cmd->d_counter++] = ft_strjoin("$", var);
 }
 
 int	cpy_global_var(t_cmd *cmd, int ch, int i)
