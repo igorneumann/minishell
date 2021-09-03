@@ -1,5 +1,6 @@
 minishell
 *.o
+*.code-workspace
 minishell.dSYM/
 minishell.dSYM
 .vscode/
