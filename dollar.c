@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/02 19:39:26 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/03 16:37:46 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,13 @@ void	replace_allocation(t_cmd *cmd, int old_len)
 
 void	replace_global_var(t_cmd *cmd, char *var)
 {
+	///ESTO TIENE QUE SER SOBRE CMD->IN, NO SOBRE CMD->ORIGINAL; EL PROBLEMA ES
+	///EL CONTADOR CONTADOR GLOBAL, HABRÍA QUE CALCULARLO EN CADA VUELTA
 	if ((cmd->quote_s == 0 && (cmd->quote_d == 0 || cmd->quote_d % 2 == 0))
 		|| (look_for_closure('\"', '$', cmd->original, cmd->c_d) == 1
-			&& look_for_open('\'', '\"', cmd->original, cmd->c_d) == 1))
+			&& look_for_open('\'', '\"', cmd->original, cmd->c_d) == 1)
+		|| (look_for_closure('\"', '$', cmd->original, cmd->c_d) == 0
+			&& look_for_closure('\'', '$', cmd->original, cmd->c_d) == 0))
 		cmd->dollar_value[cmd->d_counter++] = search_value(var, cmd);
 	else
 		cmd->dollar_value[cmd->d_counter++] = ft_strjoin("$", var);
