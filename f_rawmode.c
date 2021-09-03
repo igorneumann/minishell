@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/01 19:36:25 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/03 19:16:51 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	f_raw(t_raw *raw)
 	char	c;
 
 	nread = read(STDIN_FILENO, &c, 1);
-	while (nread != 1)
+	while (nread != 1 && g_reset != 2)
 	{
 		if (nread == -1 && errno != EAGAIN)
 			die("read", raw);

@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:01:37 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/17 17:40:09 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/03 19:27:40 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ void	ft_tab(t_cmd *cmd)
 
 void	promptin(int i)
 {
-	ft_putstr("\r\n\e[1;32m¿En qué puedo ayudarte?: \e[0m");
-	i = 2;
+	g_reset = i;
+	ft_putstr("\n\r");
 }

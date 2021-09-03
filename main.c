@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 21:25:23 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/03 19:24:28 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,14 @@ void	ft_cmd_line(t_cmd *cmd)
 	signal(SIGINT, promptin);
 	while (1)
 	{
-		if (cmd->i == 0 && cmd->in[0] == 13)
+		if (g_reset == 2 || (cmd->i == 0 && cmd->in[0] == 13))
 		{
+			if (g_reset == 2)
+				cmd->i = 0;
 			free(cmd->in);
 			cmd->in = ft_strdup("\0");
 			ft_putstr("\e[1;32m¿En qué puedo ayudarte?: \e[0m");
+			g_reset = 0;
 		}
 		processkeypress(cmd);
 	}
