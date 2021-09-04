@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/03 16:37:46 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/04 20:42:24 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	replace(t_cmd *cmd, int old_len)
 		if (cmd->tmp_in[cmd->c2_replace] == '$')
 		{
 			cmd->c2_replace++;
-			if (cmd->counter++ == cmd->d_counter)
+			if (cmd->counter++ == cmd->d_counter
+				&& cmd->dollar_value[cmd->d_counter])
 			{
 				i = 0;
 				while (cmd->dollar_value[cmd->d_counter][i])
@@ -29,7 +30,6 @@ void	replace(t_cmd *cmd, int old_len)
 						= cmd->dollar_value[cmd->d_counter][i++];
 				cmd->c2_replace += old_len;
 				cmd->d_counter++;
-				break ;
 			}
 		}
 		else if (cmd->tmp_in[cmd->c2_replace])
@@ -116,5 +116,4 @@ void	dollar(t_cmd *cmd)
 	}
 	cmd->c_d++;
 	ch = cpy_global_var(cmd, ch, cmd->c_d);
-	replace_allocation(cmd, ch);
 }
