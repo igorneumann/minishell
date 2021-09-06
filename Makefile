@@ -6,7 +6,7 @@
 #    By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 10:24:24 by narroyo-          #+#    #+#              #
-#    Updated: 2021/09/06 16:51:49 by narroyo-         ###   ########.fr        #
+#    Updated: 2021/09/06 17:08:15 by narroyo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,6 @@ $(NAME): $(OBJS)
 	$(CC) $(SRCS) $(LIBS) -o $(NAME)
 
 run: re
-	@killall minishell
 	@reset
 	@./minishell
 

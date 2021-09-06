@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/06 16:11:37 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/06 17:07:55 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ void	ft_init(t_cmd *cmd, char **envp, t_raw *raw)
 void	ft_reset(t_cmd *cmd)
 {
 	free(cmd->original);
+	cmd->original = ft_strdup("\x0D");
 	free(cmd->without_quotes);
-	free(cmd->old_len);
+	cmd->without_quotes = ft_strdup("\x0D");
 	free(cmd->tmp_in);
+	cmd->tmp_in = ft_strdup("\x0D");
 	free(cmd->in);
 	cmd->in = ft_strdup("\x0D");
 	free(cmd->inpt);
