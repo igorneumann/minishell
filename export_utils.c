@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 16:11:11 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/07/21 17:45:32 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/06 17:11:22 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,12 @@ t_envp	*copy_env(t_envp *envp)
 	while (copy->prev)
 		copy = copy->prev;
 	return (copy);
+}
+
+void	free_all(t_cmd *cmd)
+{
+	free(cmd->original);
+	free(cmd->without_quotes);
+	free(cmd->tmp_in);
+	free(cmd->old_len);
 }

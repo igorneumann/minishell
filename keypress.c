@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/06 17:02:08 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/06 17:13:53 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	ft_enter(t_cmd *cmd)
 			ft_read_arguments(cmd);
 		ft_reset(cmd);
 	}
+	free_all(cmd);
 }
 
 void	noprintable(t_cmd *cmd, char c)
