@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/04 21:02:45 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/06 09:40:09 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,9 @@ int	check_replacement(t_cmd *cmd)
 	cmd->without_quotes = ft_strdup(replace_quotes(cmd));
 	free(cmd->tmp_in);
 	cmd->tmp_in = ft_strdup(cmd->without_quotes);
-	while (cmd->tmp_in[++cmd->c_d])
-	{
-		if (cmd->tmp_in[cmd->c_d] == '$')
-			dollar(cmd);
-	}
-	// HACER LO QUE PONE EN EL CUADERNO
-	replace_allocation(cmd, ch);
+	dollar(cmd);
+	if (cmd->dollar_value)
+		replace_allocation(cmd);
 	cmd->tmp_in = ft_strdup(cmd->without_quotes);
 	free(cmd->tmp_in);
 	free_split(cmd->dollar_value);

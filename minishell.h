@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/03 19:13:41 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/06 09:25:14 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_command
 	int		quotes;
 	int		output_status;
 	char	**dollar_value;
+	int		*old_len;
 	int		d_counter;
 	int		counter;
 	int		c_d;
@@ -157,7 +158,7 @@ t_data	*free_first(t_data *data);
 *** dollar.c
 */
 void	replace(t_cmd *cmd, int old_len);
-void	replace_allocation(t_cmd *cmd, int old_len);
+void	replace_allocation(t_cmd *cmd);
 void	replace_global_var(t_cmd *cmd, char *var);
 int		cpy_global_var(t_cmd *cmd, int ch, int i);
 void	dollar(t_cmd *cmd);

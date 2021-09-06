@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/04 20:42:24 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/06 09:28:56 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	replace(t_cmd *cmd, int old_len)
 	cmd->in[cmd->c_replace] = '\0';
 }
 
-void	replace_allocation(t_cmd *cmd, int old_len)
+void	replace_allocation(t_cmd *cmd)
 {
 	char	*aux;
 
@@ -46,16 +46,17 @@ void	replace_allocation(t_cmd *cmd, int old_len)
 	aux = ft_strdup(cmd->in);
 	free(cmd->in);
 	cmd->in = (char *)malloc(sizeof(char) * (ft_strlen(aux)
-				+ (ft_strlen(cmd->dollar_value[cmd->d_read]) - (old_len))
-				+ 1));
+				+ (ft_strlen(cmd->dollar_value[cmd->d_read])
+					- (cmd->old_len[cmd->d_read])) + 1));
 	if (cmd->in == NULL)
 		return ;
 	ft_memset(cmd->in, ' ', ft_strlen(aux)
-		+ (ft_strlen(cmd->dollar_value[cmd->d_read]) - (old_len)));
+		+ (ft_strlen(cmd->dollar_value[cmd->d_read])
+			- (cmd->old_len[cmd->d_read])));
 	cmd->in[ft_strlen(aux) + (ft_strlen(cmd->dollar_value[cmd->d_read])
-			- (old_len))] = '\0';
+			- (cmd->old_len[cmd->d_read]))] = '\0';
 	cmd->in = ft_strjoin(aux, cmd->in);
-	replace(cmd, old_len);
+	replace(cmd, cmd->old_len[cmd->d_read]);
 	free(aux);
 	cmd->d_read++;
 }
@@ -104,16 +105,24 @@ int	cpy_global_var(t_cmd *cmd, int ch, int i)
 
 void	dollar(t_cmd *cmd)
 {
-	int	ch;
+	int	i;
 
-	ch = 0;
-	while (cmd->tmp_in[cmd->c_d] != '$' && (cmd->tmp_in[cmd->c_d] != '\0'
-			|| cmd->tmp_in[cmd->c_d] != ' '))
+	i = 0;
+	cmd->old_len = malloc(sizeof(int) * count_char(cmd->original, '$'));
+	while (cmd->tmp_in[++cmd->c_d])
 	{
-		if (cmd->tmp_in[cmd->c_d] == '\0')
-			break ;
-		cmd->c_d++;
+		if (cmd->tmp_in[cmd->c_d] == '$')
+		{
+			while (cmd->tmp_in[cmd->c_d] != '$' && (cmd->tmp_in[cmd->c_d] != '\0'
+					|| cmd->tmp_in[cmd->c_d] != ' '))
+			{
+				if (cmd->tmp_in[cmd->c_d] == '\0')
+					break ;
+				cmd->c_d++;
+			}
+			cmd->c_d++;
+			cmd->old_len[i] = cpy_global_var(cmd, 0, cmd->c_d);
+			i++;
+		}
 	}
-	cmd->c_d++;
-	ch = cpy_global_var(cmd, ch, cmd->c_d);
 }

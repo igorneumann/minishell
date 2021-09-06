@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_arguments.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/01 19:22:32 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/06 09:55:15 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ void	ft_read_arguments(t_cmd *cmd)
 
 void	builtins(t_cmd *cmd, int i)
 {
+	int	j;
+
+	j = 0;
 	if (ft_strnstr(cmd->in, "echo", 4))
 		ft_echo(cmd);
 	else if (ft_strnstr(cmd->in, "cd", 2))
@@ -109,8 +112,10 @@ void	ft_exit(t_cmd *cmd, int i)
 	j = i;
 	code[0] = 0;
 	code[1] = 0;
-	cmd->not_found = 1;
 	j += 4;
+	cmd->not_found = 1;
+	if (command_not_found("exit", cmd))
+		return ;
 	while (cmd->in[j] == ' ')
 		j++;
 	if ((cmd->in[j] >= 0 && cmd->in[j] <= 9)
