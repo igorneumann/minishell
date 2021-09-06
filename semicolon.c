@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 18:24:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/06 17:37:27 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/06 17:56:40 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ void	ft_semicolon(t_cmd *cmd)
 					j++;
 				ft_lst_add_front(&cmd->nexcom, ft_new(&cmd->original[i + j]));
 				free (cmd->in);
-				cmd->in = cmd->original;
-				cmd->original = ft_strdup("\x0D");
+				cmd->in = ft_strdup(cmd->original);
 			}
 		}
 		i--;

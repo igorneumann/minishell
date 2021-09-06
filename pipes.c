@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/08/31 12:24:16 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/06 17:55:39 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,16 @@ int	pipes(t_cmd *cmd)
 	while (i > 0)
 	{
 		j = 1;
-		if (cmd->in[i] == '|')
+		if (cmd->original[i] == '|'
+			&& countleft(cmd->original, i, '\'', '\"') % 2 == 0)
 		{
-			cmd->in[i] = '\0';
-			while (cmd->in[i + j] == ' ')
+			cmd->original[i] = '\0';
+			while (cmd->original[i + j] == ' ')
 				j++;
-			ft_lst_add_front(&cmd->nexpip, ft_new(&cmd->in[i + j]));
+			ft_lst_add_front(&cmd->nexpip, ft_new(&cmd->original[i + j]));
+			free (cmd->in);
+			cmd->in = cmd->original;
+			cmd->original = ft_strdup("\x0D");
 		}
 		i--;
 	}
