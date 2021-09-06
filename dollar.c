@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/06 14:58:34 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/06 16:35:17 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	replace_allocation(t_cmd *cmd)
 	free(cmd->in);
 	cmd->in = (char *)malloc(sizeof(char) * (ft_strlen(aux)
 				+ new_lenght_amount(cmd) + 1));
+	free(aux);
 	if (cmd->in == NULL)
 		return ;
 	replace(cmd);

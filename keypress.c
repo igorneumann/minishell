@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/06 16:05:38 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/06 17:02:08 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	ft_enter(t_cmd *cmd)
 	printf("\r\n");
 	if (ft_strlen(cmd->in) > 0)
 		ft_read_arguments(cmd);
+	ft_reset(cmd);
 	while (cmd->nexcom != NULL)
 	{
 		free(cmd->in);
@@ -101,8 +102,8 @@ void	ft_enter(t_cmd *cmd)
 		cmd->nexcom = free_first(cmd->nexcom);
 		if (ft_strlen(cmd->in) > 0)
 			ft_read_arguments(cmd);
+		ft_reset(cmd);
 	}
-	ft_reset(cmd);
 }
 
 void	noprintable(t_cmd *cmd, char c)
