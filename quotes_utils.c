@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 15:47:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/06 20:19:34 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/06 21:27:09 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	count_char(char *line, char character)
 
 int	look_for_closure(char quote, char searching, char *line, int i)
 {
-//	printf("\r\n%c -- %d\r\n", line[i], i);
+	if (!line)
+		return (0);
 	if (!ft_strchr(line, quote))
 		return (0);
 	while (line[i])
@@ -68,14 +69,15 @@ int	look_for_open(char quote, char quote_2, char *str, int i)
 	int	look;
 
 	look = 0;
-//	printf("\r\n%c -- %d\r\n", str[i], i);
 	while (str[i])
 	{
+		if (!str[i])
+			break ;
 		if (str[i] == quote_2)
 			break ;
 		if (str[i] == quote)
 			look++;
-		i--;
+		i++;
 	}
 	if (look % 2 != 0)
 		return (1);

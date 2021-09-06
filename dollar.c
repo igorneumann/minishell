@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/06 20:19:41 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/06 21:59:09 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	replace(t_cmd *cmd)
 	int	i;
 
 	cmd->d_counter = 0;
-	while (cmd->tmp_in[cmd->c2_replace])
+	while ((int)ft_strlen(cmd->tmp_in) > cmd->c2_replace)
 	{
 		if (cmd->tmp_in[cmd->c2_replace] == '$')
 		{
@@ -29,7 +29,7 @@ void	replace(t_cmd *cmd)
 				while (cmd->dollar_value[cmd->d_counter][i])
 					cmd->in[cmd->c_replace++]
 						= cmd->dollar_value[cmd->d_counter][i++];
-				cmd->c2_replace += cmd->old_len[cmd->d_counter];
+				cmd->c2_replace += cmd->old_len[cmd->d_counter] - 1;
 				cmd->d_counter++;
 			}
 		}
@@ -74,8 +74,8 @@ int	cpy_global_var(t_cmd *cmd, int ch, int i)
 	int		j;
 
 	j = 0;
-	while (cmd->tmp_in[cmd->c_d + ch] != '\''
-		&& cmd->tmp_in[cmd->c_d + ch] != '\0'
+	while (cmd->tmp_in[cmd->c_d + ch] != '\0'
+		&& cmd->tmp_in[cmd->c_d + ch] != '\''
 		&& cmd->tmp_in[cmd->c_d + ch] != ' '
 		&& cmd->tmp_in[cmd->c_d + ch] != '\"')
 		ch++;
@@ -108,17 +108,14 @@ void	dollar(t_cmd *cmd)
 	{
 		if (cmd->tmp_in[cmd->c_d] == '$')
 		{
+			cmd->old_len[i++] = cpy_global_var(cmd, 0, (cmd->c_d + 1));
 			while (cmd->tmp_in[cmd->c_d] != '$'
 				&& cmd->tmp_in[cmd->c_d] != '\0'
 				&& cmd->tmp_in[cmd->c_d] != ' ')
-			{
-				if (cmd->tmp_in[cmd->c_d] == '\0')
-					break ;
 				cmd->c_d++;
-			}
-			cmd->old_len[i] = cpy_global_var(cmd, 0, (cmd->c_d + 1));
-			i++;
 		}
+		if (cmd->tmp_in[cmd->c_d] == '\0')
+					break ;
 	}
 	cmd->tmp_in = tmp;
 }
