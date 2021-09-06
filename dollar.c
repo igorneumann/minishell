@@ -6,16 +6,17 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/06 09:28:56 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/06 12:56:10 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	replace(t_cmd *cmd, int old_len)
+void	replace(t_cmd *cmd)
 {
 	int	i;
 
+	cmd->d_counter = 0;
 	while (cmd->tmp_in[cmd->c2_replace])
 	{
 		if (cmd->tmp_in[cmd->c2_replace] == '$')
@@ -28,7 +29,7 @@ void	replace(t_cmd *cmd, int old_len)
 				while (cmd->dollar_value[cmd->d_counter][i])
 					cmd->in[cmd->c_replace++]
 						= cmd->dollar_value[cmd->d_counter][i++];
-				cmd->c2_replace += old_len;
+				cmd->c2_replace += cmd->old_len[cmd->d_counter];
 				cmd->d_counter++;
 			}
 		}
@@ -38,41 +39,31 @@ void	replace(t_cmd *cmd, int old_len)
 	cmd->in[cmd->c_replace] = '\0';
 }
 
+int	new_lenght_amount(t_cmd *cmd)
+{
+	int	i;
+	int	j;
+	int	len;
+
+	i = -1;
+	j = 0;
+	len = 0;
+	while (++i < cmd->d_counter)
+		len += ft_strlen(cmd->dollar_value[i]) - cmd->old_len[i];
+	return (len);
+}
+
 void	replace_allocation(t_cmd *cmd)
 {
 	char	*aux;
 
-	cmd->d_counter--;
 	aux = ft_strdup(cmd->in);
 	free(cmd->in);
 	cmd->in = (char *)malloc(sizeof(char) * (ft_strlen(aux)
-				+ (ft_strlen(cmd->dollar_value[cmd->d_read])
-					- (cmd->old_len[cmd->d_read])) + 1));
+				+ new_lenght_amount(cmd) + 1));
 	if (cmd->in == NULL)
 		return ;
-	ft_memset(cmd->in, ' ', ft_strlen(aux)
-		+ (ft_strlen(cmd->dollar_value[cmd->d_read])
-			- (cmd->old_len[cmd->d_read])));
-	cmd->in[ft_strlen(aux) + (ft_strlen(cmd->dollar_value[cmd->d_read])
-			- (cmd->old_len[cmd->d_read]))] = '\0';
-	cmd->in = ft_strjoin(aux, cmd->in);
-	replace(cmd, cmd->old_len[cmd->d_read]);
-	free(aux);
-	cmd->d_read++;
-}
-
-void	replace_global_var(t_cmd *cmd, char *var)
-{
-	///ESTO TIENE QUE SER SOBRE CMD->IN, NO SOBRE CMD->ORIGINAL; EL PROBLEMA ES
-	///EL CONTADOR CONTADOR GLOBAL, HABRÍA QUE CALCULARLO EN CADA VUELTA
-	if ((cmd->quote_s == 0 && (cmd->quote_d == 0 || cmd->quote_d % 2 == 0))
-		|| (look_for_closure('\"', '$', cmd->original, cmd->c_d) == 1
-			&& look_for_open('\'', '\"', cmd->original, cmd->c_d) == 1)
-		|| (look_for_closure('\"', '$', cmd->original, cmd->c_d) == 0
-			&& look_for_closure('\'', '$', cmd->original, cmd->c_d) == 0))
-		cmd->dollar_value[cmd->d_counter++] = search_value(var, cmd);
-	else
-		cmd->dollar_value[cmd->d_counter++] = ft_strjoin("$", var);
+	replace(cmd);
 }
 
 int	cpy_global_var(t_cmd *cmd, int ch, int i)
@@ -113,7 +104,8 @@ void	dollar(t_cmd *cmd)
 	{
 		if (cmd->tmp_in[cmd->c_d] == '$')
 		{
-			while (cmd->tmp_in[cmd->c_d] != '$' && (cmd->tmp_in[cmd->c_d] != '\0'
+			while (cmd->tmp_in[cmd->c_d] != '$'
+				&& (cmd->tmp_in[cmd->c_d] != '\0'
 					|| cmd->tmp_in[cmd->c_d] != ' '))
 			{
 				if (cmd->tmp_in[cmd->c_d] == '\0')

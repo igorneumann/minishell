@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/06 09:25:14 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/06 12:48:45 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,8 @@ t_data	*free_first(t_data *data);
 /*
 *** dollar.c
 */
-void	replace(t_cmd *cmd, int old_len);
+int		new_lenght_amount(t_cmd *cmd);
+void	replace(t_cmd *cmd);
 void	replace_allocation(t_cmd *cmd);
 void	replace_global_var(t_cmd *cmd, char *var);
 int		cpy_global_var(t_cmd *cmd, int ch, int i);

@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 15:47:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/02 19:37:12 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/06 12:55:25 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,16 @@ int	look_for_open(char quote, char quote_2, char *str, int i)
 	if (look % 2 != 0)
 		return (1);
 	return (0);
+}
+
+void	replace_global_var(t_cmd *cmd, char *var)
+{
+	if ((cmd->quote_s == 0 && (cmd->quote_d == 0 || cmd->quote_d % 2 == 0))
+		|| (look_for_closure('\"', '$', cmd->original, cmd->c_d) == 1
+			&& look_for_open('\'', '\"', cmd->original, cmd->c_d) == 1)
+		|| (look_for_closure('\"', '$', cmd->original, cmd->c_d) == 0
+			&& look_for_closure('\'', '$', cmd->original, cmd->c_d) == 0))
+		cmd->dollar_value[cmd->d_counter++] = search_value(var, cmd);
+	else
+		cmd->dollar_value[cmd->d_counter++] = ft_strjoin("$", var);
 }
