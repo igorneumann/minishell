@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 15:47:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/06 18:32:54 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/06 20:19:34 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,13 @@ int	look_for_open(char quote, char quote_2, char *str, int i)
 
 void	replace_global_var(t_cmd *cmd, char *var)
 {
+	int	open;
+	int	close;
+
+	open = look_for_open('\'', '\"', cmd->original, cmd->c_d);
+	close = look_for_closure('\'', '$', cmd->original, cmd->c_d);
 	if ((cmd->quote_s == 0 && (cmd->quote_d == 0 || cmd->quote_d % 2 == 0))
-		|| (look_for_closure('\"', '$', cmd->original, cmd->c_d) == 1
-			&& look_for_open('\'', '\"', cmd->original, cmd->c_d) == 1)
-		|| (look_for_closure('\"', '$', cmd->original, cmd->c_d) == 0
-			&& look_for_open('\'', '\"', cmd->original, cmd->c_d) == 0))
+		|| (close == 1 && open == 1) || (close == 0 && open == 0))
 		cmd->dollar_value[cmd->d_counter++] = search_value(var, cmd);
 	else
 		cmd->dollar_value[cmd->d_counter++] = ft_strjoin("$", var);

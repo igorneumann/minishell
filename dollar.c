@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/06 18:06:19 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/06 20:19:41 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,11 @@ int	cpy_global_var(t_cmd *cmd, int ch, int i)
 
 void	dollar(t_cmd *cmd)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
+	tmp = cmd->tmp_in;
+	cmd->tmp_in = cmd->buff;
 	i = 0;
 	cmd->old_len = malloc(sizeof(int) * count_char(cmd->original, '$'));
 	while (cmd->tmp_in[++cmd->c_d])
@@ -106,16 +109,16 @@ void	dollar(t_cmd *cmd)
 		if (cmd->tmp_in[cmd->c_d] == '$')
 		{
 			while (cmd->tmp_in[cmd->c_d] != '$'
-				&& (cmd->tmp_in[cmd->c_d] != '\0'
-					|| cmd->tmp_in[cmd->c_d] != ' '))
+				&& cmd->tmp_in[cmd->c_d] != '\0'
+				&& cmd->tmp_in[cmd->c_d] != ' ')
 			{
 				if (cmd->tmp_in[cmd->c_d] == '\0')
 					break ;
 				cmd->c_d++;
 			}
-			cmd->c_d++;
-			cmd->old_len[i] = cpy_global_var(cmd, 0, cmd->c_d);
+			cmd->old_len[i] = cpy_global_var(cmd, 0, (cmd->c_d + 1));
 			i++;
 		}
 	}
+	cmd->tmp_in = tmp;
 }
