@@ -6,7 +6,7 @@
 #    By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 10:24:24 by narroyo-          #+#    #+#              #
-#    Updated: 2021/09/06 17:10:51 by ineumann         ###   ########.fr        #
+#    Updated: 2021/09/06 17:11:49 by ineumann         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,6 @@ $(NAME): $(OBJS)
 	$(CC) $(SRCS) $(LIBS) -o $(NAME)
 
 run: re
-	@killall minishell
 	@reset
 	@./minishell
 
