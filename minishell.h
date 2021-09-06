@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/06 12:48:45 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/06 12:57:43 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ typedef struct s_command
 	int		c_d;
 	int		c_replace;
 	int		c2_replace;
-	int		d_read;
 	char	*original;
 	char	*without_quotes;
 	int		check_replacement;
@@ -160,7 +159,6 @@ t_data	*free_first(t_data *data);
 int		new_lenght_amount(t_cmd *cmd);
 void	replace(t_cmd *cmd);
 void	replace_allocation(t_cmd *cmd);
-void	replace_global_var(t_cmd *cmd, char *var);
 int		cpy_global_var(t_cmd *cmd, int ch, int i);
 void	dollar(t_cmd *cmd);
 
@@ -247,6 +245,7 @@ void	init_counters(t_cmd *cmd);
 int		count_char(char *line, char character);
 int		look_for_closure(char quote, char dollar, char *line, int i);
 int		look_for_open(char quote, char quote_2, char *str, int i);
+void	replace_global_var(t_cmd *cmd, char *var);
 
 /*
 *** read_arguments.c
