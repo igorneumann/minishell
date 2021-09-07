@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 15:47:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/07 18:05:46 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/07 19:01:38 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	init_counters(t_cmd *cmd)
 	cmd->c2_replace = 0;
 	cmd->counter = 0;
 	cmd->c_d = -1;
+	cmd->without_quotes = NULL;
+	cmd->old_len = NULL;
 }
 
 int	count_char(char *line, char character)

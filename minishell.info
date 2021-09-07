@@ -66,6 +66,7 @@ char	f_raw(t_raw *raw);
 	+ ejecuta todo el rato que se escribe en el terminal
 		- retorna la tecla digitada (1 caracter)
 
+
 /*
 *** lists_utils
 */
