@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 15:47:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/07 10:57:51 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/07 18:05:46 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,14 @@ void	replace_global_var(t_cmd *cmd, char *var)
 	open_double = look_for_open('\"', '\'', cmd->original, cmd->c_d);
 	close_simple = look_for_closure('\'', '$', cmd->original, cmd->c_d);
 	double_close = look_for_closure('\"', '$', cmd->original, cmd->c_d);
-	if (open_simple == 0 && close_simple == 0 && double_close == 1 && open_double == 1)
+	if (open_simple == 0 && close_simple == 0 && double_close == 1
+		&& open_double == 1)
 		cmd->dollar_value[cmd->d_counter++] = search_value(var, cmd);
 	else if (close_simple == 1 && open_simple == 1 && double_close  == 0)
 		cmd->dollar_value[cmd->d_counter++] = ft_strjoin("$", var);
-	else if ((close_simple == 1 && open_simple == 1) || (close_simple == 0 && open_simple == 0))
+	else if ((close_simple == 1 && open_simple == 1
+			&& countleft(cmd->original, cmd->c_d, '\"', '\"') % 2 != 0)
+		|| (close_simple == 0 && open_simple == 0))
 		cmd->dollar_value[cmd->d_counter++] = search_value(var, cmd);
 	else
 		cmd->dollar_value[cmd->d_counter++] = ft_strjoin("$", var);

@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 16:11:11 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/07 12:57:06 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/07 18:09:40 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,12 @@ int	question_mark(t_cmd *cmd, char	*var)
 
 void	free_all(t_cmd *cmd)
 {
-	free(cmd->original);
-	free(cmd->without_quotes);
-	free(cmd->tmp_in);
+	if (cmd->original)
+		free(cmd->original);
+	if (cmd->without_quotes)
+		free(cmd->without_quotes);
+	if (cmd->tmp_in)
+		free(cmd->tmp_in);
 	if (cmd->old_len)
 		free(cmd->old_len);
 }
