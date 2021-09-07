@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/06 21:59:09 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/07 14:34:50 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	replace_allocation(t_cmd *cmd)
 
 	aux = ft_strdup(cmd->in);
 	free(cmd->in);
+	cmd->in = NULL;
 	cmd->in = (char *)malloc(sizeof(char) * (ft_strlen(aux)
 				+ new_lenght_amount(cmd) + 1));
 	free(aux);
@@ -70,10 +71,10 @@ void	replace_allocation(t_cmd *cmd)
 int	cpy_global_var(t_cmd *cmd, int ch, int i)
 {
 	char	*var;
-	char	*question_mark;
 	int		j;
 
 	j = 0;
+	//cambiar lo del bucle por cualquier caracter que no sea alfanumerico
 	while (cmd->tmp_in[cmd->c_d + ch] != '\0'
 		&& cmd->tmp_in[cmd->c_d + ch] != '\''
 		&& cmd->tmp_in[cmd->c_d + ch] != ' '
@@ -85,12 +86,9 @@ int	cpy_global_var(t_cmd *cmd, int ch, int i)
 		&& i < i + ch)
 		var[j++] = cmd->tmp_in[i++];
 	var[j] = '\0';
-	question_mark = search_value(var, cmd);
-	if (question_mark == NULL)
-		printf("%s : command not found\r\n", var);
+	if (question_mark(cmd, var) == 0)
+		return (ch);
 	replace_global_var(cmd, var);
-	if (question_mark)
-		free(question_mark);
 	free(var);
 	return (ch);
 }
@@ -111,7 +109,7 @@ void	dollar(t_cmd *cmd)
 			cmd->old_len[i++] = cpy_global_var(cmd, 0, (cmd->c_d + 1));
 			while (cmd->tmp_in[cmd->c_d] != '$'
 				&& cmd->tmp_in[cmd->c_d] != '\0'
-				&& cmd->tmp_in[cmd->c_d] != ' ')
+				&& ft_isalnum(cmd->tmp_in[cmd->c_d]))
 				cmd->c_d++;
 		}
 		if (cmd->tmp_in[cmd->c_d] == '\0')

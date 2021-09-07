@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 16:11:11 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/07 09:07:20 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/07 12:57:06 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,22 @@ t_envp	*copy_env(t_envp *envp)
 	while (copy->prev)
 		copy = copy->prev;
 	return (copy);
+}
+
+int	question_mark(t_cmd *cmd, char	*var)
+{
+	char	*question_mark;
+
+	question_mark = search_value(var, cmd);
+	if (question_mark == NULL)
+	{
+		cmd->dollar_value[cmd->d_counter++] = ft_strdup("\0");
+		free(var);
+		return (0);
+	}
+	if (question_mark)
+		free(question_mark);
+	return (1);
 }
 
 void	free_all(t_cmd *cmd)

@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/06 09:55:15 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/07 12:48:13 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,6 @@ void	ft_exit(t_cmd *cmd, int i)
 	if ((cmd->in[j] >= 0 && cmd->in[j] <= 9)
 		|| cmd->in[j] == '-' || cmd->in[j] == '+')
 		code[1] = ft_atoi(&cmd->in[j]);
+	free_env(cmd->envp);
 	die(code, cmd->raw);
 }

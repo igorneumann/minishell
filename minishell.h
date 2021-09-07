@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/06 19:36:38 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/07 11:40:03 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ void	ft_save_env(t_cmd *cmd, char **envp);
 *** export_utils.c
 */
 t_envp	*copy_env(t_envp *envp);
+int		question_mark(t_cmd *cmd, char	*var);
 void	free_all(t_cmd *cmd);
 
 /*
