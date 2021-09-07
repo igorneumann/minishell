@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 15:47:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/06 21:27:09 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/07 09:03:31 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	look_for_closure(char quote, char searching, char *line, int i)
 				}
 				i--;
 			}
+			if (!line[i])
+				break ;
 		}
 		i++;
 	}
@@ -77,7 +79,7 @@ int	look_for_open(char quote, char quote_2, char *str, int i)
 			break ;
 		if (str[i] == quote)
 			look++;
-		i++;
+		i--;
 	}
 	if (look % 2 != 0)
 		return (1);

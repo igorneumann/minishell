@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 16:11:11 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/06 17:11:22 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/07 09:07:20 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ void	free_all(t_cmd *cmd)
 	free(cmd->original);
 	free(cmd->without_quotes);
 	free(cmd->tmp_in);
-	free(cmd->old_len);
+	if (cmd->old_len)
+		free(cmd->old_len);
 }
