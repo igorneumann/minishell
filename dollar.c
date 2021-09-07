@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/07 14:34:50 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/07 17:12:22 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,13 @@ int	cpy_global_var(t_cmd *cmd, int ch, int i)
 	int		j;
 
 	j = 0;
-	//cambiar lo del bucle por cualquier caracter que no sea alfanumerico
-	while (cmd->tmp_in[cmd->c_d + ch] != '\0'
-		&& cmd->tmp_in[cmd->c_d + ch] != '\''
-		&& cmd->tmp_in[cmd->c_d + ch] != ' '
-		&& cmd->tmp_in[cmd->c_d + ch] != '\"')
+	while ((cmd->tmp_in[cmd->c_d + ch] != '\0'
+		&& ft_isalnum(cmd->tmp_in[cmd->c_d + ch]) == 1)
+		|| cmd->tmp_in[cmd->c_d + ch] == '$')
 		ch++;
 	var = (char *)malloc(sizeof(char) * ch + 1);
-	while (cmd->tmp_in[i] && cmd->tmp_in[i] != ' '
-		&& cmd->tmp_in[i] != '\'' && cmd->tmp_in[i] != '\"'
-		&& i < i + ch)
+	while ((cmd->tmp_in[i] && ft_isalnum(cmd->tmp_in[i])
+		&& i < i + ch) || cmd->tmp_in[cmd->c_d + ch] == '$')
 		var[j++] = cmd->tmp_in[i++];
 	var[j] = '\0';
 	if (question_mark(cmd, var) == 0)
