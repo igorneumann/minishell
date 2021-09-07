@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 15:47:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/07 09:03:31 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/07 10:57:51 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,14 @@ int	look_for_closure(char quote, char searching, char *line, int i)
 			{
 				if (line[i] == quote)
 				{
+					i++;
 					while (line[i])
 					{
 						if (line[i] == quote)
 							return (1);
 						i++;
 					}
+					return (0);
 				}
 				i--;
 			}
@@ -88,13 +90,20 @@ int	look_for_open(char quote, char quote_2, char *str, int i)
 
 void	replace_global_var(t_cmd *cmd, char *var)
 {
-	int	open;
-	int	close;
+	int	open_simple;
+	int	close_simple;
+	int	open_double;
+	int	double_close;
 
-	open = look_for_open('\'', '\"', cmd->original, cmd->c_d);
-	close = look_for_closure('\'', '$', cmd->original, cmd->c_d);
-	if ((cmd->quote_s == 0 && (cmd->quote_d == 0 || cmd->quote_d % 2 == 0))
-		|| (close == 1 && open == 1) || (close == 0 && open == 0))
+	open_simple = look_for_open('\'', '\"', cmd->original, cmd->c_d);
+	open_double = look_for_open('\"', '\'', cmd->original, cmd->c_d);
+	close_simple = look_for_closure('\'', '$', cmd->original, cmd->c_d);
+	double_close = look_for_closure('\"', '$', cmd->original, cmd->c_d);
+	if (open_simple == 0 && close_simple == 0 && double_close == 1 && open_double == 1)
+		cmd->dollar_value[cmd->d_counter++] = search_value(var, cmd);
+	else if (close_simple == 1 && open_simple == 1 && double_close  == 0)
+		cmd->dollar_value[cmd->d_counter++] = ft_strjoin("$", var);
+	else if ((close_simple == 1 && open_simple == 1) || (close_simple == 0 && open_simple == 0))
 		cmd->dollar_value[cmd->d_counter++] = search_value(var, cmd);
 	else
 		cmd->dollar_value[cmd->d_counter++] = ft_strjoin("$", var);
