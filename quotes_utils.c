@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 15:47:33 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/08 13:40:08 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/08 13:41:53 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ void	replace_global_var(t_cmd *cmd, char *var)
 	double_close = look_for_closure('\"', '$', cmd->original, cmd->c_d);
 	if (!open_simple && !open_double && !close_simple && !double_close)
 		cmd->dollar_value[cmd->d_counter++] = search_value(var, cmd);
-	else if (open_simple == 0 && (close_simple == 0 || countleft(cmd->original, cmd->c_d, '\'', '\'') % 2 == 0)
+	else if (open_simple == 0 && (close_simple == 0
+			|| countleft(cmd->original, cmd->c_d, '\'', '\'') % 2 == 0)
 		&& double_close == 1 && open_double == 1)
 		cmd->dollar_value[cmd->d_counter++] = search_value(var, cmd);
 	else if (close_simple == 1 && open_simple == 1 && double_close == 0)
