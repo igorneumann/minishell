@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/07 19:01:01 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/08 12:53:47 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ void	ft_save_env(t_cmd *cmd, char **envp);
 /*
 *** export_utils.c
 */
+void	init_counters(t_cmd *cmd);
 t_envp	*copy_env(t_envp *envp);
 int		question_mark(t_cmd *cmd, char	*var);
 void	free_all(t_cmd *cmd);
@@ -243,8 +244,8 @@ int		check_replacement(t_cmd *cmd);
 /*
 *** quotes_utils.c
 */
-void	init_counters(t_cmd *cmd);
 int		count_char(char *line, char character);
+int		ret_close(char quote, char *line, int i);
 int		look_for_closure(char quote, char dollar, char *line, int i);
 int		look_for_open(char quote, char quote_2, char *str, int i);
 void	replace_global_var(t_cmd *cmd, char *var);
