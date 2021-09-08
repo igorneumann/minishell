@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/07 17:12:22 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/08 12:01:54 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ int	cpy_global_var(t_cmd *cmd, int ch, int i)
 
 	j = 0;
 	while ((cmd->tmp_in[cmd->c_d + ch] != '\0'
-		&& ft_isalnum(cmd->tmp_in[cmd->c_d + ch]) == 1)
+			&& ft_isalnum(cmd->tmp_in[cmd->c_d + ch]) == 1)
 		|| cmd->tmp_in[cmd->c_d + ch] == '$')
 		ch++;
 	var = (char *)malloc(sizeof(char) * ch + 1);
 	while ((cmd->tmp_in[i] && ft_isalnum(cmd->tmp_in[i])
-		&& i < i + ch) || cmd->tmp_in[cmd->c_d + ch] == '$')
+			&& i < i + ch) || cmd->tmp_in[cmd->c_d + ch] == '$')
 		var[j++] = cmd->tmp_in[i++];
 	var[j] = '\0';
 	if (question_mark(cmd, var) == 0)
@@ -110,7 +110,7 @@ void	dollar(t_cmd *cmd)
 				cmd->c_d++;
 		}
 		if (cmd->tmp_in[cmd->c_d] == '\0')
-					break ;
+			break ;
 	}
 	cmd->tmp_in = tmp;
 }

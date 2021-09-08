@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/07 18:38:57 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/08 12:03:58 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,19 @@ void	omit_quotes(t_cmd *cmd, char q1, char q2)
 {
 	if (cmd->tmp_in[cmd->c1] == q1
 		&& look_for_open(q1, q2, cmd->tmp_in, cmd->c1) == 1)
-		cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1];
-	cmd->c1++;
+		cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1++];
+	else
+		cmd->c1++;
 	if (cmd->tmp_in[cmd->c1] != '\0'
-		&& look_for_closure(q2, cmd->tmp_in[cmd->c1 + 1],
-			cmd->tmp_in, cmd->c1 + 1) == 1)
+		&& (look_for_closure(q2, cmd->tmp_in[cmd->c1 + 1],
+				cmd->tmp_in, cmd->c1 + 1) == 1 || cmd->tmp_in[cmd->c1] == q2))
 	{
 		while (cmd->tmp_in[cmd->c1] != q2)
 			cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1++];
 		if (look_for_open(q1, q2, cmd->tmp_in, cmd->c1) == 1)
-			cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1];
-		cmd->c1++;
+			cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1++];
+		else
+			cmd->c1++;
 	}
 }
 
@@ -82,7 +84,7 @@ char	*replace_quotes(t_cmd *cmd)
 			omit_quotes(cmd, '\'', '\"');
 		else if (cmd->tmp_in[cmd->c1] == '\'')
 			omit_quotes(cmd, '\"', '\'');
-		if (cmd->tmp_in[cmd->c1] != '\0')
+		else if (cmd->tmp_in[cmd->c1] != '\0')
 			cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1++];
 	}
 	cmd->in[cmd->c2] = '\0';
