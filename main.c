@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/07 12:45:58 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/08 17:24:57 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	ft_reset(t_cmd *cmd)
 	cmd->i = 0;
 	cmd->fd2[0] = 0;
 	cmd->fd1[0] = 0;
-	if (cmd->nexcom)
-		cleanfds(cmd, 3);
 }
 
 void	ft_presentation(void)

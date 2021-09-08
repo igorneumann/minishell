@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_arguments.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/07 12:48:13 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/08 17:26:02 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	ft_read_arguments(t_cmd *cmd)
 	if (!ft_arguments(cmd) && noinp == 0)
 		executor(cmd);
 	unlink(".tempAF.tmp");
+	if (red)
+		cleanfds(cmd, 3);
 }
 
 void	builtins(t_cmd *cmd, int i)

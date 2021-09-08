@@ -4,12 +4,16 @@ arguments.c
 arguments.o
 b.txt
 c
+c_d
+c_d)
+c_d,
 commandkeys.c
 commandkeys.o
 dollar.c
 dollar.o
 env.c
 env.o
+envp
 envp.c
 envp.o
 exec.c
@@ -37,8 +41,6 @@ minishell
 minishell.dSYM
 minishell.h
 minishell.info
-morekeys.o
-morelists.o
 moreprompt.c
 moreprompt.o
 path.c
@@ -61,3 +63,4 @@ test.c
 test.txt
 utils.c
 utils.o
+workspace.code-workspace
