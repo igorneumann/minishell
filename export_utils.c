@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 16:11:11 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/08 12:14:02 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/08 19:37:08 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_counters(t_cmd *cmd)
 	cmd->c_replace = 0;
 	cmd->c2_replace = 0;
 	cmd->counter = 0;
-	cmd->c_d = -1;
+	cmd->dc = -1;
 	cmd->without_quotes = NULL;
 	cmd->old_len = NULL;
 }

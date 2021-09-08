@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/08 12:51:02 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/08 19:37:08 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ int	cpy_global_var(t_cmd *cmd, int ch, int i)
 	int		j;
 
 	j = 0;
-	while ((cmd->tmp_in[cmd->c_d + ch] != '\0'
-			&& ft_isalnum(cmd->tmp_in[cmd->c_d + ch]) == 1)
-		|| cmd->tmp_in[cmd->c_d + ch] == '$')
+	while ((cmd->tmp_in[cmd->dc + ch] != '\0'
+			&& ft_isalnum(cmd->tmp_in[cmd->dc + ch]) == 1)
+		|| cmd->tmp_in[cmd->dc + ch] == '$')
 		ch++;
 	var = (char *)malloc(sizeof(char) * ch + 1);
 	while ((cmd->tmp_in[i] && ft_isalnum(cmd->tmp_in[i])
-			&& i < i + ch) || cmd->tmp_in[cmd->c_d + ch] == '$')
+			&& i < i + ch) || cmd->tmp_in[cmd->dc + ch] == '$')
 		var[j++] = cmd->tmp_in[i++];
 	var[j] = '\0';
 	if (question_mark(cmd, var) == 0)
@@ -99,17 +99,17 @@ void	dollar(t_cmd *cmd)
 	cmd->tmp_in = cmd->buff;
 	i = 0;
 	cmd->old_len = malloc(sizeof(int) * count_char(cmd->original, '$'));
-	while (cmd->tmp_in[++cmd->c_d])
+	while (cmd->tmp_in[++cmd->dc])
 	{
-		if (cmd->tmp_in[cmd->c_d] == '$')
+		if (cmd->tmp_in[cmd->dc] == '$')
 		{
-			cmd->old_len[i++] = cpy_global_var(cmd, 0, (cmd->c_d + 1));
-			while (cmd->tmp_in[cmd->c_d] != '$'
-				&& cmd->tmp_in[cmd->c_d] != '\0'
-				&& ft_isalnum(cmd->tmp_in[cmd->c_d]))
-				cmd->c_d++;
+			cmd->old_len[i++] = cpy_global_var(cmd, 0, (cmd->dc + 1));
+			while (cmd->tmp_in[cmd->dc] != '$'
+				&& cmd->tmp_in[cmd->dc] != '\0'
+				&& ft_isalnum(cmd->tmp_in[cmd->dc]))
+				cmd->dc++;
 		}
-		if (cmd->tmp_in[cmd->c_d] == '\0')
+		if (cmd->tmp_in[cmd->dc] == '\0')
 			break ;
 	}
 	cmd->tmp_in = tmp;

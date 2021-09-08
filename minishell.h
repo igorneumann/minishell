@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/08 12:53:47 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/08 19:36:24 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct s_command
 	int		*old_len;
 	int		d_counter;
 	int		counter;
-	int		c_d;
+	int		dc;
 	int		c_replace;
 	int		c2_replace;
 	char	*original;
