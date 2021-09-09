@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/09 16:23:42 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/09 19:19:21 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_pwd(t_cmd *cmd)
 
 void	print_echo(t_cmd *cmd, int i, int j)
 {
-	if (ft_strnstr(cmd->in + i, "-n", 2) != NULL)
+	if (ft_strnstr(cmd->in + i, "-n ", 3) != NULL)
 	{
 		cmd->echo_nl = 1;
 		while (cmd->in[i + j])
@@ -40,7 +40,7 @@ void	print_echo(t_cmd *cmd, int i, int j)
 			while (cmd->in[i + j] == ' ' && cmd->in[i + j + 1] == '-' && cmd->in[i + j + 2] == 'n')
 				j += 3;
 			if (cmd->in[i + j] != ' ')
-				cmd->echo_nl = 0;
+				cmd->echo_nl = 2;
 			while (cmd->in[i + j] == ' ')
 				j++;
 			if (ft_strnstr(cmd->in + i + j, "-n", 2) == NULL)
@@ -49,10 +49,10 @@ void	print_echo(t_cmd *cmd, int i, int j)
 		if (cmd->echo_nl == 1)
 			ft_putstr(&cmd->in[i + j]);
 	}
-	if (cmd->echo_nl == 0)
+	if (cmd->echo_nl == 0 || cmd->echo_nl == 2)
 	{
-		//tengo que restar de la j los -nnn
-
+		if(cmd->echo_nl == 2)
+			j -= 3;
 		ft_putstr(&cmd->in[i + j]);
 		if (j == 0)
 			ft_putstr("\r\n");

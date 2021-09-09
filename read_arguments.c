@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_arguments.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/08 17:26:02 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/09 19:27:00 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	ft_arguments(t_cmd *cmd)
 		i = cmd->output_status >> 8;
 		ft_putstr_fd(ft_itoa(i), 2);
 		ft_putstr_fd(": command not found\r\n", 2);
+		cmd->output_status = 127;
 	}
 	else
 		return (0);
