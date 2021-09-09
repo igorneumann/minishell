@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 12:06:27 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/08 19:37:08 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/09 10:44:35 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,15 @@ int	cpy_global_var(t_cmd *cmd, int ch, int i)
 	int		j;
 
 	j = 0;
-	while ((cmd->tmp_in[cmd->dc + ch] != '\0'
-			&& ft_isalnum(cmd->tmp_in[cmd->dc + ch]) == 1)
-		|| cmd->tmp_in[cmd->dc + ch] == '$')
+	while (cmd->tmp_in[cmd->dc + 1 + ch]
+		&& (ft_isalnum(cmd->tmp_in[cmd->dc + 1 + ch]) == 1
+			|| cmd->tmp_in[cmd->dc + 1 + ch] == '?'))
 		ch++;
+	ch++;
 	var = (char *)malloc(sizeof(char) * ch + 1);
-	while ((cmd->tmp_in[i] && ft_isalnum(cmd->tmp_in[i])
-			&& i < i + ch) || cmd->tmp_in[cmd->dc + ch] == '$')
+	while (cmd->tmp_in[i] && (cmd->tmp_in[i] == '?'
+			|| ft_isalnum(cmd->tmp_in[i]))
+		&& (i < i + ch || cmd->tmp_in[cmd->dc + ch] == '$'))
 		var[j++] = cmd->tmp_in[i++];
 	var[j] = '\0';
 	if (question_mark(cmd, var) == 0)
