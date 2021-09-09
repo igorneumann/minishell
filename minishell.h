@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/08 19:36:24 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/09 15:44:56 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_command
 	int		c2;
 	int		simple;
 	int		doubl;
+	int		echo_nl;
 	t_data	*list;
 	t_data	*param;
 	t_data	*nexcom;
@@ -105,7 +106,7 @@ typedef struct s_command
 *** arguments.c
 */
 void	ft_pwd(t_cmd *cmd);
-void	print_echo(t_cmd *cmd, int i);
+void	print_echo(t_cmd *cmd, int i, int j);
 void	ft_echo(t_cmd *cmd);
 void	previous_folder(char *path, char *old_path, int j);
 void	ft_cd(t_cmd *cmd, int i);

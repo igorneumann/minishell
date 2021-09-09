@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 17:40:09 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/09 16:23:42 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,36 @@ void	ft_pwd(t_cmd *cmd)
 	ft_putstr("\033[0m\r\n");
 }
 
-void	print_echo(t_cmd *cmd, int i)
+void	print_echo(t_cmd *cmd, int i, int j)
 {
 	if (ft_strnstr(cmd->in + i, "-n", 2) != NULL)
 	{
-		i += 2;
-		while (cmd->in[i] == ' ')
-			i++;
-		ft_putstr(&cmd->in[i]);
+		cmd->echo_nl = 1;
+		while (cmd->in[i + j])
+		{
+			if (cmd->in[i + j] == '-')
+				j++;
+			while (cmd->in[i + j] == 'n')
+				j++;
+			while (cmd->in[i + j] == ' ' && cmd->in[i + j + 1] == '-' && cmd->in[i + j + 2] == 'n')
+				j += 3;
+			if (cmd->in[i + j] != ' ')
+				cmd->echo_nl = 0;
+			while (cmd->in[i + j] == ' ')
+				j++;
+			if (ft_strnstr(cmd->in + i + j, "-n", 2) == NULL)
+				break ;
+		}
+		if (cmd->echo_nl == 1)
+			ft_putstr(&cmd->in[i + j]);
 	}
-	else
+	if (cmd->echo_nl == 0)
 	{
-		ft_putstr(&cmd->in[i]);
-		ft_putstr("\r\n");
+		//tengo que restar de la j los -nnn
+
+		ft_putstr(&cmd->in[i + j]);
+		if (j == 0)
+			ft_putstr("\r\n");
 	}
 }
 
@@ -60,7 +77,8 @@ void	ft_echo(t_cmd *cmd)
 	i += 4;
 	while (cmd->in[i] == ' ')
 		i++;
-	print_echo(cmd, i);
+	cmd->echo_nl = 0;
+	print_echo(cmd, i, j);
 }
 
 void	previous_folder(char *path, char *old_path, int j)
