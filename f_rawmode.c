@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/03 19:16:51 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/09 20:28:51 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,8 @@ void	enable_raw_mode(t_raw *raw)
 	if (tcgetattr(STDIN_FILENO, &raw->orig) == -1)
 		die("tcgetattr", raw);
 	raw->raw = raw->orig;
-	raw->raw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
-	raw->raw.c_oflag &= ~(OPOST);
-	raw->raw.c_cflag |= (CS8);
-	raw->raw.c_lflag &= ~(ECHO | ICANON | IEXTEN);
-	raw->raw.c_cc[VMIN] = 0;
+	raw->raw.c_iflag &= ~(BRKINT | ICRNL);
+	raw->raw.c_lflag &= ~(ECHO | ICANON);
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw->raw) == -1)
 		die("tcsetattr", raw);
 }
@@ -65,5 +62,6 @@ char	f_raw(t_raw *raw)
 			die("read", raw);
 		nread = read(STDIN_FILENO, &c, 1);
 	}
+	//printf("\ncaracter es %i\n", (int));
 	return (c);
 }

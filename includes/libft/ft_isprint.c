@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 17:42:32 by narroyo-          #+#    #+#             */
-/*   Updated: 2019/11/12 17:41:33 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/09 20:00:10 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,16 @@
 int	ft_isprint(int c)
 {
 	if (32 <= c && c <= 126)
+		return (1);
+	else if (c == 128 || (130 <= c && c <= 140))
+		return (1);
+	else if (c == 142 || (145 <= c && c <= 156))
+		return (1);
+	else if (c == 158 || (161 <= c && c <= 172))
+		return (1);
+	else if (c == 159 || (174 <= c && c <= 255))
+		return (1);
+	else if (c == -76 || c == -88 || c == -30)
 		return (1);
 	return (0);
 }
