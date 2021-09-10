@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/09 22:19:14 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/10 12:23:51 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	builtins(t_cmd *cmd, int i)
 	else if (ft_strnstr(cmd->in, "unset", 5))
 	{
 		ft_unset(cmd);
-		envp_to_arr(cmd);
+		//envp_to_arr(cmd);
 	}
 	else if (ft_strnstr(cmd->in, "exit", 4))
 		ft_exit(cmd, i);

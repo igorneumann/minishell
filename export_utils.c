@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 16:11:11 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/09 22:45:37 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/10 12:32:15 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,13 @@ void	envp_to_arr(t_cmd *cmd)
 	int		i;
 	char	*aux;
 	t_envp	*copy;
+	t_envp	*tmp;
 
 	i = 0;
 	copy = copy_env(cmd->envp);
-//	if (cmd->env)
-//	{
-//		free_split(cmd->env);
-//		cmd->env = NULL;
-//	}
-	cmd->env = (char **)malloc(sizeof(char *) * lst_size((t_envp *)&cmd->envp));
+	if (cmd->env != cmd->envorg)
+		free_split(cmd->env);
+	cmd->env = (char **)malloc(sizeof(char *) * (lst_size((t_envp *)&cmd->envp) + 1));
 	while (copy->prev)
 		copy = copy->prev;
 	while (copy)
@@ -62,8 +60,12 @@ void	envp_to_arr(t_cmd *cmd)
 		aux = ft_strjoin(copy->key, "=");
 		cmd->env[i] = ft_strjoin(aux, copy->value);
 		free(aux);
+		tmp = copy;
 		copy = copy->next;
 		i++;
 	}
-//	free_env(copy);
+	cmd->env[i] = NULL;
+	while (tmp->prev)
+		tmp = tmp->prev;
+	free_env(tmp);
 }
