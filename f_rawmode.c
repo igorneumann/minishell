@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/09 20:47:21 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/10 20:19:42 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,5 @@ char	f_raw(t_raw *raw)
 			die("read", raw);
 		nread = read(STDIN_FILENO, &c, 1);
 	}
-	//printf("\ncaracter es %i\n", (int)c);
 	return (c);
 }

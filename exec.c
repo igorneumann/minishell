@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/10 16:36:50 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/10 20:46:42 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,8 @@
 
 int	executor(t_cmd *cmd)
 {
-	int	i;
-
-	envp_to_arr(cmd);
-	i = open(cmd->in, O_RDONLY);
-	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->orig) == -1)
-		die("tcsetattr", cmd->raw);
-	if (i == -1 && cmd->not_found == 0)
-	{
-		free(cmd->buff);
-		cmd->buff = ft_strduptochar(cmd->in, 32);
-		ft_path(cmd);
-	}
-	close(i);
-	if (cmd->nexpip != NULL)
-		pipenator(cmd);
-	else
+	prep_exec(cmd);
+	if (cmd->nexpip == NULL)
 	{
 		free(cmd->buff);
 		cmd->buff = ft_strduptochar(cmd->in, 32);
