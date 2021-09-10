@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/08 17:24:57 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/10 12:27:21 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_init(t_cmd *cmd, char **envp, t_raw *raw)
 	cmd->in = ft_strdup("\x0D");
 	cmd->buff = ft_strdup("\x0D");
 	cmd->dollar_value = NULL;
+	cmd->env = NULL;
 	cmd->counter = 0;
 	ft_save_env(cmd, envp);
 	enable_raw_mode(raw);

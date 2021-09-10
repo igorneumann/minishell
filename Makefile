@@ -6,7 +6,7 @@
 #    By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 10:24:24 by narroyo-          #+#    #+#              #
-#    Updated: 2021/09/08 10:06:48 by narroyo-         ###   ########.fr        #
+#    Updated: 2021/09/10 12:32:47 by narroyo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS			=	main.c ./includes/gnl/get_next_line.c ./f_rawmode.c \
 					lists_utils.c export.c envp.c read_arguments.c history.c \
 					semicolon.c moreprompt.c exec.c export_utils.c pipes.c \
 					free.c path.c pipenator.c redir.c quotes.c dollar.c \
-					quotes_utils.c
+					quotes_utils.c other.c echo.c
 LIBFT			=	./includes/libft
 OBJS 			=	$(SRCS:.c=.o)
 LIBS			=	./includes/libft/libft.a

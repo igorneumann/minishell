@@ -6,22 +6,11 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 16:11:11 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/08 19:37:08 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/10 12:32:15 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	init_counters(t_cmd *cmd)
-{
-	cmd->d_counter = 0;
-	cmd->c_replace = 0;
-	cmd->c2_replace = 0;
-	cmd->counter = 0;
-	cmd->dc = -1;
-	cmd->without_quotes = NULL;
-	cmd->old_len = NULL;
-}
 
 t_envp	*copy_env(t_envp *envp)
 {
@@ -52,30 +41,31 @@ t_envp	*copy_env(t_envp *envp)
 	return (copy);
 }
 
-int	question_mark(t_cmd *cmd, char	*var)
+void	envp_to_arr(t_cmd *cmd)
 {
-	char	*question_mark;
+	int		i;
+	char	*aux;
+	t_envp	*copy;
+	t_envp	*tmp;
 
-	question_mark = search_value(var, cmd);
-	if (question_mark == NULL)
+	i = 0;
+	copy = copy_env(cmd->envp);
+	if (cmd->env != cmd->envorg)
+		free_split(cmd->env);
+	cmd->env = (char **)malloc(sizeof(char *) * (lst_size((t_envp *)&cmd->envp) + 1));
+	while (copy->prev)
+		copy = copy->prev;
+	while (copy)
 	{
-		cmd->dollar_value[cmd->d_counter++] = ft_strdup("\0");
-		free(var);
-		return (0);
+		aux = ft_strjoin(copy->key, "=");
+		cmd->env[i] = ft_strjoin(aux, copy->value);
+		free(aux);
+		tmp = copy;
+		copy = copy->next;
+		i++;
 	}
-	if (question_mark)
-		free(question_mark);
-	return (1);
-}
-
-void	free_all(t_cmd *cmd)
-{
-	if (cmd->original)
-		free(cmd->original);
-	if (cmd->without_quotes)
-		free(cmd->without_quotes);
-	if (cmd->tmp_in)
-		free(cmd->tmp_in);
-	if (cmd->old_len)
-		free(cmd->old_len);
+	cmd->env[i] = NULL;
+	while (tmp->prev)
+		tmp = tmp->prev;
+	free_env(tmp);
 }

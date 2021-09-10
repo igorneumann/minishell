@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/06 18:50:44 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/10 12:21:16 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_startpipe(char *str, t_cmd *cmd)
 		dup2(cmd->fd1[WRITE_END], STDOUT_FILENO);
 		close(cmd->fd1[WRITE_END]);
 		 if (!ft_arguments(cmd))
-			execve(str, parm_list, cmd->envorg);
+			execve(str, parm_list, cmd->env);
 	}
 	else
 		close(cmd->fd1[WRITE_END]);
@@ -75,7 +75,7 @@ void	ft_midpipe(char *str, t_cmd *cmd, int *fd_in, int *fd_out)
 		dup2(fd_out[WRITE_END], STDOUT_FILENO);
 		close(fd_out[WRITE_END]);
 		if (!ft_arguments(cmd))
-			execve(str, parm_list, cmd->envorg);
+			execve(str, parm_list, cmd->env);
 	}
 	else
 	{
@@ -105,7 +105,7 @@ void	ft_endpipe(char *str, t_cmd *cmd, int i)
 		close(fd[READ_END]);
 		redirout(cmd);
 		if (!ft_arguments(cmd))
-			execve(str, parm_list, cmd->envorg);
+			execve(str, parm_list, cmd->env);
 	}
 	else
 		close(fd[READ_END]);

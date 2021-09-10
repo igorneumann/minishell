@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/09 15:44:56 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/09 22:22:51 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,15 @@ typedef struct s_command
 *** arguments.c
 */
 void	ft_pwd(t_cmd *cmd);
-void	print_echo(t_cmd *cmd, int i, int j);
-void	ft_echo(t_cmd *cmd);
 void	previous_folder(char *path, char *old_path, int j);
 void	ft_cd(t_cmd *cmd, int i);
+
+/*
+*** echo.c
+*/
+int		print_echo_nl(t_cmd *cmd, int i, int j);
+void	print_echo(t_cmd *cmd, int i, int j);
+void	ft_echo(t_cmd *cmd);
 
 /*
 *** main.c
@@ -185,10 +190,8 @@ void	ft_save_env(t_cmd *cmd, char **envp);
 /*
 *** export_utils.c
 */
-void	init_counters(t_cmd *cmd);
 t_envp	*copy_env(t_envp *envp);
-int		question_mark(t_cmd *cmd, char	*var);
-void	free_all(t_cmd *cmd);
+void	envp_to_arr(t_cmd *cmd);
 
 /*
 *** export.c
@@ -318,5 +321,12 @@ int		redirector(t_cmd *cmd, int i);
 *** get_next_line.c
 */
 int		get_next_line(int fd, char **line);
+
+/*
+*** other.c
+*/
+void	init_counters(t_cmd *cmd);
+int		question_mark(t_cmd *cmd, char	*var);
+void	free_all(t_cmd *cmd);
 
 #endif
