@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Makefile
 a
 arguments.c
@@ -65,3 +66,6 @@ test.txt
 utils.c
 utils.o
 workspace.code-workspace
+=======
+hola > a 
+>>>>>>> 290168f0f560e04c8d97671a6f029d18b08210c2

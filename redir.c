@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/13 20:30:06 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/13 20:34:18 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	redir(t_cmd *cmd, int i)
 		k++;
 	}
 	if (cmd->outp[0] != '\x0D' || cmd->inpt[0] != '\x0D')
-		return (redirector(cmd, 0));
+		return (1);
 	return (0);
 }
 

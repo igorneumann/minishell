@@ -3,14 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 16:11:11 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/13 16:55:16 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/13 20:15:33 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_unset(t_cmd *cmd)
+{
+	int		i;
+	int		j;
+	char	*erase;
+	t_envp	*env;
+
+	i = 0;
+	j = 0;
+	cmd->not_found = 1;
+	if (command_not_found("unset", cmd))
+		return ;
+	i += 6;
+	erase = (char *)malloc(sizeof(char) * (ft_strlen(cmd->in) - i + 1));
+	while (cmd->in[i] != '\0')
+		erase[j++] = cmd->in[i++];
+	erase[j] = '\0';
+	env = search_elem(cmd->envp, erase);
+	if (env)
+		cmd->envp = env;
+	else
+	{
+		free(erase);
+		return ;
+	}
+	cmd->envp = remove_elem(cmd->envp);
+	free(erase);
+}
 
 t_envp	*copy_env(t_envp *envp)
 {

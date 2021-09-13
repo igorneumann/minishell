@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 18:38:34 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/13 16:54:38 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/13 20:25:10 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ int	new_env_element(t_cmd *cmd, int i)
 	if (cmd->in[i] != ' ')
 	{
 		aux = ft_split(cmd->in + i, ' ');
+		if (!aux[j])
+		{
+			ft_sort_env(cmd->envp, NULL, NULL, 1);
+			return (0);
+		}
 		while (aux[j])
 		{
 			ft_include(cmd, aux[j]);
@@ -106,33 +111,4 @@ void	ft_export(t_cmd *cmd)
 		ft_sort_env(cmd->envp, NULL, NULL, 1);
 	while (cmd->in[i] != '\0' && bucle == 1)
 		bucle = new_env_element(cmd, i);
-}
-
-void	ft_unset(t_cmd *cmd)
-{
-	int		i;
-	int		j;
-	char	*erase;
-	t_envp	*env;
-
-	i = 0;
-	j = 0;
-	cmd->not_found = 1;
-	if (command_not_found("unset", cmd))
-		return ;
-	i += 6;
-	erase = (char *)malloc(sizeof(char) * (ft_strlen(cmd->in) - i + 1));
-	while (cmd->in[i] != '\0')
-		erase[j++] = cmd->in[i++];
-	erase[j] = '\0';
-	env = search_elem(cmd->envp, erase);
-	if (env)
-		cmd->envp = env;
-	else
-	{
-		free(erase);
-		return ;
-	}
-	cmd->envp = remove_elem(cmd->envp);
-	free(erase);
 }
