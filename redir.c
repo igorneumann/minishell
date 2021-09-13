@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/13 18:05:23 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/13 18:16:42 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,22 @@ int	redir(t_cmd *cmd, int i)
 	return (0);
 }
 
+void	redirout_one(t_cmd *cmd, int i, int	*in[2], int *out[2])
+{
+	if (cmd->outp[0] != '\x0D' || i == 1)
+	{
+		*out[0] = dup(STDOUT_FILENO);
+		dup2(*out[1], STDOUT_FILENO);
+		close(*out[1]);
+	}
+	if (cmd->inpt[0] != '\x0D' || i == 1)
+	{
+		*in[0] = dup(STDIN_FILENO);
+		dup2(*in[1], STDIN_FILENO);
+		close(*in[1]);
+	}
+}
+
 void	redirout(t_cmd *cmd, int i)
 {
 	int	*in[2];
@@ -59,18 +75,7 @@ void	redirout(t_cmd *cmd, int i)
 		out[0] = &cmd->out_fd;
 		out[1] = &cmd->bkp_fdout;
 	}
-	if (cmd->outp[0] != '\x0D' || i == 1)
-	{
-		*out[0] = dup(STDOUT_FILENO);
-		dup2(*out[1], STDOUT_FILENO);
-		close(*out[1]);
-	}
-	if (cmd->inpt[0] != '\x0D' || i == 1)
-	{
-		*in[0] = dup(STDIN_FILENO);
-		dup2(*in[1], STDIN_FILENO);
-		close(*in[1]);
-	}
+	redirout_one(cmd, i, in, out);
 }
 
 int	tempinput(t_cmd *cmd)
@@ -98,15 +103,6 @@ int	tempinput(t_cmd *cmd)
 		die("tcsetattr", cmd->raw);
 	ft_putstr_fd(buff, cmd->in_fd);
 	return (close(cmd->in_fd));
-}
-
-int	cleanfds(t_cmd *cmd, int i)
-{
-	if ((i == 1 || i == 3) && cmd->in_fd)
-		close(cmd->in_fd);
-	if ((i == 2 || i == 3) && cmd->out_fd)
-		close(cmd->out_fd);
-	return (1);
 }
 
 int	redirector(t_cmd *cmd, int i)
