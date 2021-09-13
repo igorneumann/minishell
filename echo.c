@@ -6,11 +6,34 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 21:20:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/13 13:57:06 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/13 14:10:33 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	while_echo(t_cmd *cmd, int i, int j)
+{
+	while (cmd->in[i + j])
+	{
+		if (cmd->in[i + j] == '-')
+			j++;
+		while (cmd->in[i + j] == 'n')
+			j++;
+		if (cmd->in[i + j] != ' ')
+			cmd->echo_nl = 2;
+		while (cmd->in[i + j] == ' ' && cmd->in[i + j + 1] == '-'
+			&& cmd->in[i + j + 2] == 'n')
+			j += 3;
+		while (cmd->in[i + j] == 'n')
+			j++;
+		while (cmd->in[i + j] == ' ')
+			j++;
+		if (ft_strnstr(cmd->in + i + j, "-n", 2) == NULL)
+			break ;
+	}
+	return (j);
+}
 
 int	print_echo_nl(t_cmd *cmd, int i, int j)
 {
@@ -25,24 +48,7 @@ int	print_echo_nl(t_cmd *cmd, int i, int j)
 			if (!cmd->in[i + j])
 				return (j + 3);
 		}
-		while (cmd->in[i + j])
-		{
-			if (cmd->in[i + j] == '-')
-				j++;
-			while (cmd->in[i + j] == 'n')
-				j++;
-			if (cmd->in[i + j] != ' ')
-				cmd->echo_nl = 2;
-			while (cmd->in[i + j] == ' ' && cmd->in[i + j + 1] == '-'
-				&& cmd->in[i + j + 2] == 'n')
-				j += 3;
-			while (cmd->in[i + j] == 'n')
-				j++;
-			while (cmd->in[i + j] == ' ')
-				j++;
-			if (ft_strnstr(cmd->in + i + j, "-n", 2) == NULL)
-				break ;
-		}
+		j = while_echo(cmd, i, j);
 		if (cmd->echo_nl == 1)
 		{
 			if (cmd->in[i + j - 1] != ' ' && cmd->in[i + j] != '\0')

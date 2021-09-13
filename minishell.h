@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/13 11:14:21 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/13 14:10:58 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	ft_cd(t_cmd *cmd, int i);
 /*
 *** echo.c
 */
+int		while_echo(t_cmd *cmd, int i, int j);
 int		print_echo_nl(t_cmd *cmd, int i, int j);
 void	print_echo(t_cmd *cmd, int i, int j);
 void	ft_echo(t_cmd *cmd);
