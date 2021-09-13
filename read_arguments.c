@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/10 20:57:59 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/13 16:55:57 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ void	builtins(t_cmd *cmd, int i)
 	else if (ft_strnstr(cmd->in, "export", 6))
 		ft_export(cmd);
 	else if (ft_strnstr(cmd->in, "unset", 5))
-	{
 		ft_unset(cmd);
-		//envp_to_arr(cmd, 0);
-	}
 	else if (ft_strnstr(cmd->in, "exit", 4))
 		ft_exit(cmd, i);
 	else if (ft_strnstr(cmd->in, "env", 3))

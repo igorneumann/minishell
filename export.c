@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 18:38:34 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/10 20:58:13 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/13 16:54:38 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ void	ft_export(t_cmd *cmd)
 		ft_sort_env(cmd->envp, NULL, NULL, 1);
 	while (cmd->in[i] != '\0' && bucle == 1)
 		bucle = new_env_element(cmd, i);
-	//envp_to_arr(cmd, 0);
 }
 
 void	ft_unset(t_cmd *cmd)

@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/10 12:08:28 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/13 15:25:47 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	redirector(t_cmd *cmd, int i)
 {
 	if (ft_strlen(cmd->inpt) < 1 && cmd->in[i - 1] == '<')
 	{
-		ft_putstr("error: tio, hay que escribir algo despues de <<\r\n");
+		ft_putstr_fd("error: tio, hay que escribir algo despues de <<\r\n", 2);
 		return (1);
 	}
 	else if (cmd->inpt[0] != '\x0D' && cmd->in[i - 1] == '<')
