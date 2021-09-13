@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 17:50:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/10 20:47:18 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/10 20:58:07 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	pipewhiler(t_cmd *cmd, int i)
 
 void	prep_exec(t_cmd *cmd)
 {
-	int i;
+	int	i;
 
-	envp_to_arr(cmd);
+	envp_to_arr(cmd, 0);
 	i = open(cmd->in, O_RDONLY);
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->orig) == -1)
 		die("tcsetattr", cmd->raw);

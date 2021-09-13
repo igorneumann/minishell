@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/10 20:46:30 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/10 20:59:11 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ void	ft_save_env(t_cmd *cmd, char **envp);
 *** export_utils.c
 */
 t_envp	*copy_env(t_envp *envp);
-void	envp_to_arr(t_cmd *cmd);
+void	envp_to_arr(t_cmd *cmd, int i);
 
 /*
 *** export.c
