@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/13 20:34:18 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/13 20:49:11 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	redir(t_cmd *cmd, int i)
 				cmd->inpt = ft_strduptochar(&cmd->in[k + j], 32);
 			cmd->in[k] = '\0';
 		}
-		redirector(cmd, 0);
+		if (redirector(cmd, 0) == 1)
+			return (1);
 		k++;
 	}
 	if (cmd->outp[0] != '\x0D' || cmd->inpt[0] != '\x0D')
@@ -126,7 +127,15 @@ int	redirector(t_cmd *cmd, int i)
 		cmd->inpt = ft_strdup(".tempAF.tmp");
 	}
 	if (cmd->inpt[0] != '\x0D' && cleanfds(cmd, 1))
+	{
 		cmd->in_fd = open(cmd->inpt, O_RDONLY);
+		if (cmd->in_fd == -1)
+		{
+			ft_putstr(cmd->inpt);
+			ft_putstr(": No such file or directory\r\n");
+			return (1);
+		}
+	}
 	else if (cmd->outp[0] != '\x0D' && cleanfds(cmd, 2))
 	{
 		if (cmd->in[i - j] == ' ')
