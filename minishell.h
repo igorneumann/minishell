@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/13 16:54:55 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/13 17:44:46 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ typedef struct s_command
 	t_list	*fdlist;
 	int		not_found;
 	int		out_fd;
+	int		bkp_fdout;
+	int		bkp_fdin;
 	char	*outp;
 	int		in_fd;
 	char	*inpt;
@@ -314,7 +316,7 @@ void	ft_endpipe(char *str, t_cmd *cmd, int i);
 *** redir.c
 */
 int		redir(t_cmd *cmd, int i);
-void	redirout(t_cmd *cmd);
+void	redirout(t_cmd *cmd, int i);;
 int		tempinput(t_cmd *cmd);
 int		cleanfds(t_cmd *cmd, int i);
 int		redirector(t_cmd *cmd, int i);

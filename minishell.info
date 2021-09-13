@@ -362,7 +362,7 @@ int	redir(t_cmd *cmd, int i)
 		- cmd->inpt (guarda redireccion de entrada)
 		- cmd->outp (guarda redireccion de salida)
 
-void	redirout(t_cmd *cmd)
+void	redirout(t_cmd *cmd, int i);)
 	+ lo llama pipes y exec
 		- si hay redireccion redirecciona salida por defecto a cmd->out_fd
 		- si hay redireeccion redirecciona entrada a cmd->in_fd

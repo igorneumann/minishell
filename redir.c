@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/13 15:25:47 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/13 18:05:23 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,36 @@ int	redir(t_cmd *cmd, int i)
 	return (0);
 }
 
-void	redirout(t_cmd *cmd)
+void	redirout(t_cmd *cmd, int i)
 {
-	if (cmd->outp[0] != '\x0D')
+	int	*in[2];
+	int	*out[2];
+
+	if (i == 0)
 	{
-		dup2(cmd->out_fd, STDOUT_FILENO);
-		close(cmd->out_fd);
+		in[0] = &cmd->bkp_fdin;
+		in[1] = &cmd->in_fd;
+		out[0] = &cmd->bkp_fdout;
+		out[1] = &cmd->out_fd;
 	}
-	if (cmd->inpt[0] != '\x0D')
+	else if (i == 1)
 	{
-		dup2(cmd->in_fd, STDIN_FILENO);
-		close(cmd->in_fd);
+		in[0] = &cmd->in_fd;
+		in[1] = &cmd->bkp_fdin;
+		out[0] = &cmd->out_fd;
+		out[1] = &cmd->bkp_fdout;
+	}
+	if (cmd->outp[0] != '\x0D' || i == 1)
+	{
+		*out[0] = dup(STDOUT_FILENO);
+		dup2(*out[1], STDOUT_FILENO);
+		close(*out[1]);
+	}
+	if (cmd->inpt[0] != '\x0D' || i == 1)
+	{
+		*in[0] = dup(STDIN_FILENO);
+		dup2(*in[1], STDIN_FILENO);
+		close(*in[1]);
 	}
 }
 

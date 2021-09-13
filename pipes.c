@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/10 13:25:25 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/13 17:58:28 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	ft_endpipe(char *str, t_cmd *cmd, int i)
 	{
 		dup2(fd[READ_END], STDIN_FILENO);
 		close(fd[READ_END]);
-		redirout(cmd);
+		redirout(cmd, 0);
 		if (!ft_arguments(cmd))
 			execve(str, parm_list, cmd->env);
 	}

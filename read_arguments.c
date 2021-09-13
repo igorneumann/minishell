@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/13 16:55:57 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/13 18:01:12 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	ft_arguments(t_cmd *cmd)
 	cmd->quote_d = 0;
 	cmd->quotes = 0;
 	cmd->output_status = 0;
+	redirout(cmd, 0);
 	while (cmd->in[i] == ' ')
 		i++;
 	if (ft_strnstr(cmd->in, "echo", 4) || ft_strnstr(cmd->in, "cd", 2)
@@ -83,6 +84,7 @@ int	ft_arguments(t_cmd *cmd)
 	}
 	else
 		return (0);
+	redirout(cmd, 1);
 	return (1);
 }
 

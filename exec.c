@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/10 20:46:42 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/13 17:58:27 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	exec(char *str, t_cmd *cmd)
 	}
 	else if (pid == 0)
 	{
-		redirout(cmd);
+		redirout(cmd, 0);
 		execve(str, parm_list, cmd->env);
 		error = ft_strjoin(cmd->in, ": command not found\r\n");
 		ft_putstr_fd(error, 2);
