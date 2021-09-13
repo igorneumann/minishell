@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/13 19:11:44 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/13 19:41:38 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,6 +335,7 @@ int		get_next_line(int fd, char **line);
 /*
 *** other.c
 */
+void	replace_inpt(t_cmd *cmd);
 void	init_counters(t_cmd *cmd);
 int		question_mark(t_cmd *cmd, char	*var);
 void	free_all(t_cmd *cmd);
