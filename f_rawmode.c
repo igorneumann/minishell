@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/10 13:24:21 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/13 09:57:16 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	die(const char *s, t_raw *raw)
 			error = s[1];
 		write(STDERR, &s[1], 1);
 	}
-//	system("leaks minishell");
-//	system("lsof -c minishell");
+	//system("leaks minishell");
+	//system("lsof -c minishell");
 	exit(error);
 }
 
@@ -62,6 +62,5 @@ char	f_raw(t_raw *raw)
 			die("read", raw);
 		nread = read(STDIN_FILENO, &c, 1);
 	}
-	//printf("\ncaracter es %i\n", (int));
 	return (c);
 }

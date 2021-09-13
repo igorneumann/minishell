@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/09 20:15:56 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/10 20:38:34 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	processkeypress(t_cmd *cmd)
 	c[1] = '\0';
 	if (!iscntrl(c[0]) && g_reset != 2)
 	{
-		if (cmd->i == (int)ft_strlen(cmd->in))
+		if (cmd->i == (int)ft_strlen(cmd->in) && ft_isprint(c[0]))
 		{
 			temp = cmd->in;
 			cmd->in = ft_strjoin(cmd->in, &c[0]);
@@ -29,11 +29,11 @@ void	processkeypress(t_cmd *cmd)
 			ft_putchar_fd(c[0], STDOUT);
 			cmd->i++;
 		}
-		else if (g_reset != 2)
+		else if (g_reset != 2 && ft_isprint(c[0]))
 			ft_editstring(cmd, c[0]);
 		c[0] = '\0';
 	}
-	if (g_reset != 2)
+	if (g_reset != 2 && !ft_isprint(c[0]))
 		noprintable(cmd, c[0]);
 }
 
