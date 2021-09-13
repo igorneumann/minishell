@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/13 09:57:16 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/13 11:20:51 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	die(const char *s, t_raw *raw)
 			error = s[1];
 		write(STDERR, &s[1], 1);
 	}
-	//system("leaks minishell");
-	//system("lsof -c minishell");
 	exit(error);
 }
 
@@ -46,6 +44,7 @@ void	enable_raw_mode(t_raw *raw)
 	raw->raw = raw->orig;
 	raw->raw.c_iflag &= ~(BRKINT | ICRNL);
 	raw->raw.c_lflag &= ~(ECHO | ICANON);
+	raw->raw.c_cc[VMIN] = 0;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw->raw) == -1)
 		die("tcsetattr", raw);
 }

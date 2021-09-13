@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 16:11:11 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/10 12:32:15 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/13 10:00:43 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,17 @@ t_envp	*copy_env(t_envp *envp)
 	return (copy);
 }
 
-void	envp_to_arr(t_cmd *cmd)
+void	envp_to_arr(t_cmd *cmd, int i)
 {
-	int		i;
 	char	*aux;
 	t_envp	*copy;
 	t_envp	*tmp;
 
-	i = 0;
 	copy = copy_env(cmd->envp);
 	if (cmd->env != cmd->envorg)
 		free_split(cmd->env);
-	cmd->env = (char **)malloc(sizeof(char *) * (lst_size((t_envp *)&cmd->envp) + 1));
+	cmd->env = (char **)malloc(sizeof(char *)
+			* (lst_size((t_envp *)&cmd->envp) + 1));
 	while (copy->prev)
 		copy = copy->prev;
 	while (copy)

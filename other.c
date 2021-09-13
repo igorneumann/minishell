@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 21:12:53 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/09 22:46:15 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/13 10:39:34 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,27 @@ void	free_all(t_cmd *cmd)
 		free(cmd->tmp_in);
 	if (cmd->old_len)
 		free(cmd->old_len);
+}
+
+int	ctrl_d_c(t_cmd *cmd, char *seq)
+{
+	if (seq[1] == 'D')
+	{
+		if (cmd->i > 0)
+		{
+			ft_putstr("\033[D");
+			cmd->i--;
+		}
+		return (1);
+	}
+	else if (seq[1] == 'C')
+	{
+		if (cmd->in[cmd->i] != '\0')
+		{
+			ft_putstr("\033[C");
+			cmd->i++;
+		}
+		return (1);
+	}
+	return (0);
 }

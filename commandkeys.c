@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commandkeys.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:26:29 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/09 20:24:05 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/13 10:39:09 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,36 +39,21 @@ int	commandkeys(t_cmd *cmd)
 int	ft_arrows(t_cmd *cmd, char *seq)
 {
 	int	j;
+	int	ret;
 
+	ret = 0;
 	j = strlen(cmd->in);
-	if (seq[1] == 'D')
-	{
-		if (cmd->i > 0)
-		{
-			ft_putstr("\033[D");
-			cmd->i--;
-		}
-		return (1);
-	}
-	else if (seq[1] == 'C')
-	{
-		if (cmd->in[cmd->i] != '\0')
-		{
-			ft_putstr("\033[C");
-			cmd->i++;
-		}
-		return (1);
-	}
-	else if (seq[1] == 'A' || seq[1] == 'B')
+	ret = ctrl_d_c(cmd, seq);
+	if (seq[1] == 'A' || seq[1] == 'B')
 	{
 		while (cmd->in[cmd->i] != '\0')
 		{
 			ft_putstr("\033[C");
 			cmd->i++;
 		}
-		return (ft_history(cmd, seq));
+		ret = ft_history(cmd, seq);
 	}
-	return (0);
+	return (ret);
 }
 
 int	ft_jumpword(t_cmd *cmd, char seq)

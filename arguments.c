@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arguments.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/10 20:37:09 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/13 10:04:31 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ void	ft_pwd(t_cmd *cmd)
 	if (command_not_found("pwd", cmd))
 		return ;
 	pwd = getcwd(NULL, -1);
-	ft_putstr_fd("¿Ya te has perdido? Estás en \033[1m", 2);
 	ft_putstr(pwd);
 	free(pwd);
-	ft_putstr("\033[0m\r\n");
+	ft_putstr("\r\n");
 }
 
 void	previous_folder(char *path, char *old_path, int j)
