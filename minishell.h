@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/13 18:25:14 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/13 19:11:44 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,7 +317,7 @@ void	ft_endpipe(char *str, t_cmd *cmd, int i);
 *** redir.c
 */
 int		redir(t_cmd *cmd, int i);
-void	redirout_one(t_cmd *cmd, int i, int	*in[2], int *out[2]);
+void	redirout_one(t_cmd *cmd, int *in[2], int *out[2]);
 void	redirout(t_cmd *cmd, int i);;
 int		tempinput(t_cmd *cmd);
 int		redirector(t_cmd *cmd, int i);

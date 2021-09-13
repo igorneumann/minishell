@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_arguments.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/13 18:10:59 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/13 19:02:27 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	builtins(t_cmd *cmd, int i)
 	int	j;
 
 	j = 0;
+	redirout(cmd, 0);
 	if (ft_strnstr(cmd->in, "echo", 4))
 		ft_echo(cmd);
 	else if (ft_strnstr(cmd->in, "cd", 2))
@@ -56,6 +57,7 @@ void	builtins(t_cmd *cmd, int i)
 		ft_exit(cmd, i);
 	else if (ft_strnstr(cmd->in, "env", 3))
 		ft_env(cmd);
+	redirout(cmd, 1);
 }
 
 void	init_arguments(t_cmd *cmd)
@@ -72,7 +74,6 @@ int	ft_arguments(t_cmd *cmd)
 
 	i = 0;
 	init_arguments(cmd);
-	redirout(cmd, 0);
 	while (cmd->in[i] == ' ')
 		i++;
 	if (ft_strnstr(cmd->in, "echo", 4) || ft_strnstr(cmd->in, "cd", 2)
@@ -89,7 +90,6 @@ int	ft_arguments(t_cmd *cmd)
 	}
 	else
 		return (0);
-	redirout(cmd, 1);
 	return (1);
 }
 

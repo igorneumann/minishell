@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 18:13:10 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/13 18:17:54 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/13 19:20:43 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	cleanfds(t_cmd *cmd, int i)
 {
-	if ((i == 1 || i == 3) && cmd->in_fd)
+	if ((i == 1 || i == 3) && cmd->in_fd > 0)
 		close(cmd->in_fd);
-	if ((i == 2 || i == 3) && cmd->out_fd)
+	if ((i == 2 || i == 3) && cmd->out_fd > 0)
 		close(cmd->out_fd);
 	return (1);
 }
