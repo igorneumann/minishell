@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 21:12:53 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/13 19:41:40 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/13 20:04:27 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,4 @@ int	ctrl_d_c(t_cmd *cmd, char *seq)
 		return (1);
 	}
 	return (0);
-}
-
-void	replace_inpt(t_cmd *cmd)
-{
-	printf("YAY");
 }

@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/13 19:44:22 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/13 20:30:06 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,32 @@
 int	redir(t_cmd *cmd, int i)
 {
 	int		j;
+	int		k;
 
-	while (i > 0)
+	k = 0;
+	while (k <= i)
 	{
 		j = 1;
-		if (cmd->in[i] == '>' || cmd->in[i] == '<')
+		if (cmd->in[k] == '>' || cmd->in[k] == '<')
 		{
-			while (cmd->in[i + j] == ' ' || cmd->in[i + j] == '>'
-				|| cmd->in[i + j] == '<')
+			while (cmd->in[k + j] == ' ' || cmd->in[k + j] == '>'
+				|| cmd->in[k + j] == '<')
 				j++;
-			if (cmd->in[i] == '>')
+			if (cmd->in[k] == '>')
 				free(cmd->outp);
-			if (cmd->in[i] == '<')
+			if (cmd->in[k] == '<')
 				free(cmd->inpt);
-			if (cmd->in[i] == '>')
-				cmd->outp = ft_strduptochar(&cmd->in[i + j], 32);
-			if (cmd->in[i] == '<')
-				cmd->inpt = ft_strduptochar(&cmd->in[i + j], 32);
-			cmd->in[i] = '\0';
-			return (redirector(cmd, i));
+			if (cmd->in[k] == '>')
+				cmd->outp = ft_strduptochar(&cmd->in[k + j], 32);
+			if (cmd->in[k] == '<')
+				cmd->inpt = ft_strduptochar(&cmd->in[k + j], 32);
+			cmd->in[k] = '\0';
 		}
-		i--;
+		redirector(cmd, 0);
+		k++;
 	}
+	if (cmd->outp[0] != '\x0D' || cmd->inpt[0] != '\x0D')
+		return (redirector(cmd, 0));
 	return (0);
 }
 
@@ -107,6 +111,9 @@ int	tempinput(t_cmd *cmd)
 
 int	redirector(t_cmd *cmd, int i)
 {
+	int	j;
+
+	j = 1;
 	if (ft_strlen(cmd->inpt) < 1 && cmd->in[i - 1] == '<')
 	{
 		ft_putstr_fd("error: tio, hay que escribir algo despues de <<\r\n", 2);
@@ -122,7 +129,9 @@ int	redirector(t_cmd *cmd, int i)
 		cmd->in_fd = open(cmd->inpt, O_RDONLY);
 	else if (cmd->outp[0] != '\x0D' && cleanfds(cmd, 2))
 	{
-		if (cmd->in[i - 1] == '>')
+		if (cmd->in[i - j] == ' ')
+			j++;
+		if (cmd->in[i - j] == '>')
 		{
 			cmd->in[i - 1] = '\0';
 			cmd->out_fd = open(cmd->outp, O_WRONLY | O_CREAT | O_APPEND, 0644);
