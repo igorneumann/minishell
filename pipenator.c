@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 17:50:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/14 19:36:19 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/14 19:56:25 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,16 @@ void	pipenator(t_cmd *cmd, int i)
 	if (cmd->nexpip != NULL)
 	{
 		i = ft_startpipe(cmd->in, cmd);
-		if (i >= 0)
-		{
-			i = close (i);
-			while (cmd->nexpip->next && i >= 0)
-				i = pipewhiler(cmd, i);
-			cmd->param = free_list(cmd->param);
-			free(cmd->in);
-			if (i >= 0)
-			{
-				cmd->in = ft_strdup(cmd->nexpip->in);
-				ft_lst_add_arguments(&cmd->param, cmd->nexpip->in);
-				free(cmd->buff);
-				cmd->buff = ft_strduptochar(cmd->in, 32);
-				ft_path(cmd);
-				ft_endpipe(cmd->in, cmd, i);
-			}
-		}
+		while (cmd->nexpip->next && i >= 0)
+			i = pipewhiler(cmd, i);
+		cmd->param = free_list(cmd->param);
+		free(cmd->in);
+		cmd->in = ft_strdup(cmd->nexpip->in);
+		ft_lst_add_arguments(&cmd->param, cmd->nexpip->in);
+		free(cmd->buff);
+		cmd->buff = ft_strduptochar(cmd->in, 32);
+		ft_path(cmd);
+		ft_endpipe(cmd->in, cmd, i);
 		cmd->param = free_list(cmd->param);
 		cmd->nexpip = free_list(cmd->nexpip);
 	}
