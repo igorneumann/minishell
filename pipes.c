@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/13 17:58:28 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/14 19:30:52 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	pipes(t_cmd *cmd)
 	return (0);
 }
 
-void	ft_startpipe(char *str, t_cmd *cmd)
+int	ft_startpipe(char *str, t_cmd *cmd)
 {
 	int		status;
 	int		pid;
@@ -50,16 +50,17 @@ void	ft_startpipe(char *str, t_cmd *cmd)
 		close(cmd->fd1[READ_END]);
 		dup2(cmd->fd1[WRITE_END], STDOUT_FILENO);
 		close(cmd->fd1[WRITE_END]);
-		 if (!ft_arguments(cmd))
-			execve(str, parm_list, cmd->env);
+		if (!ft_arguments(cmd))
+			return (pipexector(str, parm_list, cmd->env));
 	}
 	else
 		close(cmd->fd1[WRITE_END]);
 	free(parm_list);
 	wait(&status);
+	return (open(cmd->in, O_RDONLY));
 }
 
-void	ft_midpipe(char *str, t_cmd *cmd, int *fd_in, int *fd_out)
+int	ft_midpipe(char *str, t_cmd *cmd, int *fd_in, int *fd_out)
 {
 	int		status;
 	int		pid;
@@ -75,7 +76,7 @@ void	ft_midpipe(char *str, t_cmd *cmd, int *fd_in, int *fd_out)
 		dup2(fd_out[WRITE_END], STDOUT_FILENO);
 		close(fd_out[WRITE_END]);
 		if (!ft_arguments(cmd))
-			execve(str, parm_list, cmd->env);
+			return (pipexector(str, parm_list, cmd->env));
 	}
 	else
 	{
@@ -84,9 +85,10 @@ void	ft_midpipe(char *str, t_cmd *cmd, int *fd_in, int *fd_out)
 	}
 	free(parm_list);
 	wait(&status);
+	return (0);
 }
 
-void	ft_endpipe(char *str, t_cmd *cmd, int i)
+int	ft_endpipe(char *str, t_cmd *cmd, int i)
 {
 	int		status;
 	int		pid;
@@ -105,15 +107,16 @@ void	ft_endpipe(char *str, t_cmd *cmd, int i)
 		close(fd[READ_END]);
 		redirout(cmd, 0);
 		if (!ft_arguments(cmd))
-			execve(str, parm_list, cmd->env);
+			return (pipexector(str, parm_list, cmd->env));
 	}
 	else
 		close(fd[READ_END]);
 	free(parm_list);
 	wait(&status);
+	return (0);
 }
 
-void	middlepiper(char *str, t_cmd *cmd, int i)
+int	middlepiper(char *str, t_cmd *cmd, int i)
 {
 	int	*fd_in;
 	int	*fd_out;
@@ -129,5 +132,5 @@ void	middlepiper(char *str, t_cmd *cmd, int i)
 		fd_out = cmd->fd1;
 	}
 	pipe(fd_out);
-	ft_midpipe(str, cmd, fd_in, fd_out);
+	return (ft_midpipe(str, cmd, fd_in, fd_out));
 }

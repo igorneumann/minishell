@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/14 17:52:40 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/14 19:33:15 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,22 +296,23 @@ char	*ft_strduptochar(const char *s1, char c);
 */
 void	ft_path(t_cmd *cmd);
 int		addpath(t_cmd *cmd, char *tmp);
+int		pipexector(char *file, char *const *argv, char *const *envp);
 
 /*
 *** pipenator.c
 */
 int		pipewhiler(t_cmd *cmd, int i);
-void	pipenator(t_cmd *cmd);
+void	pipenator(t_cmd *cmd, int i);
 void	prep_exec(t_cmd *cmd);
 
 /*
 *** pipes.c
 */
 int		pipes(t_cmd *cmd);
-void	ft_startpipe(char *str, t_cmd *cmd);
-void	ft_midpipe(char *str, t_cmd *cmd, int *ft_in, int *fd_out);
-void	middlepiper(char *str, t_cmd *cmd, int i);
-void	ft_endpipe(char *str, t_cmd *cmd, int i);
+int		ft_startpipe(char *str, t_cmd *cmd);
+int		ft_midpipe(char *str, t_cmd *cmd, int *ft_in, int *fd_out);
+int		middlepiper(char *str, t_cmd *cmd, int i);
+int		ft_endpipe(char *str, t_cmd *cmd, int i);
 
 /*
 *** redir.c

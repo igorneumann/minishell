@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 17:50:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/13 16:55:47 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/14 19:36:19 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,28 @@ void	prep_exec(t_cmd *cmd)
 	close(i);
 }
 
-void	pipenator(t_cmd *cmd)
+void	pipenator(t_cmd *cmd, int i)
 {
-	int	i;
-
-	i = 0;
-	prep_exec(cmd);
 	if (cmd->nexpip != NULL)
 	{
-		ft_startpipe(cmd->in, cmd);
-		while (cmd->nexpip->next)
-			i = pipewhiler(cmd, i);
-		cmd->param = free_list(cmd->param);
-		free(cmd->in);
-		cmd->in = ft_strdup(cmd->nexpip->in);
-		ft_lst_add_arguments(&cmd->param, cmd->nexpip->in);
-		free(cmd->buff);
-		cmd->buff = ft_strduptochar(cmd->in, 32);
-		ft_path(cmd);
-		ft_endpipe(cmd->in, cmd, i);
+		i = ft_startpipe(cmd->in, cmd);
+		if (i >= 0)
+		{
+			i = close (i);
+			while (cmd->nexpip->next && i >= 0)
+				i = pipewhiler(cmd, i);
+			cmd->param = free_list(cmd->param);
+			free(cmd->in);
+			if (i >= 0)
+			{
+				cmd->in = ft_strdup(cmd->nexpip->in);
+				ft_lst_add_arguments(&cmd->param, cmd->nexpip->in);
+				free(cmd->buff);
+				cmd->buff = ft_strduptochar(cmd->in, 32);
+				ft_path(cmd);
+				ft_endpipe(cmd->in, cmd, i);
+			}
+		}
 		cmd->param = free_list(cmd->param);
 		cmd->nexpip = free_list(cmd->nexpip);
 	}

@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/14 18:24:27 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/14 19:36:24 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	ft_read_arguments(t_cmd *cmd)
 	if (pip > 0)
 	{
 		pipes(cmd);
-		pipenator(cmd);
+		prep_exec(cmd);
+		pipenator(cmd, 0);
 	}
 	else if (!ft_arguments(cmd) && noinp == 0)
 		executor(cmd);
