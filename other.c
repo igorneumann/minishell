@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 21:12:53 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/13 20:45:10 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/14 17:16:57 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,17 @@ int	ctrl_d_c(t_cmd *cmd, char *seq)
 		return (1);
 	}
 	return (0);
+}
+
+void	open_files(t_cmd *cmd, int i, int j)
+{
+	if (cmd->in[i - j] == ' ')
+		j++;
+	if (cmd->in[i - j] == '>')
+	{
+		cmd->in[i - 1] = '\0';
+		cmd->out_fd = open(cmd->outp, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	}
+	else
+		cmd->out_fd = open(cmd->outp, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 }

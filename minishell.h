@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/13 20:36:04 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/14 17:52:40 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,16 +316,17 @@ void	ft_endpipe(char *str, t_cmd *cmd, int i);
 /*
 *** redir.c
 */
-int		redir(t_cmd *cmd, int i);
+int		redir(t_cmd *cmd, int i, int j, int k);
 void	redirout_one(t_cmd *cmd, int *in[2], int *out[2]);
 void	redirout(t_cmd *cmd, int i);;
 int		tempinput(t_cmd *cmd);
-int		redirector(t_cmd *cmd, int i);
+int		redirector(t_cmd *cmd, int i, int j);
 
 /*
 *** clean.c
 */
 int		cleanfds(t_cmd *cmd, int i);
+void	cleanspcback(char *str, int k);
 
 /*
 *** get_next_line.c
@@ -339,5 +340,6 @@ void	init_counters(t_cmd *cmd);
 int		question_mark(t_cmd *cmd, char	*var);
 void	free_all(t_cmd *cmd);
 int		ctrl_d_c(t_cmd *cmd, char *seq);
+void	open_files(t_cmd *cmd, int i, int j);
 
 #endif

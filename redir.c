@@ -6,21 +6,16 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/13 20:49:11 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/14 18:16:54 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	redir(t_cmd *cmd, int i)
+int	redir(t_cmd *cmd, int i, int j, int k)
 {
-	int		j;
-	int		k;
-
-	k = 0;
 	while (k <= i)
 	{
-		j = 1;
 		if (cmd->in[k] == '>' || cmd->in[k] == '<')
 		{
 			while (cmd->in[k + j] == ' ' || cmd->in[k + j] == '>'
@@ -35,13 +30,14 @@ int	redir(t_cmd *cmd, int i)
 			if (cmd->in[k] == '<')
 				cmd->inpt = ft_strduptochar(&cmd->in[k + j], 32);
 			cmd->in[k] = '\0';
+			cleanspcback(cmd->in, k);
 		}
-		if (redirector(cmd, 0) == 1)
+		if (redirector(cmd, 0, 1) == 1)
 			return (1);
 		k++;
 	}
 	if (cmd->outp[0] != '\x0D' || cmd->inpt[0] != '\x0D')
-		return (1);
+		return (redirector(cmd, 0, 1));
 	return (0);
 }
 
@@ -110,11 +106,8 @@ int	tempinput(t_cmd *cmd)
 	return (close(cmd->in_fd));
 }
 
-int	redirector(t_cmd *cmd, int i)
+int	redirector(t_cmd *cmd, int i, int j)
 {
-	int	j;
-
-	j = 1;
 	if (ft_strlen(cmd->inpt) < 1 && cmd->in[i - 1] == '<')
 	{
 		ft_putstr_fd("error: tio, hay que escribir algo despues de <<\r\n", 2);
@@ -132,21 +125,12 @@ int	redirector(t_cmd *cmd, int i)
 		if (cmd->in_fd == -1)
 		{
 			ft_putstr(cmd->inpt);
-			ft_putstr(": No such file or directory\r\n");
+			if (cmd->inpt[0] != '\0')
+				ft_putstr(": No such file or directory\r\n");
 			return (1);
 		}
 	}
 	else if (cmd->outp[0] != '\x0D' && cleanfds(cmd, 2))
-	{
-		if (cmd->in[i - j] == ' ')
-			j++;
-		if (cmd->in[i - j] == '>')
-		{
-			cmd->in[i - 1] = '\0';
-			cmd->out_fd = open(cmd->outp, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		}
-		else
-			cmd->out_fd = open(cmd->outp, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	}
+		open_files(cmd, i, j);
 	return (0);
 }

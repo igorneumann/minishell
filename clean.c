@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 18:13:10 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/13 19:20:43 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/14 17:36:19 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,16 @@ int	cleanfds(t_cmd *cmd, int i)
 	if ((i == 2 || i == 3) && cmd->out_fd > 0)
 		close(cmd->out_fd);
 	return (1);
+}
+
+void	cleanspcback(char *str, int k)
+{
+	int	i;
+
+	i = 1;
+	while (str[k - i] == 32)
+	{
+		str[k - i] = '\0';
+		i++;
+	}
 }
