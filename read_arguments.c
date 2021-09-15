@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/15 16:46:54 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/15 16:58:13 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_read_arguments(t_cmd *cmd)
 			|| (cmd->inpt[0] == '\r' && cmd->outp[0] == '\0')
 			|| (cmd->inpt[0] == '\0' && cmd->outp[0] == '\r')))
 	{
-		ft_putstr("syntax error near unexpected token `newline'\r\n");
+		ft_putstr_fd("syntax error near unexpected token `newline'\r\n", 2);
 		noinp = 1;
 	}
 	ft_lst_add_arguments(&cmd->param, cmd->in);
@@ -36,7 +36,7 @@ void	ft_read_arguments(t_cmd *cmd)
 		prep_exec(cmd);
 		pipenator(cmd, 0);
 	}
-	else if (!ft_arguments(cmd) && noinp == 0)
+	else if (noinp == 0 && !ft_arguments(cmd))
 		executor(cmd);
 	cleanfds(cmd, 3, red);
 }
