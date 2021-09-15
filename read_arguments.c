@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_arguments.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/15 13:39:39 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/15 16:46:54 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ void	ft_read_arguments(t_cmd *cmd)
 	red = findredir(cmd->in);
 	noinp = 0;
 	cmd->not_found = 0;
-	if (red > 0 && redir(cmd, ft_strlen(cmd->in), 0, 1) > 0)
-		noinp = 1;
-	if (noinp == 1 && ((cmd->inpt[0] == '\r' && cmd->outp[0] == '\0')
+	if (red > 0 && (redir(cmd, ft_strlen(cmd->in), 0, 1) > 0
+			|| (cmd->inpt[0] == '\r' && cmd->outp[0] == '\0')
 			|| (cmd->inpt[0] == '\0' && cmd->outp[0] == '\r')))
+	{
 		ft_putstr("syntax error near unexpected token `newline'\r\n");
+		noinp = 1;
+	}
 	ft_lst_add_arguments(&cmd->param, cmd->in);
 	if (pip > 0)
 	{
@@ -36,9 +38,7 @@ void	ft_read_arguments(t_cmd *cmd)
 	}
 	else if (!ft_arguments(cmd) && noinp == 0)
 		executor(cmd);
-	unlink(".tempAF.tmp");
-	if (red)
-		cleanfds(cmd, 3);
+	cleanfds(cmd, 3, red);
 }
 
 void	builtins(t_cmd *cmd, int i)

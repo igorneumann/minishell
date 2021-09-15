@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/14 19:33:15 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/15 16:46:36 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,7 +326,7 @@ int		redirector(t_cmd *cmd, int i, int j);
 /*
 *** clean.c
 */
-int		cleanfds(t_cmd *cmd, int i);
+int		cleanfds(t_cmd *cmd, int i, int red);
 void	cleanspcback(char *str, int k);
 
 /*

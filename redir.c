@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/14 18:16:54 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/15 16:48:11 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	redirector(t_cmd *cmd, int i, int j)
 		free (cmd->inpt);
 		cmd->inpt = ft_strdup(".tempAF.tmp");
 	}
-	if (cmd->inpt[0] != '\x0D' && cleanfds(cmd, 1))
+	if (cmd->inpt[0] != '\x0D' && cleanfds(cmd, 1, 1))
 	{
 		cmd->in_fd = open(cmd->inpt, O_RDONLY);
 		if (cmd->in_fd == -1)
@@ -130,7 +130,7 @@ int	redirector(t_cmd *cmd, int i, int j)
 			return (1);
 		}
 	}
-	else if (cmd->outp[0] != '\x0D' && cleanfds(cmd, 2))
+	else if (cmd->outp[0] != '\x0D' && cleanfds(cmd, 2, 1))
 		open_files(cmd, i, j);
 	return (0);
 }
