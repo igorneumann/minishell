@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_arguments.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/14 19:36:24 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/15 13:39:39 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_read_arguments(t_cmd *cmd)
 	cmd->not_found = 0;
 	if (red > 0 && redir(cmd, ft_strlen(cmd->in), 0, 1) > 0)
 		noinp = 1;
-	if (noinp == 1 && ((cmd->outp[0] == '\r' && cmd->outp[0] == '\0')
+	if (noinp == 1 && ((cmd->inpt[0] == '\r' && cmd->outp[0] == '\0')
 			|| (cmd->inpt[0] == '\0' && cmd->outp[0] == '\r')))
 		ft_putstr("syntax error near unexpected token `newline'\r\n");
 	ft_lst_add_arguments(&cmd->param, cmd->in);
