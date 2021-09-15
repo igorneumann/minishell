@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/14 19:20:02 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/15 19:58:39 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	ft_presentation(void)
 void	ft_cmd_line(t_cmd *cmd)
 {
 	signal(SIGINT, promptin);
+	signal(SIGQUIT, do_nothing);
 	while (1)
 	{
 		if (g_reset == 2 || (cmd->i == 0 && cmd->in[0] == 13))

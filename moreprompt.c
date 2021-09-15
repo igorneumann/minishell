@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:01:37 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/03 19:27:40 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/15 19:58:36 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,11 @@ void	promptin(int i)
 {
 	g_reset = i;
 	ft_putstr("\n\r");
+}
+
+void	do_nothing(int i)
+{
+	int	j;
+
+	j = i;
 }

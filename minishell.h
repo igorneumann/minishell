@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/15 16:46:36 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/15 19:58:58 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,6 +281,7 @@ void	ft_print_export(t_envp *x);
 */
 void	ft_tab(t_cmd *cmd);
 void	promptin(int i);
+void	do_nothing(int i);
 
 /*
 *** exec.c

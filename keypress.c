@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/13 19:00:22 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/15 19:22:17 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,25 @@ void	ft_enter(t_cmd *cmd)
 
 void	noprintable(t_cmd *cmd, char c)
 {
+	size_t	i;
+
+	i = 0;
 	if (c == '\x1b')
 		commandkeys(cmd);
 	if (c == 4 && cmd->i == 0)
 		die("\0", cmd->raw);
 	else if (c == 13)
-		ft_enter(cmd);
+	{
+		while (cmd->in[i] == ' ')
+			i++;
+		if (i != ft_strlen(cmd->in))
+			ft_enter(cmd);
+		else
+		{
+			ft_putstr("\r\n");
+			ft_reset(cmd);
+		}
+	}
 	else if (c == 127)
 		ft_backspace(cmd);
 	else if (c == 9)

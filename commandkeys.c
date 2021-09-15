@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:26:29 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/13 16:54:22 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/15 19:29:26 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	commandkeys(t_cmd *cmd)
 		ft_delete(cmd);
 	if (seq[2] == ';' && seq[1] == '1')
 		ft_altarrow(cmd);
+	else
+		printf("1 %i\r\n2 %i\r\n", (int)seq[1], (int)seq[2]);
 	return (0);
 }
 
