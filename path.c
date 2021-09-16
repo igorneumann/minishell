@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 19:10:00 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/15 19:50:16 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/16 17:51:34 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_path(t_cmd *cmd)
 	i = 0;
 	while (cmd->envp->prev)
 		cmd->envp = cmd->envp->prev;
-	while (ft_strcmp(cmd->envp->key, "PATH") != 0 && cmd->envp->next)
+	while (ft_strcmp(cmd->envp->key, "PATH") != 0)
 		cmd->envp = cmd->envp->next;
 	cmd->path = ft_split(cmd->envp->value, ':');
 	while (cmd->path[i])
