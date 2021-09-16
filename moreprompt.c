@@ -6,11 +6,21 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:01:37 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/15 19:58:36 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/16 18:49:14 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ft_replacestr(char *in, char *new)
+{
+	char	*temp;
+
+	temp = in;
+	in = new;
+	free (temp);
+	return (in);
+}
 
 void	ft_tab(t_cmd *cmd)
 {

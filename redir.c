@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/16 12:16:16 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/16 20:18:41 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 int	redir(t_cmd *cmd, int i, int j, int k)
 {
-	while (k <= i)
+	while (k <= i && cmd->outp[0] == '\r' && cmd->outp[0] == '\r')
 	{
-		if (cmd->in[k] == '>' || cmd->in[k] == '<')
+		if ((cmd->in[k] == '>')
+			|| (cmd->in[k] == '<' && cmd->inpt[0] == '\r'))
 		{
 			while (cmd->in[k + j] == ' ' || cmd->in[k + j] == '>'
 				|| cmd->in[k + j] == '<')
@@ -29,15 +30,12 @@ int	redir(t_cmd *cmd, int i, int j, int k)
 				cmd->outp = ft_strduptochar(&cmd->in[k + j], 32);
 			if (cmd->in[k] == '<')
 				cmd->inpt = ft_strduptochar(&cmd->in[k + j], 32);
-			cmd->in[k] = '\0';
 			cleanspcback(cmd->in, k);
 		}
-		if (redirector(cmd, 0, 1) == 1)
-			return (1);
 		k++;
 	}
 	if (cmd->outp[0] != '\x0D' || cmd->inpt[0] != '\x0D')
-		return (redirector(cmd, 0, 1));
+		return (redirector(cmd, k, 1));
 	return (0);
 }
 
@@ -120,17 +118,8 @@ int	redirector(t_cmd *cmd, int i, int j)
 		cmd->inpt = ft_strdup(".tempAF.tmp");
 	}
 	if (cmd->inpt[0] != '\x0D' && cleanfds(cmd, 1, 1))
-	{
 		cmd->in_fd = open(cmd->inpt, O_RDONLY);
-		if (cmd->in_fd == -1)
-		{
-			ft_putstr(cmd->inpt);
-			if (cmd->inpt[0] != '\0')
-				ft_putstr_fd(": No such file or directory\r\n", 2);
-			return (1);
-		}
-	}
 	else if (cmd->outp[0] != '\x0D' && cleanfds(cmd, 2, 1))
 		open_files(cmd, i, j);
-	return (0);
+	return (check_fds(cmd, i));
 }

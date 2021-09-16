@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/16 11:14:34 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/16 18:34:46 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,6 +286,7 @@ void	ft_print_export(t_envp *x);
 /*
 *** moreprompt.c
 */
+char	*ft_replacestr(char *in, char *new);
 void	ft_tab(t_cmd *cmd);
 void	promptin(int i);
 void	do_nothing(int i);
@@ -336,6 +337,7 @@ int		redirector(t_cmd *cmd, int i, int j);
 */
 int		cleanfds(t_cmd *cmd, int i, int red);
 void	cleanspcback(char *str, int k);
+int		check_fds(t_cmd *cmd, int i);
 
 /*
 *** get_next_line.c
