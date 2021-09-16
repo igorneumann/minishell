@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/16 13:57:29 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/16 20:53:07 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_read_arguments(t_cmd *cmd)
 		ft_putstr_fd("syntax error near unexpected token `newline'\r\n", 2);
 		noinp = 1;
 	}
-	ft_lst_add_arguments(&cmd->param, cmd->in);
+	ft_lst_add_arguments(&cmd->param, cmd->original);
 	if (pip > 0)
 	{
 		pipes(cmd);

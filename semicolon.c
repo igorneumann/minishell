@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   semicolon.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 18:24:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/06 17:56:40 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/16 21:01:02 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ void	ft_semicolon(t_cmd *cmd)
 	while (i > 0)
 	{
 		j = 1;
-		if ((cmd->original[i] == '&' && cmd->original[i + j] == '&')
-			|| cmd->original[i] == ';')
+		if (((cmd->original[i] == '&' && cmd->original[i + j] == '&')
+				|| cmd->original[i] == ';')
+			&& look_for_closure('\'', cmd->original[i], cmd->original, i) == 0
+			&& look_for_closure('\"', cmd->original[i], cmd->original, i) == 0)
 		{
 			if (countleft(cmd->original, i, '\'', '\"') % 2 == 0)
 			{
