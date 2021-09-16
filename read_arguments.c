@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/16 20:53:07 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/16 21:15:27 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,9 @@ void	ft_read_arguments(t_cmd *cmd)
 	red = findredir(cmd->in);
 	noinp = 0;
 	cmd->not_found = 0;
-	if (red > 0 && (redir(cmd, ft_strlen(cmd->in), 0, 1) > 0
-			|| (cmd->inpt[0] == '\r' && cmd->outp[0] == '\0')
-			|| (cmd->inpt[0] == '\0' && cmd->outp[0] == '\r')))
-	{
+	noinp = redir(cmd, ft_strlen(cmd->in), 0, 1);
+	if (noinp > 0 && cmd->inpt[0] == '\0')
 		ft_putstr_fd("syntax error near unexpected token `newline'\r\n", 2);
-		noinp = 1;
-	}
 	ft_lst_add_arguments(&cmd->param, cmd->original);
 	if (pip > 0)
 	{
@@ -50,7 +46,12 @@ void	builtins(t_cmd *cmd, int i)
 	if (ft_strnstr(cmd->in, "echo", 4))
 		ft_echo(cmd);
 	else if (ft_strnstr(cmd->in, "cd", 2))
+	{
+		if (ft_strlen(cmd->in) == 2)
+			cmd->in = ft_replacestr(cmd->in,
+					ft_strjoin("cd ", search_value("HOME", cmd)));
 		ft_cd(cmd, i);
+	}
 	else if (ft_strnstr(cmd->in, "pwd", 3))
 		ft_pwd(cmd);
 	else if (ft_strnstr(cmd->in, "export", 6))

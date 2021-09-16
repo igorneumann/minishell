@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 21:12:53 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/16 12:15:32 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/16 19:58:40 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	ctrl_d_c(t_cmd *cmd, char *seq)
 
 void	open_files(t_cmd *cmd, int i, int j)
 {
-	if (cmd->in[i - j] == ' ')
+	while (cmd->in[i - j] == ' ')
 		j++;
 	if (cmd->in[i - j] == '>')
 	{

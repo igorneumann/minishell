@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 18:13:10 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/15 16:46:15 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/16 18:07:27 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,28 @@ void	cleanspcback(char *str, int k)
 		str[k - i] = '\0';
 		i++;
 	}
+}
+
+int	check_fds(t_cmd *cmd, int i)
+{
+	if (cmd->out_fd == -1)
+	{
+		ft_putstr(cmd->inpt);
+		if (cmd->inpt[0] != '\0')
+			ft_putstr_fd(": Permission denied\r\n", 2);
+		if (cmd->inpt[0] == '\0' && cmd->outp[0] == '\r')
+			return (2);
+		return (1);
+	}
+	else if (cmd->in_fd == -1 && cmd->in[i - 1] != '<')
+	{
+		ft_putstr(cmd->inpt);
+		if (cmd->inpt[0] != '\0')
+			ft_putstr_fd(": No such file or directory\r\n", 2);
+		if (cmd->inpt[0] == '\r' && cmd->outp[0] == '\0')
+			return (2);
+		return (1);
+	}
+	else
+		return (0);
 }

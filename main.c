@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/15 19:58:39 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/16 18:41:12 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	ft_reset(t_cmd *cmd)
 	cmd->fd1[0] = 0;
 	cmd->bkp_fdin = -1;
 	cmd->bkp_fdout = -1;
-	cmd->in_fd = -1;
-	cmd->out_fd = -1;
+	cmd->in_fd = 0;
+	cmd->out_fd = 0;
 }
 
 void	ft_presentation(void)
@@ -82,8 +82,8 @@ void	ft_cmd_line(t_cmd *cmd)
 	}
 	free(cmd->in);
 	free(cmd->buff);
-	cmd->in = NULL;
-	cmd->buff = NULL;
+	cmd->in = ft_strdup("\0");
+	cmd->buff = ft_strdup("\0");
 }
 
 int	main(int argc, char **argv, char **envp)
