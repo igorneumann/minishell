@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/15 19:58:58 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/16 09:52:43 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ typedef struct s_command
 	char	**env;
 	char	**envorg;
 	char	**path;
+	char	*relative_path;
+	char	*old_path;
 	char	*tmp_in;
 	int		quote_s;
 	int		quote_d;
@@ -108,9 +110,14 @@ typedef struct s_command
 *** arguments.c
 */
 void	ft_pwd(t_cmd *cmd);
-void	previous_folder(char *path, char *old_path, int j);
-void	ft_cd(t_cmd *cmd, int i);
 void	ft_exit(t_cmd *cmd, int i);
+
+/*
+*** cd.c
+*/
+void	save_path(t_cmd *cmd, int i);
+void	previous_folder(t_cmd *cmd);
+void	ft_cd(t_cmd *cmd, int i);
 
 /*
 *** echo.c

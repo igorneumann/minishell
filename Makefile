@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+         #
+#    By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 10:24:24 by narroyo-          #+#    #+#              #
-#    Updated: 2021/09/13 20:13:54 by ineumann         ###   ########.fr        #
+#    Updated: 2021/09/16 09:34:36 by narroyo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,12 @@ SRCS			=	main.c ./includes/gnl/get_next_line.c ./f_rawmode.c \
 					lists.c env.c commandkeys.c keypress.c utils.c arguments.c \
 					lists_utils.c export.c envp.c read_arguments.c history.c \
 					semicolon.c moreprompt.c exec.c export_utils.c pipes.c \
-					free.c path.c pipenator.c redir.c quotes.c dollar.c \
+					free.c path.c pipenator.c redir.c quotes.c dollar.c cd.c \
 					quotes_utils.c other.c echo.c clean.c
 LIBFT			=	./includes/libft
 OBJS 			=	$(SRCS:.c=.o)
 LIBS			=	./includes/libft/libft.a
-CC				=	@gcc -g -Wall -Wextra -Werror
+CC				=	@gcc -g -Wall -Wextra -Werror -g3 -fsanitize=address
 
 #  al final de CC -g3 -fsanitize=address
 
