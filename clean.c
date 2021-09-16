@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 18:13:10 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/16 18:07:27 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/16 21:30:16 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	check_fds(t_cmd *cmd, int i)
 	{
 		ft_putstr(cmd->inpt);
 		if (cmd->inpt[0] != '\0')
-			ft_putstr_fd(": Permission denied\r\n", 2);
+			ft_putstr_fd(" : Permission denied\r\n", 2);
 		if (cmd->inpt[0] == '\0' && cmd->outp[0] == '\r')
 			return (2);
 		return (1);
