@@ -6,32 +6,11 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 10:47:23 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/09 19:26:45 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/16 11:13:39 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	command_not_found(char *str, t_cmd *cmd)
-{
-	int		i;
-	char	*error;
-
-	i = ft_strlen(str);
-	error = NULL;
-	if (ft_strnstr(cmd->in, str, ft_strlen(str)))
-	{
-		if (cmd->in[i] != ' ' && cmd->in[i] != '\0')
-		{
-			error = ft_strjoin(cmd->in, " : command not found\r\n");
-			cmd->output_status = 127;
-			ft_putstr_fd(error, 2);
-			free(error);
-			return (1);
-		}
-	}
-	return (0);
-}
 
 void	ft_printlist(t_data *x)
 {

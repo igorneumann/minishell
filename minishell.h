@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/16 09:52:43 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/16 11:14:34 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct s_command
 /*
 *** arguments.c
 */
+int		command_not_found(char *str, t_cmd *cmd);
 void	ft_pwd(t_cmd *cmd);
 void	ft_exit(t_cmd *cmd, int i);
 
@@ -277,7 +278,6 @@ void	ft_lst_add_arguments(t_data **in, char *new);
 /*
 *** utils.c
 */
-int		command_not_found(char *str, t_cmd *cmd);
 void	ft_printlist(t_data *x);
 void	swap(t_envp *a, t_envp *b);
 void	ft_sort_env(t_envp *list, t_envp *elem, t_envp *next_elem, int swapped);
