@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/17 10:17:21 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/17 11:37:08 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,22 @@ int	quotes_command_error(t_cmd *cmd, char *str)
 	int		i;
 	char	*error;
 
-	i = ft_strlen(str);
+	i = ft_strlen(cmd->original);
 	error = NULL;
-	if ((look_for_closure('\'', cmd->original[i], cmd->original,
-				cmd->original - ft_strnstr(cmd->original, str, i)) == 1
-			&& cmd->original[(ft_strnstr(cmd->original, str, i)
-					- cmd->original) + 1] != '\'')
-		|| (look_for_closure('\"', cmd->original[i], cmd->original,
-				cmd->original - ft_strnstr(cmd->original, str, i) == 1
-				&& cmd->original[(ft_strnstr(cmd->original, str, i)
-						- cmd->original) + 1] != '\"')))
+	if ((look_for_closure('\'', cmd->original[ft_strnstr(cmd->original, str, i)
+					- cmd->original + ft_strlen(str)], cmd->original,
+				ft_strnstr(cmd->original, str, i) - cmd->original
+				+ ft_strlen(str)) == 1
+			&& cmd->original[ft_strnstr(cmd->original, str, i) - cmd->original
+				+ ft_strlen(str)] != '\'') || (look_for_closure('\"',
+				cmd->original[ft_strnstr(cmd->original, str, i) - cmd->original
+					+ ft_strlen(str)], cmd->original,
+				ft_strnstr(cmd->original, str, i)
+				- cmd->original + ft_strlen(str)) == 1
+			&& cmd->original[ft_strnstr(cmd->original, str, i)
+				- cmd->original + ft_strlen(str)] != '\"'))
 	{
-		error = ft_strjoin(cmd->in, " : command not found\r\n");
+		error = ft_strjoin(cmd->in, ": command not found\r\n");
 		cmd->output_status = 127;
 		ft_putstr_fd(error, 2);
 		free(error);
