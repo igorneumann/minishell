@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/16 20:46:12 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/17 17:14:51 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,16 @@ char	*ft_strduptochar(const char *s1, char c)
 
 	size = ft_strlentochar((char *)s1, c);
 	dest = (char *)malloc(sizeof(char) * (size + 1));
-	ft_bzero(dest, size);
 	if (!dest)
 		return (NULL);
+	ft_bzero(dest, size);
 	i = 0;
-	while (s1[i]
-		&& ((look_for_closure('\"', s1[i], (char *)s1, i) == 0 && s1[i] != c)
-			|| (look_for_closure('\'', s1[i], (char *)s1, i) == 0 && s1[i] != c)
-			|| s1[i] != '\0'))
+	/*
+	s1[i] && (((look_for_closure('\"', s1[i], (char *)s1, i) == 0 && s1[i] != c)
+			|| (look_for_closure('\'', s1[i], (char *)s1, i) == 0 && s1[i] != c))
+			|| s1[i] != '\0')
+	*/
+	while (s1[i] && s1[i] != c)
 	{
 		dest[i] = s1[i];
 		i++;

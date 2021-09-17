@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/16 18:34:46 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/17 16:22:48 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct s_command
 /*
 *** arguments.c
 */
+int		quotes_command_error(t_cmd *cmd, char *str);
 int		command_not_found(char *str, t_cmd *cmd);
 void	ft_pwd(t_cmd *cmd);
 void	ft_exit(t_cmd *cmd, int i);
