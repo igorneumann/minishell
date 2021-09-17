@@ -6,18 +6,45 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/16 13:34:46 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/17 10:17:21 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	command_not_found(char *str, t_cmd *cmd)
+int	quotes_command_error(t_cmd *cmd, char *str)
 {
 	int		i;
 	char	*error;
 
 	i = ft_strlen(str);
+	error = NULL;
+	if ((look_for_closure('\'', cmd->original[i], cmd->original,
+				cmd->original - ft_strnstr(cmd->original, str, i)) == 1
+			&& cmd->original[(ft_strnstr(cmd->original, str, i)
+					- cmd->original) + 1] != '\'')
+		|| (look_for_closure('\"', cmd->original[i], cmd->original,
+				cmd->original - ft_strnstr(cmd->original, str, i) == 1
+				&& cmd->original[(ft_strnstr(cmd->original, str, i)
+						- cmd->original) + 1] != '\"')))
+	{
+		error = ft_strjoin(cmd->in, " : command not found\r\n");
+		cmd->output_status = 127;
+		ft_putstr_fd(error, 2);
+		free(error);
+		return (1);
+	}
+	return (0);
+}
+
+int	command_not_found(char *str, t_cmd *cmd)
+{
+	int		i;
+	int		ret;
+	char	*error;
+
+	i = ft_strlen(str);
+	ret = 0;
 	error = NULL;
 	if (ft_strnstr(cmd->in, str, ft_strlen(str)))
 	{
@@ -27,10 +54,12 @@ int	command_not_found(char *str, t_cmd *cmd)
 			cmd->output_status = 127;
 			ft_putstr_fd(error, 2);
 			free(error);
-			return (1);
+			ret = 1;
 		}
+		if (ret == 0)
+			ret = quotes_command_error(cmd, str);
 	}
-	return (0);
+	return (ret);
 }
 
 void	ft_pwd(t_cmd *cmd)
