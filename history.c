@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 17:19:56 by ineumann          #+#    #+#             */
-/*   Updated: 2021/06/17 18:21:09 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/19 17:14:37 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_dupin(t_cmd *cmd, int src)
 
 	if (src == 2)
 	{
-		free (cmd->buff);
+		free(cmd->buff);
 		cmd->buff = ft_strdup(cmd->in);
 	}
 	else
@@ -55,7 +55,7 @@ void	ft_dupin(t_cmd *cmd, int src)
 		i = ft_strlen(cmd->in);
 		while (i-- > 0)
 			ft_putstr("\033[D \033[D");
-		free (cmd->in);
+		free(cmd->in);
 		if (src == 1)
 			cmd->in = ft_strdup(cmd->list->in);
 		else if (src == 0)

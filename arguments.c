@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/19 13:58:38 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/19 19:06:51 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ char	*parse_file_name(const char *s1, char c)
 	j = 0;
 	while (s1[i] && (((look_for_closure('\"', s1[i], (char *)s1, i) == 0
 					&& s1[i] != c) || (look_for_closure('\'', s1[i],
-						(char *)s1, i) == 0 && s1[i] != c))
-					|| s1[i] != '\0'))
+						(char *)s1, i) == 0 && s1[i] != c)) || s1[i] != '\0'))
 	{
 		if (s1[i] != '\"' && s1[i] != '\'')
 		{
@@ -84,7 +83,7 @@ int	command_not_found(char *str, t_cmd *cmd)
 	{
 		if (cmd->in[i] != ' ' && cmd->in[i] != '\0')
 		{
-			error = ft_strjoin(cmd->in, " : command not found\r\n");
+			error = ft_strjoin(cmd->in, ": command not found\r\n");
 			cmd->output_status = 127;
 			ft_putstr_fd(error, 2);
 			free(error);

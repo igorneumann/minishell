@@ -6,11 +6,25 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 09:13:20 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/16 10:00:16 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/19 17:03:02 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	home_cd(t_cmd *cmd)
+{
+	char	*in;
+	char	*home;
+
+	if (ft_strlen(cmd->in) == 2)
+	{
+		home = search_value("HOME", cmd);
+		in = ft_strjoin("cd ", home);
+		cmd->in = ft_replacestr(cmd->in, in);
+		free(home);
+	}
+}
 
 void	save_path(t_cmd *cmd, int i)
 {

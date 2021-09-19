@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/19 13:38:30 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/19 19:19:00 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_command
 	int		simple;
 	int		doubl;
 	int		echo_nl;
+	int		cmd_error;
 	t_data	*list;
 	t_data	*param;
 	t_data	*nexcom;
@@ -118,6 +119,7 @@ void	ft_exit(t_cmd *cmd, int i);
 /*
 *** cd.c
 */
+void	home_cd(t_cmd *cmd);
 void	save_path(t_cmd *cmd, int i);
 void	previous_folder(t_cmd *cmd);
 void	ft_cd(t_cmd *cmd, int i);
@@ -252,6 +254,12 @@ void	ft_dupin(t_cmd *cmd, int src);
 int		ft_altarrow(t_cmd *cmd);
 
 /*
+*** init.c
+*/
+void	reinitialize_variables(t_cmd *cmd);
+int		command_error(t_cmd *cmd);
+
+/*
 *** quotes.c
 */
 int		check_quotes_error(t_cmd *cmd);
@@ -284,6 +292,7 @@ void	ft_printlist(t_data *x);
 void	swap(t_envp *a, t_envp *b);
 void	ft_sort_env(t_envp *list, t_envp *elem, t_envp *next_elem, int swapped);
 void	ft_print_export(t_envp *x);
+int		quit_spaces(char *str, int i);
 
 /*
 *** moreprompt.c

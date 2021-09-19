@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/16 17:59:17 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/19 18:54:14 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,21 +85,18 @@ void	ft_backspace(t_cmd *cmd)
 void	ft_enter(t_cmd *cmd)
 {
 	ft_lst_add_front(&cmd->list, ft_new(cmd->in));
-	cmd->tmp_in = ft_strdup(cmd->in);
-	free(cmd->buff);
-	cmd->buff = ft_strdup(cmd->tmp_in);
-	cmd->original = ft_strdup(cmd->in);
-	cmd->check_replacement = check_replacement(cmd);
+	reinitialize_variables(cmd);
 	ft_semicolon(cmd);
 	printf("\r\n");
+	cmd->cmd_error = command_error(cmd);
 	free(cmd->tmp_in);
 	cmd->tmp_in = ft_strtrim(cmd->in, " ");
 	free(cmd->in);
 	cmd->in = ft_strdup(cmd->tmp_in);
-	if (ft_strlen(cmd->in) > 0)
+	if (ft_strlen(cmd->in) > 0 && cmd->cmd_error == 0)
 		ft_read_arguments(cmd);
 	ft_reset(cmd);
-	while (cmd->nexcom != NULL)
+	while (cmd->nexcom != NULL && cmd->cmd_error == 0)
 	{
 		free(cmd->in);
 		cmd->in = ft_strdup(cmd->nexcom->in);

@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/19 12:40:38 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/19 19:08:59 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	executor(t_cmd *cmd)
 		free(cmd->buff);
 		cmd->buff = ft_strduptochar(cmd->in, 32);
 		exec(cmd->buff, cmd);
+		cmd->output_status >>= 8;
 	}
 	wait (0);
 	redirout(cmd, 1);

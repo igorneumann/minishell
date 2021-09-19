@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moreprompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:01:37 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/16 18:49:14 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/19 17:01:03 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_replacestr(char *in, char *new)
 
 	temp = in;
 	in = new;
-	free (temp);
+	free(temp);
 	return (in);
 }
 

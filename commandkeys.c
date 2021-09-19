@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commandkeys.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:26:29 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/15 19:29:26 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/19 16:41:43 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_arrows(t_cmd *cmd, char *seq)
 	int	ret;
 
 	ret = 0;
-	j = strlen(cmd->in);
+	j = ft_strlen(cmd->in);
 	ret = ctrl_d_c(cmd, seq);
 	if (seq[1] == 'A' || seq[1] == 'B')
 	{

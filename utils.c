@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 10:47:23 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/16 11:13:39 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/19 19:18:33 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,11 @@ void	ft_print_export(t_envp *x)
 			printf("declare -x %s=\"%s\"\r\n", x->key, x->value);
 		x = x->next;
 	}
+}
+
+int	quit_spaces(char *str, int i)
+{
+	while (str[i] == ' ')
+		i++;
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/19 14:14:09 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/19 19:22:13 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ void	builtins(t_cmd *cmd, int i)
 		ft_echo(cmd);
 	else if (ft_strnstr(cmd->in, "cd", 2))
 	{
-		if (ft_strlen(cmd->in) == 2)
-			cmd->in = ft_replacestr(cmd->in,
-					ft_strjoin("cd ", search_value("HOME", cmd)));
+		home_cd(cmd);
 		ft_cd(cmd, i);
 	}
 	else if (ft_strnstr(cmd->in, "pwd", 3))
@@ -70,7 +68,6 @@ void	init_arguments(t_cmd *cmd)
 	cmd->quote_s = 0;
 	cmd->quote_d = 0;
 	cmd->quotes = 0;
-	cmd->output_status = 0;
 }
 
 int	ft_arguments(t_cmd *cmd)
@@ -86,10 +83,8 @@ int	ft_arguments(t_cmd *cmd)
 		builtins(cmd, i);
 	else if (ft_strnstr(cmd->in, "$?", 2))
 	{
-		i = cmd->output_status >> 8;
-		ft_putstr_fd(ft_itoa(i), 2);
+		ft_putstr_fd(ft_itoa(cmd->output_status), 2);
 		ft_putstr_fd(": command not found\r\n", 2);
-		cmd->output_status = 127;
 	}
 	else
 		return (0);
@@ -104,8 +99,7 @@ void	ft_lst_add_arguments(t_data **in, char *new)
 
 	i = 0;
 	size = 0;
-	while (new[i] == ' ')
-		i++;
+	i = quit_spaces(new, i);
 	if (new[i] != '|' && new[i] != '<' && new[i] != '>')
 	{
 		if (new[i] == '\"' || new[i] == '\'')
@@ -119,8 +113,7 @@ void	ft_lst_add_arguments(t_data **in, char *new)
 		size += ft_strlen(temp);
 		while (new[i] && size--)
 			i++;
-		while (new[i] == ' ')
-			i++;
+		i = quit_spaces(new, i);
 		if (new[i] != '\0')
 			ft_lst_add_arguments(in, &new[i]);
 		free(temp);
