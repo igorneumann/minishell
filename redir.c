@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/19 13:27:24 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/19 13:38:19 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	redir(t_cmd *cmd, int i, int j, int k)
 			if (cmd->in[k] == '<')
 				free(cmd->inpt);
 			if (cmd->in[k] == '>')
-				cmd->outp = parse_file_name(cmd, &cmd->in[k + j], 32);
+				cmd->outp = parse_file_name(&cmd->in[k + j], 32);
 			if (cmd->in[k] == '<')
-				cmd->inpt = parse_file_name(cmd, &cmd->in[k + j], 32);
+				cmd->inpt = parse_file_name(&cmd->in[k + j], 32);
 			cleanspcback(cmd->in, k);
 		}
 		k++;

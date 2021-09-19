@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/19 13:29:16 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/19 14:14:09 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,20 @@ void	ft_lst_add_arguments(t_data **in, char *new)
 	int		size;
 
 	i = 0;
+	size = 0;
 	while (new[i] == ' ')
 		i++;
 	if (new[i] != '|' && new[i] != '<' && new[i] != '>')
 	{
-		temp = ft_strduptochar(&new[i], 32);
+		if (new[i] == '\"' || new[i] == '\'')
+		{
+			temp = parse_file_name(&new[i], 32);
+			size = 2;
+		}
+		else
+			temp = ft_strduptochar(&new[i], 32);
 		ft_lst_add_front(in, ft_new(temp));
-		size = ft_strlen(temp);
+		size += ft_strlen(temp);
 		while (new[i] && size--)
 			i++;
 		while (new[i] == ' ')

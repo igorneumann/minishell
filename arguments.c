@@ -6,16 +6,17 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/19 13:36:17 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/19 13:58:38 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*parse_file_name(t_cmd *cmd, const char *s1, char c)
+char	*parse_file_name(const char *s1, char c)
 {
 	char	*dest;
 	int		i;
+	int		j;
 	int		size;
 
 	size = ft_strlentochar((char *)s1, c);
@@ -24,11 +25,17 @@ char	*parse_file_name(t_cmd *cmd, const char *s1, char c)
 		return (NULL);
 	ft_bzero(dest, size);
 	i = 0;
+	j = 0;
 	while (s1[i] && (((look_for_closure('\"', s1[i], (char *)s1, i) == 0
 					&& s1[i] != c) || (look_for_closure('\'', s1[i],
-						(char *)s1, i) == 0 && s1[i] != c)) || s1[i] != '\0'))
+						(char *)s1, i) == 0 && s1[i] != c))
+					|| s1[i] != '\0'))
 	{
-		dest[i] = s1[i];
+		if (s1[i] != '\"' && s1[i] != '\'')
+		{
+			dest[j] = s1[i];
+			j++;
+		}
 		i++;
 	}
 	dest[i] = '\0';
