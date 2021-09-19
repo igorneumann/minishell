@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 18:22:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/19 18:59:40 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/19 20:15:07 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	reinitialize_variables(t_cmd *cmd)
 	cmd->buff = ft_strdup(cmd->tmp_in);
 	cmd->original = ft_strdup(cmd->in);
 	cmd->check_replacement = check_replacement(cmd);
+	if (cmd->check_replacement == -1)
+		ft_putstr_fd("\r\nunexpected EOF while looking for matching\'\"", 2);
 }
 
 int	command_error(t_cmd *cmd)

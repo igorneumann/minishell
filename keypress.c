@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/19 18:54:14 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/19 20:13:55 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,12 @@ void	ft_enter(t_cmd *cmd)
 	cmd->tmp_in = ft_strtrim(cmd->in, " ");
 	free(cmd->in);
 	cmd->in = ft_strdup(cmd->tmp_in);
-	if (ft_strlen(cmd->in) > 0 && cmd->cmd_error == 0)
+	if (ft_strlen(cmd->in) > 0 && cmd->cmd_error == 0
+		&& cmd->check_replacement != -1)
 		ft_read_arguments(cmd);
 	ft_reset(cmd);
-	while (cmd->nexcom != NULL && cmd->cmd_error == 0)
+	while (cmd->nexcom != NULL && cmd->cmd_error == 0
+		&& cmd->check_replacement != -1)
 	{
 		free(cmd->in);
 		cmd->in = ft_strdup(cmd->nexcom->in);
