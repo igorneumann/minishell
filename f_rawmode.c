@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:43:45 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/19 14:32:49 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/20 12:02:06 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	die(const char *s, t_raw *raw)
 			error = s[1];
 		write(STDERR, &s[1], 1);
 	}
-	system("leaks minishell");
-	system("lsof -c minishell");
 	exit(error);
 }
 

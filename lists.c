@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 17:17:03 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/06/14 20:30:23 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/20 14:06:41 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_data	*ft_new(char *in)
 		return (NULL);
 	new->prev = NULL;
 	new->in = ft_strdup(in);
-	new->copy = ft_strdup(new->in);
+	new->copy = ft_strdup(in);
 	new->next = NULL;
 	return (new);
 }
@@ -67,6 +67,10 @@ void	ft_lst_edit(t_data **in, t_data *new)
 	new->next = tmp->next;
 	new->prev = tmp->prev;
 	*in = new;
+	if (tmp->in)
+		free(tmp->in);
+	if (tmp->copy)
+		free(tmp->copy);
 	free(tmp);
 	if (new->next != NULL)
 	{
