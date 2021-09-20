@@ -6,28 +6,24 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 16:11:11 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/13 20:15:33 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/20 18:10:17 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_unset(t_cmd *cmd)
+void	remove_enviroment_variables(t_cmd *cmd, char *str)
 {
+	t_envp	*env;
+	char	*erase;
 	int		i;
 	int		j;
-	char	*erase;
-	t_envp	*env;
 
 	i = 0;
 	j = 0;
-	cmd->not_found = 1;
-	if (command_not_found("unset", cmd))
-		return ;
-	i += 6;
-	erase = (char *)malloc(sizeof(char) * (ft_strlen(cmd->in) - i + 1));
-	while (cmd->in[i] != '\0')
-		erase[j++] = cmd->in[i++];
+	erase = (char *)malloc(sizeof(char) * (ft_strlen(str) - i + 1));
+	while (str[i] && str[i] != ' ')
+		erase[j++] = str[i++];
 	erase[j] = '\0';
 	env = search_elem(cmd->envp, erase);
 	if (env)
@@ -39,6 +35,23 @@ void	ft_unset(t_cmd *cmd)
 	}
 	cmd->envp = remove_elem(cmd->envp);
 	free(erase);
+}
+
+void	ft_unset(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	cmd->not_found = 1;
+	if (command_not_found("unset", cmd))
+		return ;
+	i += 6;
+	while (cmd->in[i] != '\0')
+	{
+		if (cmd->in[i] != ' ')
+			remove_enviroment_variables(cmd, cmd->in + i);
+		i++;
+	}
 }
 
 t_envp	*copy_env(t_envp *envp)
