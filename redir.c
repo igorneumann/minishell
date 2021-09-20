@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/20 19:23:53 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/20 20:03:29 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,7 @@ int	tempinput(t_cmd *cmd)
 
 int	redirector(t_cmd *cmd, int i, int j)
 {
-	if (ft_strlen(cmd->inpt) < 1 && cmd->original[i - 1] == '<')
-	{
-		ft_putstr_fd("syntax error near unexpected token `newline'\r\n", 2);
-		return (1);
-	}
-	else if (cmd->inpt[0] != '\x0D' && cmd->original[i] == '<'
+	if (cmd->inpt[0] != '\x0D' && cmd->original[i] == '<'
 		&& cmd->original[i - 1] == '<')
 	{
 		tempinput(cmd);
@@ -126,5 +121,5 @@ int	redirector(t_cmd *cmd, int i, int j)
 		cmd->in_fd = open(cmd->inpt, O_RDONLY);
 	else if (cmd->outp[0] != '\x0D' && cleanfds(cmd, 2, 1))
 		open_files(cmd, i, j);
-	return (check_fds(cmd, i));
+	return (check_fds(cmd));
 }

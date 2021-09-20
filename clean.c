@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 18:13:10 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/20 19:19:27 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/20 20:01:48 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,27 @@ void	cleanspcback(char *str, int k)
 	}
 }
 
-int	check_fds(t_cmd *cmd, int i)
+int	check_fds(t_cmd *cmd)
 {
-	if (cmd->out_fd == -1)
+	if (cmd->out_fd != -2)
 	{
-		ft_putstr(cmd->inpt);
-		if (cmd->inpt[0] != '\0')
-			ft_putstr_fd(" : Permission denied\r\n", 2);
+		if (cmd->outp[0] == '\0')
+			ft_putstr_fd("syntax error near unexpected token `newline'\r\n", 2);
+		else
+		{
+			ft_putstr(cmd->outp);
+			ft_putstr_fd(": Permission denied\r\n", 2);
+		}
 		if (cmd->inpt[0] == '\0' && cmd->outp[0] == '\r')
 			return (2);
 		return (1);
 	}
-	else if (cmd->in_fd == -1 && cmd->in[i - 1] != '<')
+	else if (cmd->in_fd != -2)
 	{
 		ft_putstr(cmd->inpt);
 		if (cmd->inpt[0] != '\0')
 			ft_putstr_fd(": No such file or directory\r\n", 2);
-		if (cmd->inpt[0] == '\r' && cmd->outp[0] == '\0')
+		else if (cmd->inpt[0] == '\r' && cmd->outp[0] == '\0')
 			return (2);
 		return (1);
 	}
