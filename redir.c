@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/19 13:38:19 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/20 18:09:22 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ int	redir(t_cmd *cmd, int i, int j, int k)
 {
 	while (k <= i && cmd->inpt[0] == '\r' && cmd->outp[0] == '\r')
 	{
-		if ((cmd->in[k] == '>')
-			|| (cmd->in[k] == '<' && cmd->inpt[0] == '\r'))
+		if ((cmd->original[k] == '>')
+			|| (cmd->original[k] == '<' && cmd->inpt[0] == '\r'))
 		{
-			while (cmd->in[k + j] == ' ' || cmd->in[k + j] == '>'
-				|| cmd->in[k + j] == '<')
+			while (cmd->original[k + j] == ' ' || cmd->in[k + j] == '>'
+				|| cmd->original[k + j] == '<')
 				j++;
-			if (cmd->in[k] == '>')
+			if (cmd->original[k] == '>')
 				free(cmd->outp);
-			if (cmd->in[k] == '<')
+			if (cmd->original[k] == '<')
 				free(cmd->inpt);
-			if (cmd->in[k] == '>')
+			if (cmd->original[k] == '>')
 				cmd->outp = parse_file_name(&cmd->in[k + j], 32);
-			if (cmd->in[k] == '<')
+			if (cmd->original[k] == '<')
 				cmd->inpt = parse_file_name(&cmd->in[k + j], 32);
 			cleanspcback(cmd->in, k);
 		}
@@ -106,12 +106,12 @@ int	tempinput(t_cmd *cmd)
 
 int	redirector(t_cmd *cmd, int i, int j)
 {
-	if (ft_strlen(cmd->inpt) < 1 && cmd->in[i - 1] == '<')
+	if (ft_strlen(cmd->inpt) < 1 && cmd->original[i - 1] == '<')
 	{
 		ft_putstr_fd("syntax error near unexpected token `newline'\r\n", 2);
 		return (1);
 	}
-	else if (cmd->inpt[0] != '\x0D' && cmd->in[i - 1] == '<')
+	else if (cmd->inpt[0] != '\x0D' && cmd->original[i - 2] == '<')
 	{
 		tempinput(cmd);
 		free (cmd->inpt);
