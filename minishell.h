@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/19 19:19:00 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/20 17:33:04 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,10 +127,15 @@ void	ft_cd(t_cmd *cmd, int i);
 /*
 *** echo.c
 */
-int		while_echo(t_cmd *cmd, int i, int j);
-int		print_echo_nl(t_cmd *cmd, int i, int j);
+void	print_without_excess_of_spaces(t_cmd *cmd, int i, int j);
 void	print_echo(t_cmd *cmd, int i, int j);
 void	ft_echo(t_cmd *cmd);
+
+/*
+*** echo_nl.c
+*/
+int		while_echo(t_cmd *cmd, int i, int j);
+int		print_echo_nl(t_cmd *cmd, int i, int j);
 
 /*
 *** main.c
