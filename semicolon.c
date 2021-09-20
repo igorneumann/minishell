@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   semicolon.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 18:24:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/17 10:16:22 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/20 17:28:53 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,21 @@ void	ft_semicolon(t_cmd *cmd)
 	int		i;
 	int		j;
 
-	i = ft_strlen(cmd->original);
+	i = ft_strlen(cmd->in);
 	while (i > 0)
 	{
 		j = 1;
-		if ((cmd->original[i] == '&' && cmd->original[i + j] == '&')
-			|| cmd->original[i] == ';')
+		if ((cmd->in[i] == '&' && cmd->in[i + j] == '&')
+			|| cmd->in[i] == ';')
 		{
-			if (countleft(cmd->original, i, '\'', '\"') % 2 == 0)
+			if (countleft(cmd->in, i, '\'', '\"') % 2 == 0)
 			{
-				cmd->original[i] = '\0';
-				if (cmd->original[i + j] == '&')
-					cmd->original[i + j++] = '\0';
-				while (cmd->original[i + j] == ' ')
+				cmd->in[i] = '\0';
+				if (cmd->in[i + j] == '&')
+					cmd->in[i + j++] = '\0';
+				while (cmd->in[i + j] == ' ')
 					j++;
-				ft_lst_add_front(&cmd->nexcom, ft_new(&cmd->original[i + j]));
-				free (cmd->in);
-				cmd->in = ft_strdup(cmd->original);
+				ft_lst_add_front(&cmd->nexcom, ft_new(&cmd->in[i + j]));
 			}
 		}
 		i--;
