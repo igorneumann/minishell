@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/20 18:09:22 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/20 19:23:53 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	tempinput(t_cmd *cmd)
 	char	*buff;
 	char	*tmp;
 	char	*c;
+	int		error;
 
 	if (cmd->in_fd)
 		close(cmd->in_fd);
@@ -90,8 +91,11 @@ int	tempinput(t_cmd *cmd)
 	c = NULL;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->orig) == -1)
 		die("tcsetattr", cmd->raw);
-	while (get_next_line(0, &c) > 0 && ft_strcmp(c, cmd->inpt) != 0)
+	while (get_next_line(0, &c) > 0)
 	{
+		error = ft_strcmp(c, cmd->inpt);
+		if (error == 0)
+			break ;
 		tmp = buff;
 		buff = ft_strjoin(buff, c);
 		free(c);
@@ -101,7 +105,7 @@ int	tempinput(t_cmd *cmd)
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
 		die("tcsetattr", cmd->raw);
 	ft_putstr_fd(buff, cmd->in_fd);
-	return (close(cmd->in_fd));
+	return (cmd->in_fd);
 }
 
 int	redirector(t_cmd *cmd, int i, int j)
@@ -111,7 +115,8 @@ int	redirector(t_cmd *cmd, int i, int j)
 		ft_putstr_fd("syntax error near unexpected token `newline'\r\n", 2);
 		return (1);
 	}
-	else if (cmd->inpt[0] != '\x0D' && cmd->original[i - 2] == '<')
+	else if (cmd->inpt[0] != '\x0D' && cmd->original[i] == '<'
+		&& cmd->original[i - 1] == '<')
 	{
 		tempinput(cmd);
 		free (cmd->inpt);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 18:13:10 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/16 21:30:16 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/20 19:19:27 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	cleanfds(t_cmd *cmd, int i, int red)
 {
-	unlink(".tempAF.tmp");
 	if (red)
 	{
 		if ((i == 1 || i == 3) && cmd->in_fd > 0)
