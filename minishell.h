@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/20 18:11:33 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/21 17:04:54 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,7 +354,7 @@ int		redirector(t_cmd *cmd, int i, int j);
 */
 int		cleanfds(t_cmd *cmd, int i, int red);
 void	cleanspcback(char *str, int k);
-int		check_fds(t_cmd *cmd, int i);
+int		check_fds(t_cmd *cmd);
 
 /*
 *** get_next_line.c

@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/20 18:09:22 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/20 20:14:18 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	redir(t_cmd *cmd, int i, int j, int k)
 			if (cmd->original[k] == '<')
 				free(cmd->inpt);
 			if (cmd->original[k] == '>')
-				cmd->outp = parse_file_name(&cmd->in[k + j], 32);
+				cmd->outp = parse_file_name(&cmd->original[k + j], 32);
 			if (cmd->original[k] == '<')
-				cmd->inpt = parse_file_name(&cmd->in[k + j], 32);
+				cmd->inpt = parse_file_name(&cmd->original[k + j], 32);
 			cleanspcback(cmd->in, k);
 		}
 		k++;
@@ -82,6 +82,7 @@ int	tempinput(t_cmd *cmd)
 	char	*buff;
 	char	*tmp;
 	char	*c;
+	int		error;
 
 	if (cmd->in_fd)
 		close(cmd->in_fd);
@@ -90,8 +91,11 @@ int	tempinput(t_cmd *cmd)
 	c = NULL;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->orig) == -1)
 		die("tcsetattr", cmd->raw);
-	while (get_next_line(0, &c) > 0 && ft_strcmp(c, cmd->inpt) != 0)
+	while (get_next_line(0, &c) > 0)
 	{
+		error = ft_strcmp(c, cmd->inpt);
+		if (error == 0)
+			break ;
 		tmp = buff;
 		buff = ft_strjoin(buff, c);
 		free(c);
@@ -101,17 +105,13 @@ int	tempinput(t_cmd *cmd)
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
 		die("tcsetattr", cmd->raw);
 	ft_putstr_fd(buff, cmd->in_fd);
-	return (close(cmd->in_fd));
+	return (cmd->in_fd);
 }
 
 int	redirector(t_cmd *cmd, int i, int j)
 {
-	if (ft_strlen(cmd->inpt) < 1 && cmd->original[i - 1] == '<')
-	{
-		ft_putstr_fd("syntax error near unexpected token `newline'\r\n", 2);
-		return (1);
-	}
-	else if (cmd->inpt[0] != '\x0D' && cmd->original[i - 2] == '<')
+	if (cmd->inpt[0] != '\x0D' && cmd->original[i] == '<'
+		&& cmd->original[i - 1] == '<')
 	{
 		tempinput(cmd);
 		free (cmd->inpt);
@@ -121,5 +121,5 @@ int	redirector(t_cmd *cmd, int i, int j)
 		cmd->in_fd = open(cmd->inpt, O_RDONLY);
 	else if (cmd->outp[0] != '\x0D' && cleanfds(cmd, 2, 1))
 		open_files(cmd, i, j);
-	return (check_fds(cmd, i));
+	return (check_fds(cmd));
 }

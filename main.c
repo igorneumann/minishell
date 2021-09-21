@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/20 12:07:10 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/20 19:54:04 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	ft_init(t_cmd *cmd, char **envp, t_raw *raw)
 	cmd->dollar_value = NULL;
 	cmd->env = NULL;
 	cmd->counter = 0;
+	cmd->in_fd = -2;
+	cmd->out_fd = -2;
 	cmd->output_status = 0;
 	ft_save_env(cmd, envp);
 	enable_raw_mode(raw);
@@ -51,8 +53,8 @@ void	ft_reset(t_cmd *cmd)
 	cmd->fd1[0] = 0;
 	cmd->bkp_fdin = -1;
 	cmd->bkp_fdout = -1;
-	cmd->in_fd = 0;
-	cmd->out_fd = 0;
+	cmd->in_fd = -2;
+	cmd->out_fd = -2;
 }
 
 void	ft_presentation(void)
