@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arguments.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/20 17:49:31 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/21 17:02:56 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*parse_file_name(const char *s1, char c)
 	j = 0;
 	while (s1[i] && (((look_for_closure('\"', s1[i], (char *)s1, i) == 0
 					&& s1[i] != c) || (look_for_closure('\'', s1[i],
-						(char *)s1, i) == 0 && s1[i] != c))))
+						(char *)s1, i) == 0 && s1[i] != c)) || s1[i] != '\0'))
 	{
 		if (s1[i] != '\"' && s1[i] != '\'')
 		{

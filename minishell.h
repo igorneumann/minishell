@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/20 17:33:04 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/20 18:11:33 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,7 @@ void	ft_save_env(t_cmd *cmd, char **envp);
 /*
 *** export_utils.c
 */
+void	remove_enviroment_variables(t_cmd *cmd, char *str);
 void	ft_unset(t_cmd *cmd);
 t_envp	*copy_env(t_envp *envp);
 void	envp_to_arr(t_cmd *cmd, int i);
