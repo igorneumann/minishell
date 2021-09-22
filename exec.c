@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/19 19:08:59 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/22 19:33:46 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	executor(t_cmd *cmd)
 	if (cmd->nexpip == NULL)
 	{
 		free(cmd->buff);
-		cmd->buff = ft_strduptochar(cmd->in, 32);
+		cmd->buff = ft_strduptochar(cmd->in, 32, '\0');
 		exec(cmd->buff, cmd);
 		cmd->output_status >>= 8;
 	}
@@ -39,7 +39,7 @@ size_t	ft_strlentochar(const char *s, char c)
 	return (i);
 }
 
-char	*ft_strduptochar(const char *s1, char c)
+char	*ft_strduptochar(const char *s1, char c, char d)
 {
 	char	*dest;
 	int		i;
@@ -51,7 +51,7 @@ char	*ft_strduptochar(const char *s1, char c)
 		return (NULL);
 	ft_bzero(dest, size);
 	i = 0;
-	while (s1[i] && s1[i] != c)
+	while (s1[i] && s1[i] != c && s1[i] != d)
 	{
 		dest[i] = s1[i];
 		i++;

@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/22 19:09:22 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/22 19:35:38 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	ft_arguments(t_cmd *cmd)
 	return (1);
 }
 
-void		ft_lst_add_arguments(t_data **in, char *new)
+void	ft_lst_add_arguments(t_data **in, char *new)
 {
 	int		i;
 	char	*temp;
@@ -100,23 +100,22 @@ void		ft_lst_add_arguments(t_data **in, char *new)
 	i = 0;
 	size = 0;
 	i = quit_spaces(new, i);
-	if (new[i] != '|' && new[i] != '<' && new[i] != '>' && new[i] != ';'
-		&& !(new[i] == '&' && new[i + 1] == '&'))
+	if (new[i] == '|' || new[i] == '<' || new[i] == '>' || new[i] == ';'
+		|| (new[i] == '&' && new[i + 1] == '&'))
+		return ;
+	if (new[i] == '\"' || new[i] == '\'')
 	{
-		if (new[i] == '\"' || new[i] == '\'')
-		{
-			temp = parse_file_name(&new[i], 32);
-			size = 2;
-		}
-		else
-			temp = ft_strduptochar(&new[i], 32);
-		ft_lst_add_front(in, ft_new(temp));
-		size += ft_strlen(temp);
-		while (new[i] && size--)
-			i++;
-		i = quit_spaces(new, i);
-		if (new[i] != '\0')
-			ft_lst_add_arguments(in, &new[i]);
-		free(temp);
+		temp = parse_file_name(&new[i], 32);
+		size = 2;
 	}
+	else
+		temp = ft_strduptochar(&new[i], 32, '\0');
+	ft_lst_add_front(in, ft_new(temp));
+	size += ft_strlen(temp);
+	while (new[i] && size--)
+		i++;
+	i = quit_spaces(new, i);
+	if (new[i] != '\0')
+		ft_lst_add_arguments(in, &new[i]);
+	free(temp);
 }

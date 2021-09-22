@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/22 11:51:58 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/22 19:30:51 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,7 +316,7 @@ int		executor(t_cmd *cmd);
 int		exec(char *str, t_cmd *cmd);
 char	**copyparam(t_cmd *cmd);
 size_t	ft_strlentochar(const char *s, char c);
-char	*ft_strduptochar(const char *s1, char c);
+char	*ft_strduptochar(const char *s1, char c, char d);
 
 /*
 *** path.c
