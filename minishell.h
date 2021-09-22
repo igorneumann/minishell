@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/22 19:30:51 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/22 19:54:50 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -361,6 +361,11 @@ int		check_fds(t_cmd *cmd);
 *** get_next_line.c
 */
 int		get_next_line(int fd, char **line);
+
+/*
+*** filename.c
+*/
+char	*filename(char *str, int pos);
 
 /*
 *** other.c

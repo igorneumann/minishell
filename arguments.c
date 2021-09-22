@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/22 19:25:50 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/22 19:53:56 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ char	*parse_file_name(const char *s1, char c)
 					&& s1[i] != c) || (look_for_closure('\'', s1[i],
 						(char *)s1, i) == 0 && s1[i] != c)) || s1[i] != '\0'))
 	{
-		if (s1[i] == ';' || (s1[i] == '&' && s1[i + 1] == '&'))
-			break ;
-		else if (s1[i] != '\"' && s1[i] != '\'')
+		if (s1[i] != '\"' && s1[i] != '\'')
 			dest[j++] = s1[i];
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/22 11:52:07 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/22 19:56:31 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	redir(t_cmd *cmd, int i, int j, int k)
 			if (cmd->original[k] == '<')
 				free(cmd->inpt);
 			if (cmd->original[k] == '>')
-				cmd->outp = parse_file_name(&cmd->original[k + j], 32);
+				cmd->outp = filename(cmd->original, (k + j));
 			if (cmd->original[k] == '<')
-				cmd->inpt = parse_file_name(&cmd->original[k + j], 32);
+				cmd->inpt = filename(cmd->original, (k + j));
 			cleanspcback(cmd->in, k);
 		}
 		k++;
