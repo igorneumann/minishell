@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/22 19:56:31 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/22 20:20:34 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	redir(t_cmd *cmd, int i, int j, int k)
 			if (cmd->original[k] == '<')
 				free(cmd->inpt);
 			if (cmd->original[k] == '>')
-				cmd->outp = filename(cmd->original, (k + j));
+				cmd->outp = parse_file_name(&cmd->original[k + j], 32);
 			if (cmd->original[k] == '<')
-				cmd->inpt = filename(cmd->original, (k + j));
+				cmd->inpt = parse_file_name(&cmd->original[k + j], 32);
 			cleanspcback(cmd->in, k);
 		}
 		k++;
@@ -82,7 +82,6 @@ void	tempinput(t_cmd *cmd)
 	char	*buff;
 	char	*tmp;
 	char	*c;
-	int		error;
 
 	if (cmd->in_fd)
 		close(cmd->in_fd);
@@ -93,8 +92,7 @@ void	tempinput(t_cmd *cmd)
 		die("tcsetattr", cmd->raw);
 	while (get_next_line(0, &c) > 0)
 	{
-		error = ft_strcmp(c, cmd->inpt);
-		if (error == 0)
+		if (ft_strcmp(c, cmd->inpt) == 0)
 			break ;
 		tmp = buff;
 		buff = ft_strjoin(buff, c);
