@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/22 20:02:27 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/22 20:29:38 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	executor(t_cmd *cmd)
 	if (cmd->nexpip == NULL)
 	{
 		free(cmd->buff);
-		cmd->buff = filename(cmd->in, 0);
+		cmd->buff = ft_strduptochar(cmd->in, 32, '\0');
 		exec(cmd->buff, cmd);
 		cmd->output_status >>= 8;
 	}
