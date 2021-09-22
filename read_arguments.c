@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_arguments.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/21 16:45:23 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/22 19:09:22 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	ft_arguments(t_cmd *cmd)
 	return (1);
 }
 
-void	ft_lst_add_arguments(t_data **in, char *new)
+void		ft_lst_add_arguments(t_data **in, char *new)
 {
 	int		i;
 	char	*temp;
@@ -100,7 +100,8 @@ void	ft_lst_add_arguments(t_data **in, char *new)
 	i = 0;
 	size = 0;
 	i = quit_spaces(new, i);
-	if (new[i] != '|' && new[i] != '<' && new[i] != '>')
+	if (new[i] != '|' && new[i] != '<' && new[i] != '>' && new[i] != ';'
+		&& !(new[i] == '&' && new[i + 1] == '&'))
 	{
 		if (new[i] == '\"' || new[i] == '\'')
 		{
