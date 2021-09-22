@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/20 20:14:18 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/22 11:52:07 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	redirout(t_cmd *cmd, int i)
 	redirout_one(cmd, in, out);
 }
 
-int	tempinput(t_cmd *cmd)
+void	tempinput(t_cmd *cmd)
 {
 	char	*buff;
 	char	*tmp;
@@ -105,7 +105,6 @@ int	tempinput(t_cmd *cmd)
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
 		die("tcsetattr", cmd->raw);
 	ft_putstr_fd(buff, cmd->in_fd);
-	return (cmd->in_fd);
 }
 
 int	redirector(t_cmd *cmd, int i, int j)

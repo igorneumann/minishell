@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/21 17:02:56 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/22 14:05:12 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,18 @@ int	quotes_command_error(t_cmd *cmd, char *str)
 {
 	int		i;
 	char	*error;
+	int		position;
 
 	i = ft_strlen(cmd->original);
 	error = NULL;
-	if ((look_for_closure('\'', cmd->original[ft_strnstr(cmd->original, str, i)
-					- cmd->original + ft_strlen(str)], cmd->original,
-				ft_strnstr(cmd->original, str, i) - cmd->original
-				+ ft_strlen(str)) == 1
-			&& cmd->original[ft_strnstr(cmd->original, str, i) - cmd->original
-				+ ft_strlen(str)] != '\'') || (look_for_closure('\"',
-				cmd->original[ft_strnstr(cmd->original, str, i) - cmd->original
-					+ ft_strlen(str)], cmd->original,
-				ft_strnstr(cmd->original, str, i)
-				- cmd->original + ft_strlen(str)) == 1
-			&& cmd->original[ft_strnstr(cmd->original, str, i)
-				- cmd->original + ft_strlen(str)] != '\"'))
+	position = ft_strnstr(cmd->original, str, i) - cmd->original
+		+ ft_strlen(str);
+	if (ft_strnstr(cmd->original, str, i) && cmd->original[position]
+		&& ((look_for_closure('\'', cmd->original[position], cmd->original,
+					position) == 1 && cmd->original[position] != '\'')
+			|| (look_for_closure('\"', cmd->original[position],
+					cmd->original, position) == 1
+				&& cmd->original[position] != '\"')))
 	{
 		error = ft_strjoin(cmd->in, ": command not found\r\n");
 		cmd->output_status = 127;

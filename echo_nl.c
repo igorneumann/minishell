@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 17:29:35 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/20 17:34:34 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/22 11:36:53 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	print_echo_nl(t_cmd *cmd, int i, int j)
 		if (cmd->in[i + j] == '-' && cmd->in[i + j + 1] == 'n')
 		{
 			j += 2;
+			while (cmd->in[i + j] == 'n')
+				j++;
 			if (cmd->in[i + j] == '\0')
 				return (j);
 			if (cmd->in[i + j] != ' ')
@@ -57,8 +59,6 @@ int	print_echo_nl(t_cmd *cmd, int i, int j)
 				cmd->echo_nl = 0;
 				return (0);
 			}
-			while (cmd->in[i + j] == 'n')
-				j++;
 			if (!cmd->in[i + j])
 				return (j + 3);
 		}

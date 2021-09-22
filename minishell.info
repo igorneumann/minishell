@@ -372,7 +372,7 @@ void	redirout(t_cmd *cmd, int i);)
 		- cmd->in_fd (fd de entrada)
 		- cmd->out_fd (fd de salida)
 
-int	tempinput(t_cmd *cmd)
+void	tempinput(t_cmd *cmd)
 	+ lo llama redirector si detecta redireccion de entrada doble
 		- abre ".tempAF.tmp" en cmd->in_fd
 		- deshabilita raw mode

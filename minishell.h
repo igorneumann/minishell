@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/21 17:04:54 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/22 11:51:58 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	ft_echo(t_cmd *cmd);
 *** echo_nl.c
 */
 int		while_echo(t_cmd *cmd, int i, int j);
+int		echo_nl(t_cmd *cmd, int i, int j);
 int		print_echo_nl(t_cmd *cmd, int i, int j);
 
 /*
@@ -346,7 +347,7 @@ int		ft_endpipe(char *str, t_cmd *cmd, int i);
 int		redir(t_cmd *cmd, int i, int j, int k);
 void	redirout_one(t_cmd *cmd, int *in[2], int *out[2]);
 void	redirout(t_cmd *cmd, int i);;
-int		tempinput(t_cmd *cmd);
+void	tempinput(t_cmd *cmd);
 int		redirector(t_cmd *cmd, int i, int j);
 
 /*
