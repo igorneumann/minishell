@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 18:24:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/22 18:31:54 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/22 18:41:31 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ int	findpipes(char *str)
 		if (st[i] == '|'
 			&& look_for_closure('\'', st[i], st, i) == 0
 			&& look_for_closure('\"', st[i], st, i) == 0
-			&& (countleft(st, i, '\'', '\'') % 2 != 0))
+			&& ((countleft(st, i, '\'', '\"') == 0)
+				|| (countleft(st, i, '\'', '\"') % 2 != 0)))
 			pp++;
 		i++;
 	}
@@ -102,7 +103,8 @@ int	findredir(char *str)
 		if ((st[i] == '<' || st[i] == '>')
 			&& look_for_closure('\'', st[i], st, i) == 0
 			&& look_for_closure('\"', st[i], st, i) == 0
-			&& (countleft(st, i, '\'', '\'') % 2 != 0))
+			&& ((countleft(st, i, '\'', '\"') == 0)
+				|| (countleft(st, i, '\'', '\"') % 2 != 0)))
 			rd++;
 		i++;
 	}
