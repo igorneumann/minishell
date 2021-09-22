@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 18:24:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/20 17:28:53 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/22 18:31:54 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,20 @@ int	countright(char *str, int pos, char c, char d)
 int	findpipes(char *str)
 {
 	int		pp;
+	int		i;
 	char	*st;
 
+	i = 0;
 	st = str;
 	pp = 0;
-	while (st[0] != '\0')
+	while (st[i] != '\0')
 	{
-		if (st[0] == '|')
+		if (st[i] == '|'
+			&& look_for_closure('\'', st[i], st, i) == 0
+			&& look_for_closure('\"', st[i], st, i) == 0
+			&& (countleft(st, i, '\'', '\'') % 2 != 0))
 			pp++;
-		st++;
+		i++;
 	}
 	return (pp);
 }
@@ -86,15 +91,20 @@ int	findpipes(char *str)
 int	findredir(char *str)
 {
 	int		rd;
+	int		i;
 	char	*st;
 
+	i = 0;
 	st = str;
 	rd = 0;
-	while (st[0] != '\0')
+	while (st[i] != '\0')
 	{
-		if ((st[0] == '<' || st[0] == '>'))
+		if ((st[i] == '<' || st[i] == '>')
+			&& look_for_closure('\'', st[i], st, i) == 0
+			&& look_for_closure('\"', st[i], st, i) == 0
+			&& (countleft(st, i, '\'', '\'') % 2 != 0))
 			rd++;
-		st++;
+		i++;
 	}
 	return (rd);
 }
