@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/23 18:59:54 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/23 20:43:19 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,23 @@
 
 int	redir(t_cmd *cmd, int i, int j, int k)
 {
-	while (k <= i && cmd->original[k] != '|')
+	while (k <= i && cmd->in[k] != '|')
 	{
-		if ((cmd->original[k] == '>') || (cmd->original[k] == '<'))
+		if ((cmd->in[k] == '>') || (cmd->in[k] == '<' && cmd->in[k + 1] != '<'))
 		{
-			while (cmd->original[k + j] == ' ' || cmd->in[k + j] == '>'
-				|| cmd->original[k + j] == '<')
+			while (cmd->in[k + j] == ' ' || cmd->in[k + j] == '>'
+				|| cmd->in[k + j] == '<')
 				j++;
-			if (cmd->original[k] == '>')
+			if (cmd->in[k] == '>')
 				free(cmd->outp);
-			if (cmd->original[k] == '<')
+			if (cmd->in[k] == '<')
 				free(cmd->inpt);
-			if (cmd->original[k] == '>')
-				cmd->outp = filename(cmd->original, (k + j));
-			if (cmd->original[k] == '<')
-				cmd->inpt = filename(cmd->original, (k + j));
+			if (cmd->in[k] == '>')
+				cmd->outp = filename(cmd->in, (k + j));
+			if (cmd->in[k] == '<')
+				cmd->inpt = filename(cmd->in, (k + j));
 			cleanspcback(cmd->in, k);
+			cmd->in[k] = '\0';
 			if (!(cmd->inpt[0] == '\r' && cmd->outp[0] == '\r')
 				&& redirector(cmd, k, 1) == -1)
 				return (-1);
@@ -83,7 +84,7 @@ void	tempinput(t_cmd *cmd)
 	char	*tmp;
 	char	*c;
 
-	if (cmd->in_fd)
+	if (cmd->in_fd > 0)
 		close(cmd->in_fd);
 	cmd->in_fd = open(".tempAF.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	buff = ft_strdup("\x0D");
@@ -99,6 +100,7 @@ void	tempinput(t_cmd *cmd)
 		free(c);
 		free(tmp);
 		c = NULL;
+		tmp = NULL;
 	}
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &cmd->raw->raw) == -1)
 		die("tcsetattr", cmd->raw);
@@ -114,7 +116,8 @@ int	redirector(t_cmd *cmd, int i, int j)
 		free (cmd->inpt);
 		cmd->inpt = ft_strdup(".tempAF.tmp");
 	}
-	if (cmd->inpt[0] != '\x0D' && cleanfds(cmd, 1, 1))
+	if (cmd->inpt[0] != '\x0D' && cmd->original[i + 1] != '<'
+		&& cleanfds(cmd, 1, 1))
 		cmd->in_fd = open(cmd->inpt, O_RDONLY);
 	else if (cmd->outp[0] != '\x0D' && cleanfds(cmd, 2, 1))
 		open_files(cmd, i, j);
