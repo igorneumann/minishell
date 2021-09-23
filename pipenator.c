@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 17:50:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/22 20:29:29 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/23 17:45:32 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	pipewhiler(t_cmd *cmd, int i)
 	return (i);
 }
 
-void	prep_exec(t_cmd *cmd)
+void	prep_exec(t_cmd *cmd, int red)
 {
 	int	i;
 
@@ -37,7 +37,10 @@ void	prep_exec(t_cmd *cmd)
 	if (i == -1 && cmd->not_found == 0)
 	{
 		free(cmd->buff);
-		cmd->buff = ft_strduptochar(cmd->in, 32, '\0');
+		if (red > 0)
+			cmd->buff = ft_strduptochar(cmd->in, '>', '<');
+		else
+			cmd->buff = ft_strduptochar(cmd->in, 32, '\0');
 		ft_path(cmd);
 	}
 	close(i);

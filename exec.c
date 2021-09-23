@@ -6,15 +6,15 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/22 20:29:38 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/23 17:46:24 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	executor(t_cmd *cmd)
+int	executor(t_cmd *cmd, int red)
 {
-	prep_exec(cmd);
+	prep_exec(cmd, red);
 	if (cmd->nexpip == NULL)
 	{
 		free(cmd->buff);

@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/22 19:54:50 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/23 17:45:45 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,7 +312,7 @@ void	do_nothing(int i);
 /*
 *** exec.c
 */
-int		executor(t_cmd *cmd);
+int		executor(t_cmd *cmd, int red);
 int		exec(char *str, t_cmd *cmd);
 char	**copyparam(t_cmd *cmd);
 size_t	ft_strlentochar(const char *s, char c);
@@ -330,7 +330,7 @@ int		pipexector(char *file, char *const *argv, char *const *envp);
 */
 int		pipewhiler(t_cmd *cmd, int i);
 void	pipenator(t_cmd *cmd, int i);
-void	prep_exec(t_cmd *cmd);
+void	prep_exec(t_cmd *cmd, int red);
 
 /*
 *** pipes.c
