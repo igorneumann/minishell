@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/22 20:32:40 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/23 18:30:53 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 int	redir(t_cmd *cmd, int i, int j, int k)
 {
-	while (k <= i && cmd->inpt[0] == '\r' && cmd->outp[0] == '\r')
+	while (k <= i && cmd->original[k] != '|')
 	{
-		if ((cmd->original[k] == '>')
-			|| (cmd->original[k] == '<' && cmd->inpt[0] == '\r'))
+		if ((cmd->original[k] == '>') || (cmd->original[k] == '<'))
 		{
 			while (cmd->original[k + j] == ' ' || cmd->in[k + j] == '>'
 				|| cmd->original[k + j] == '<')
@@ -32,10 +31,10 @@ int	redir(t_cmd *cmd, int i, int j, int k)
 				cmd->inpt = filename(cmd->original, (k + j));
 			cleanspcback(cmd->in, k);
 		}
+		if (redirector(cmd, k, 1) == -1)
+			return (-1);
 		k++;
 	}
-	if (cmd->outp[0] != '\x0D' || cmd->inpt[0] != '\x0D')
-		return (redirector(cmd, k, 1));
 	return (0);
 }
 
