@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/23 18:30:53 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/23 18:59:54 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ int	redir(t_cmd *cmd, int i, int j, int k)
 			if (cmd->original[k] == '<')
 				cmd->inpt = filename(cmd->original, (k + j));
 			cleanspcback(cmd->in, k);
+			if (!(cmd->inpt[0] == '\r' && cmd->outp[0] == '\r')
+				&& redirector(cmd, k, 1) == -1)
+				return (-1);
 		}
-		if (redirector(cmd, k, 1) == -1)
-			return (-1);
 		k++;
 	}
 	return (0);

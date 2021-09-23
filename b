@@ -1,5 +1,4 @@
 Makefile
-a
 arguments.c
 arguments.o
 b
