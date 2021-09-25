@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 17:50:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/23 19:31:34 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/25 20:14:22 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	pipewhiler(t_cmd *cmd, int i)
 	ft_path(cmd);
 	middlepiper(cmd->in, cmd, ++i);
 	cmd->nexpip = free_first(cmd->nexpip);
+	cmd->redpip += returnoutput(cmd);
 	return (i);
 }
 
@@ -56,6 +57,7 @@ void	pipenator(t_cmd *cmd, int i)
 	if (cmd->nexpip != NULL)
 	{
 		i = ft_startpipe(cmd->in, cmd);
+		cmd->redpip += returnoutput(cmd);
 		while (cmd->nexpip->next && i >= 0)
 			i = pipewhiler(cmd, i);
 		cmd->param = free_list(cmd->param);

@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 18:13:10 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/23 19:48:49 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/25 20:15:14 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	cleanspcback(char *str, int k)
 
 int	check_fds(t_cmd *cmd)
 {
-	if (cmd->out_fd != -2 && open(cmd->outp, O_RDONLY) == -1)
+	if (cmd->redpip < 2 && cmd->out_fd != -2 && open(cmd->outp, O_RDONLY) == -1)
 	{
 		if (cmd->outp[0] == '\0')
 			ft_putstr_fd("syntax error near unexpected token `newline'\r\n", 2);

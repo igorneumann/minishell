@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/23 18:00:52 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/25 19:51:11 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_command
 	int		out_fd;
 	int		bkp_fdout;
 	int		bkp_fdin;
+	int		redpip;
 	char	*outp;
 	int		in_fd;
 	char	*inpt;
@@ -323,7 +324,10 @@ char	*ft_strduptochar(const char *s1, char c, char d);
 */
 void	ft_path(t_cmd *cmd);
 int		addpath(t_cmd *cmd, char *tmp);
-int		pipexector(char *file, char *const *argv, char *const *envp);
+int		pipexector(char *file, char *const *argv,
+			char *const *envp, t_cmd *cmd);
+int		returnoutput(t_cmd *cmd);
+void	ft_redir_in(t_cmd *cmd, int j, int k);
 
 /*
 *** pipenator.c

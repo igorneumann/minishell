@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/25 16:03:27 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/25 19:53:41 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	redir(t_cmd *cmd, int i, int j, int k)
 {
-	while (k <= i && cmd->in[k] != '|')
+	while (k <= i)
 	{
 		if ((cmd->in[k] == '>' && cmd->in[k + 1] != '>')
 			|| (cmd->in[k] == '<' && cmd->in[k + 1] != '<'))
@@ -23,13 +23,16 @@ int	redir(t_cmd *cmd, int i, int j, int k)
 				|| cmd->in[k + j] == '<')
 				j++;
 			if (cmd->in[k] == '>')
+			{
+				cmd->redpip = countleft(cmd->original, k, '|', '\0') + 1;
 				free(cmd->outp);
-			if (cmd->in[k] == '<')
-				free(cmd->inpt);
-			if (cmd->in[k] == '>')
 				cmd->outp = filename(cmd->in, (k + j));
+			}
 			if (cmd->in[k] == '<')
+			{
+				free(cmd->inpt);
 				cmd->inpt = filename(cmd->in, (k + j));
+			}
 			cleanspcback(cmd->in, k);
 			cmd->in[k] = '\0';
 			if (!(cmd->inpt[0] == '\r' && cmd->outp[0] == '\r')

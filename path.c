@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 19:10:00 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/23 19:31:06 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/25 19:56:10 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,29 @@ void	ft_path(t_cmd *cmd)
 	cmd->path = NULL;
 }
 
-int	pipexector(char *file, char *const *argv, char *const *envp)
+int	pipexector(char *file, char *const *argv, char *const *envp, t_cmd *cmd)
 {
 	char	*error;
 
+	if (cmd->redpip == 1)
+	{
+		redirout(cmd, 0);
+		cmd->redpip = -1;
+	}
 	execve(file, argv, envp);
 	error = ft_strjoin(file, ": command not found\r\n");
 	ft_putstr_fd(error, 2);
 	free(error);
 	exit(127);
+	return (-1);
+}
+
+int	returnoutput(t_cmd *cmd)
+{
+	if (cmd->redpip == -1)
+	{
+		redirout(cmd, 1);
+		return (1);
+	}
 	return (-1);
 }

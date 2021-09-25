@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/23 19:20:42 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/25 20:14:28 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,17 @@ int	pipes(t_cmd *cmd)
 	int		i;
 	int		j;
 
-	i = ft_strlen(cmd->in);
+	i = ft_strlen(cmd->original);
 	while (i > 0)
 	{
 		j = 1;
-		if (cmd->in[i] == '|'
-			&& countleft(cmd->in, i, '\'', '\"') % 2 == 0)
+		if (cmd->original[i] == '|'
+			&& countleft(cmd->original, i, '\'', '\"') % 2 == 0)
 		{
 			cmd->in[i] = '\0';
 			while (cmd->in[i + j] == ' ')
 				j++;
 			ft_lst_add_front(&cmd->nexpip, ft_new(&cmd->in[i + j]));
-			free (cmd->in);
-			cmd->in = ft_strdup(cmd->in);
 		}
 		i--;
 	}
@@ -52,7 +50,7 @@ int	ft_startpipe(char *str, t_cmd *cmd)
 		dup2(cmd->fd1[WRITE_END], STDOUT_FILENO);
 		close(cmd->fd1[WRITE_END]);
 		if (!ft_arguments(cmd))
-			return (pipexector(str, parm_list, cmd->env));
+			return (pipexector(str, parm_list, cmd->env, cmd));
 	}
 	else
 		close(cmd->fd1[WRITE_END]);
@@ -77,7 +75,7 @@ int	ft_midpipe(char *str, t_cmd *cmd, int *fd_in, int *fd_out)
 		dup2(fd_out[WRITE_END], STDOUT_FILENO);
 		close(fd_out[WRITE_END]);
 		if (!ft_arguments(cmd))
-			return (pipexector(str, parm_list, cmd->env));
+			return (pipexector(str, parm_list, cmd->env, cmd));
 	}
 	else
 	{
@@ -106,9 +104,8 @@ int	ft_endpipe(char *str, t_cmd *cmd, int i)
 	{
 		dup2(fd[READ_END], STDIN_FILENO);
 		close(fd[READ_END]);
-		redirout(cmd, 0);
 		if (!ft_arguments(cmd))
-			return (pipexector(str, parm_list, cmd->env));
+			return (pipexector(str, parm_list, cmd->env, cmd));
 	}
 	else
 		close(fd[READ_END]);
