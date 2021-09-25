@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/23 20:43:19 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/25 16:03:27 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	redir(t_cmd *cmd, int i, int j, int k)
 {
 	while (k <= i && cmd->in[k] != '|')
 	{
-		if ((cmd->in[k] == '>') || (cmd->in[k] == '<' && cmd->in[k + 1] != '<'))
+		if ((cmd->in[k] == '>' && cmd->in[k + 1] != '>')
+			|| (cmd->in[k] == '<' && cmd->in[k + 1] != '<'))
 		{
 			while (cmd->in[k + j] == ' ' || cmd->in[k + j] == '>'
 				|| cmd->in[k + j] == '<')
