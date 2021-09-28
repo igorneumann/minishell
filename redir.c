@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/25 19:53:41 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/28 16:52:11 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	redir(t_cmd *cmd, int i, int j, int k)
 			cleanspcback(cmd->in, k);
 			cmd->in[k] = '\0';
 			if (!(cmd->inpt[0] == '\r' && cmd->outp[0] == '\r')
-				&& redirector(cmd, k, 1) == -1)
+				&& redirector(cmd, k, 0) == -1)
 				return (-1);
 		}
 		k++;
