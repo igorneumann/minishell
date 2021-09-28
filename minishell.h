@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/25 19:51:11 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/28 17:48:54 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -369,7 +369,7 @@ int		get_next_line(int fd, char **line);
 /*
 *** filename.c
 */
-char	*filename(char *str, int pos);
+char	*filename(char *oldstr, char *str, int pos);
 
 /*
 *** other.c
