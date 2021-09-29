@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keypress.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 17:21:07 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/20 12:04:48 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/29 16:26:03 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,10 @@ void	noprintable(t_cmd *cmd, char c)
 	if (c == '\x1b')
 		commandkeys(cmd);
 	if (c == 4 && cmd->i == 0)
+	{
+		ft_putstr("exit\n\r");
 		die("\0", cmd->raw);
+	}
 	else if (c == 13)
 	{
 		while (cmd->in[i] == ' ')
