@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/28 17:48:54 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/29 17:36:39 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,6 +309,7 @@ char	*ft_replacestr(char *in, char *new);
 void	ft_tab(t_cmd *cmd);
 void	promptin(int i);
 void	do_nothing(int i);
+void	char_enter(t_cmd *cmd);
 
 /*
 *** exec.c

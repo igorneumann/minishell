@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moreprompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:01:37 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/19 17:01:03 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/09/29 17:36:39 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,20 @@ void	do_nothing(int i)
 	int	j;
 
 	j = i;
+}
+
+void	char_enter(t_cmd *cmd)
+{
+	size_t	i;
+
+	i = 0;
+	while (cmd->in[i] == ' ')
+		i++;
+	if (i != ft_strlen(cmd->in))
+		ft_enter(cmd);
+	else
+	{
+		ft_putstr("\r\n");
+		ft_reset(cmd);
+	}
 }
