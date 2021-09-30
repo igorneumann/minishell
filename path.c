@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 19:10:00 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/25 19:56:10 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/30 17:20:14 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,8 @@ int	addpath(t_cmd *cmd, char *tmp)
 	return (0);
 }
 
-void	ft_path(t_cmd *cmd)
+void	ft_path(t_cmd *cmd, int i)
 {
-	int		i;
 	char	*tmp;
 
 	i = 0;
@@ -52,6 +51,7 @@ void	ft_path(t_cmd *cmd)
 	while (cmd->envp->next && ft_strcmp(cmd->envp->key, "PATH") != 0)
 		cmd->envp = cmd->envp->next;
 	cmd->path = ft_split(cmd->envp->value, ':');
+	cmd->buff = ft_strduptochar(cmd->in, 32, '\0');
 	while (cmd->path[i])
 	{
 		tmp = ft_strjoin(cmd->path[i], "/");

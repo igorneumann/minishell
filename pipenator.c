@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 17:50:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/25 20:14:22 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/09/30 17:20:38 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	pipewhiler(t_cmd *cmd, int i)
 	cmd->buff = ft_strduptochar(cmd->in, 32, '\0');
 	cleanspcback(cmd->in, ft_strlen(cmd->in));
 	cleanspcback(cmd->buff, ft_strlen(cmd->buff));
-	ft_path(cmd);
+	ft_path(cmd, 0);
 	middlepiper(cmd->in, cmd, ++i);
 	cmd->nexpip = free_first(cmd->nexpip);
 	cmd->redpip += returnoutput(cmd);
@@ -47,7 +47,7 @@ void	prep_exec(t_cmd *cmd, int red)
 			cmd->buff = ft_strduptochar(cmd->in, 32, '\0');
 		cleanspcback(cmd->in, ft_strlen(cmd->in));
 		cleanspcback(cmd->buff, ft_strlen(cmd->buff));
-		ft_path(cmd);
+		ft_path(cmd, 0);
 	}
 	close(i);
 }
@@ -69,7 +69,7 @@ void	pipenator(t_cmd *cmd, int i)
 		cmd->buff = ft_strduptochar(cmd->in, 32, '\0');
 		cleanspcback(cmd->in, ft_strlen(cmd->in));
 		cleanspcback(cmd->buff, ft_strlen(cmd->buff));
-		ft_path(cmd);
+		ft_path(cmd, 0);
 		ft_endpipe(cmd->in, cmd, i);
 		cmd->param = free_list(cmd->param);
 		cmd->nexpip = free_list(cmd->nexpip);
