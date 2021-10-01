@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/22 19:53:56 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/10/01 20:14:25 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,12 @@ char	*parse_file_name(const char *s1, char c)
 	ft_bzero(dest, size);
 	i = 0;
 	j = 0;
-	while (s1[i] && (((look_for_closure('\"', s1[i], (char *)s1, i) == 0
-					&& s1[i] != c) || (look_for_closure('\'', s1[i],
-						(char *)s1, i) == 0 && s1[i] != c)) || s1[i] != '\0'))
+	while (s1[i] && s1[i] != '\0')
 	{
-		if (s1[i] != '\"' && s1[i] != '\'')
-			dest[j++] = s1[i];
-		i++;
+		if (s1[i] != '\"' && s1[i] != '\'' && s1[i] != c)
+			dest[j++] = s1[i++];
+		else
+			break ;
 	}
 	dest[i] = '\0';
 	return (dest);

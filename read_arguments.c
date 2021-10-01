@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/10/01 18:24:16 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/10/01 20:40:59 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	ft_read_arguments(t_cmd *cmd)
 	red = findredir(cmd->original);
 	noinp = 0;
 	cmd->not_found = 0;
-	noinp = redir(cmd, ft_strlen(cmd->original), 0, 1);
+	noinp = redir(cmd, ft_strlen(cmd->original), 0, 0);
 	if (noinp > 0 && cmd->inpt[0] == '\0')
 		ft_putstr_fd("syntax error near unexpected token `newline'\r\n", 2);
-	ft_lst_add_arguments(&cmd->param, cmd->original);
+	ft_lst_add_arguments(&cmd->param, cmd->original, 0, NULL);
 	if (pip > 0)
 	{
 		pipes(cmd);
@@ -91,31 +91,31 @@ int	ft_arguments(t_cmd *cmd)
 	return (1);
 }
 
-void	ft_lst_add_arguments(t_data **in, char *new)
+void	ft_lst_add_arguments(t_data **in, char *new, int i, char *temp)
 {
-	int		i;
-	char	*temp;
-	int		size;
-
-	i = 0;
-	size = 0;
 	i = quit_spaces(new, i);
-	if (new[i] == '|' || new[i] == '<' || new[i] == '>' || new[i] == ';'
-		|| (new[i] == '&' && new[i + 1] == '&'))
-		return ;
-	if (new[i] == '\"' || new[i] == '\'')
+	while (new[i] != '\0')
 	{
-		temp = parse_file_name(&new[i], 32);
-		size = 2;
+		if (new[i] == '|' || new[i] == '<' || new[i] == '>' || new[i] == ';'
+			|| (new[i] == '&' && new[i + 1] == '&'))
+			return ;
+		if ((new[i] == '\"' || new[i] == '\'') && new[i + 1] != '\0')
+		{
+			i++;
+			temp = parse_file_name(&new[i], new[i - 1]);
+		}
+		else if (new[i + 1] != '\0')
+			temp = ft_strduptochar(&new[i], ' ', '\0');
+		if (temp != NULL)
+		{
+			ft_lst_add_front(in, ft_new(temp));
+			i += ft_strlen(temp);
+			i = quit_spaces(new, i);
+			free(temp);
+			temp = NULL;
+		}
+		else
+			i++;
 	}
-	else
-		temp = ft_strduptochar(&new[i], ' ', '\0');
-	ft_lst_add_front(in, ft_new(temp));
-	size += ft_strlen(temp);
-	while (new[i] && size--)
-		i++;
-	i = quit_spaces(new, i);
-	if (new[i] != '\0')
-		ft_lst_add_arguments(in, &new[i]);
 	free(temp);
 }
