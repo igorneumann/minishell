@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/10/01 16:28:06 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/10/01 18:09:59 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,24 @@ int	redir(t_cmd *cmd, int i, int j, int k)
 {
 	while (k <= i)
 	{
-		if (((cmd->in[k] == '>' && cmd->in[k + 1] != '>')
-				|| (cmd->in[k] == '<' && cmd->in[k + 1] != '<'))
+		if (((cmd->original[k] == '>' && cmd->original[k + 1] != '>')
+				|| (cmd->original[k] == '<' && cmd->original[k + 1] != '<'))
 			&& (countleft(cmd->original, k, '\"', '\0') % 2 == 0)
 			&& (countleft(cmd->original, k, '\'', '\0') % 2 == 0))
 		{
-			while (cmd->in[k + j] == ' ' || cmd->in[k + j] == '>'
-				|| cmd->in[k + j] == '<')
+			while (cmd->original[k + j] == ' ' || cmd->original[k + j] == '>'
+				|| cmd->original[k + j] == '<')
 				j++;
-			if (cmd->in[k] == '>')
+			if (cmd->original[k] == '>')
 			{
 				cmd->redpip = countleft(cmd->original, k, '|', '\0') + 1;
-				cmd->outp = filename(cmd->outp, cmd->in, (k + j));
+				cmd->outp = filename(cmd->outp, cmd->original, (k + j));
 			}
-			if (cmd->in[k] == '<')
-				cmd->inpt = filename(cmd->inpt, cmd->in, (k + j));
-			cmd->in[k] = '\0';
-			if (!(cmd->inpt[0] == '\r' && cmd->outp[0] == '\r')
-				&& redirector(cmd, k, 0) == -1)
+			if (cmd->original[k] == '<')
+				cmd->inpt = filename(cmd->inpt, cmd->original, (k + j));
+			if (cmd->in[k] == '>' || cmd->in[k] == '<')
+				cmd->in[k] = '\0';
+			if (redirector(cmd, k, 0) == -1)
 				return (-1);
 		}
 		k++;
@@ -110,6 +110,8 @@ void	tempinput(t_cmd *cmd)
 
 int	redirector(t_cmd *cmd, int i, int j)
 {
+	if (cmd->inpt[0] == '\r' && cmd->outp[0] == '\r')
+		return (0);
 	if (cmd->inpt[0] != '\x0D' && cmd->original[i] == '<'
 		&& cmd->original[i - 1] == '<')
 	{

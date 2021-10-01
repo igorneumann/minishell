@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:05:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/08 19:33:52 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/10/01 18:04:57 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,8 @@ char	*replace_quotes(t_cmd *cmd)
 	cmd->in = (char *)malloc(sizeof(char) * ft_strlen(cmd->tmp_in) + 1);
 	while (cmd->tmp_in[cmd->c1] != '\0')
 	{
-		if (cmd->tmp_in[cmd->c1] == '\"')
-			omit_quotes(cmd, '\'', '\"');
-		else if (cmd->tmp_in[cmd->c1] == '\'')
-			omit_quotes(cmd, '\"', '\'');
+		if (cmd->tmp_in[cmd->c1] == '\"' || cmd->tmp_in[cmd->c1] == '\'')
+			cmd->tmp_in[cmd->c1] = ' ';
 		else if (cmd->tmp_in[cmd->c1] != '\0')
 			cmd->in[cmd->c2++] = cmd->tmp_in[cmd->c1++];
 	}
