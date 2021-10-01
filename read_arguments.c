@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_arguments.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/29 17:07:51 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/10/01 16:13:56 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	ft_lst_add_arguments(t_data **in, char *new)
 		size = 2;
 	}
 	else
-		temp = ft_strduptochar(&new[i], 32, '\0');
+		temp = ft_strduptochar(&new[i], ' ', '\0');
 	ft_lst_add_front(in, ft_new(temp));
 	size += ft_strlen(temp);
 	while (new[i] && size--)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/25 20:14:28 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/10/01 16:00:09 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	pipes(t_cmd *cmd)
 {
 	int		i;
 	int		j;
+	int		k;
 
 	i = ft_strlen(cmd->original);
 	while (i > 0)
@@ -24,10 +25,14 @@ int	pipes(t_cmd *cmd)
 		if (cmd->original[i] == '|'
 			&& countleft(cmd->original, i, '\'', '\"') % 2 == 0)
 		{
-			cmd->in[i] = '\0';
-			while (cmd->in[i + j] == ' ')
+			k = 0;
+			while (cmd->in[k] != '|'
+				&& countleft(cmd->original, i, '\'', '\"') % 2 == 0)
+				k++;
+			cmd->in[k] = '\0';
+			while (cmd->original[i + j] == ' ')
 				j++;
-			ft_lst_add_front(&cmd->nexpip, ft_new(&cmd->in[i + j]));
+			ft_lst_add_front(&cmd->nexpip, ft_new(&cmd->in[k + j]));
 		}
 		i--;
 	}

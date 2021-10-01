@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 21:20:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/20 17:30:08 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/10/01 14:49:06 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,5 @@ void	ft_echo(t_cmd *cmd)
 		i++;
 	cmd->echo_nl = 0;
 	print_echo(cmd, i, j);
+	cmd->output_status = 0;
 }

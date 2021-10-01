@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   semicolon.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 18:24:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/22 18:52:59 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/10/01 15:17:03 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,7 @@ int	findpipes(char *str)
 	{
 		if (st[i] == '|'
 			&& look_for_closure('\'', st[i], st, i) == 0
-			&& look_for_closure('\"', st[i], st, i) == 0
-			&& ((countleft(st, i, '\'', '\"') == 0)
-				|| (countleft(st, i, '\'', '\"') % 2 != 0)))
+			&& look_for_closure('\"', st[i], st, i) == 0)
 			pp++;
 		i++;
 	}

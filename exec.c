@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 18:22:39 by ineumann          #+#    #+#             */
-/*   Updated: 2021/09/30 17:17:39 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/10/01 16:14:09 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*ft_strduptochar(const char *s1, char c, char d)
 		return (NULL);
 	ft_bzero(dest, size);
 	i = 0;
-	while (s1[i] && s1[i] != c && s1[i] != d)
+	while (s1[i] && s1[i] != c && s1[i] != d && s1[i] != '|')
 	{
 		dest[i] = s1[i];
 		i++;
