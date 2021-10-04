@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 09:35:29 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/08/31 12:23:16 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/10/01 19:57:25 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_data	*ft_lst_last(t_data *elem)
 
 t_data	*ft_lst_first(t_data *elem)
 {
-	if (elem)
+	if (elem && elem->prev)
 	{
 		while (elem->prev)
 			elem = elem->prev;

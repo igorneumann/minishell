@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/10/01 16:00:09 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/10/01 20:38:28 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_startpipe(char *str, t_cmd *cmd)
 	pipe(cmd->fd1);
 	pid = fork();
 	parm_list = copyparam(cmd);
-	redir(cmd, ft_strlen(cmd->in), 0, 1);
+	redir(cmd, ft_strlen(cmd->in), 0, 0);
 	if (pid == 0)
 	{
 		close(cmd->fd1[READ_END]);

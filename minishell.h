@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/30 17:21:18 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/10/01 20:43:53 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,7 +271,6 @@ int		command_error(t_cmd *cmd);
 *** quotes.c
 */
 int		check_quotes_error(t_cmd *cmd);
-void	omit_quotes(t_cmd *cmd, char q1, char q2);
 char	*replace_quotes(t_cmd *cmd);
 int		check_replacement(t_cmd *cmd);
 
@@ -291,7 +290,7 @@ void	ft_read_arguments(t_cmd *cmd);
 void	builtins(t_cmd *cmd, int i);
 void	init_arguments(t_cmd *cmd);
 int		ft_arguments(t_cmd *cmd);
-void	ft_lst_add_arguments(t_data **in, char *new);
+void	ft_lst_add_arguments(t_data **in, char *new, int i, char *temp);
 
 /*
 *** utils.c

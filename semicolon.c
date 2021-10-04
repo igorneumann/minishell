@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   semicolon.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 18:24:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/10/01 15:17:03 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/10/01 20:28:45 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,18 +91,19 @@ int	findredir(char *str)
 {
 	int		rd;
 	int		i;
+	int		comma;
+	int		dcomma;
 	char	*st;
 
 	i = 0;
 	st = str;
 	rd = 0;
+	comma = countleft(st, i, '\'', '\0');
+	dcomma = countleft(st, i, '\"', '\0');
 	while (st[i] != '\0')
 	{
-		if ((st[i] == '<' || st[i] == '>')
-			&& look_for_closure('\'', st[i], st, i) == 0
-			&& look_for_closure('\"', st[i], st, i) == 0
-			&& ((countleft(st, i, '\'', '\"') == 0)
-				|| (countleft(st, i, '\'', '\"') % 2 != 0)))
+		if ((st[i] == '<' || st[i] == '>') && (comma == 0 || comma % 2 == 0)
+			&& (dcomma == 0 || dcomma % 2 == 0))
 			rd++;
 		i++;
 	}

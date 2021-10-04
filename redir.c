@@ -114,6 +114,8 @@ void	tempinput(t_cmd *cmd)
 
 int	redirector(t_cmd *cmd, int i, int j)
 {
+	if (cmd->inpt[0] == '\r' && cmd->outp[0] == '\r')
+		return (0);
 	if (cmd->inpt[0] != '\x0D' && cmd->original[i] == '<'
 		&& cmd->original[i - 1] == '<')
 	{
