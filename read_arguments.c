@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/10/01 18:36:34 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/10/04 17:43:16 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_read_arguments(t_cmd *cmd)
 	noinp = redir(cmd, ft_strlen(cmd->original), 0, 1);
 	if (noinp > 0 && cmd->inpt[0] == '\0')
 		ft_putstr_fd("syntax error near unexpected token `newline'\r\n", 2);
-	ft_lst_add_arguments(&cmd->param, cmd->original);
+	ft_lst_add_arguments(&cmd->param, cmd->in);
 	if (pip > 0)
 	{
 		pipes(cmd);
@@ -111,11 +111,8 @@ void	ft_lst_add_arguments(t_data **in, char *new)
 		temp = ft_strduptochar(&new[i], ' ', '\0');
 	ft_lst_add_front(in, ft_new(temp));
 	size += ft_strlen(temp);
-	while (new[i] && size)
-	{
-		size--;
+	while (new[i] && size--)
 		i++;
-	}
 	i = quit_spaces(new, i);
 	if (new[i] != '\0')
 		ft_lst_add_arguments(in, &new[i]);
