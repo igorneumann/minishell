@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/10/04 18:54:30 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/10/04 19:18:38 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ typedef struct s_command
 /*
 *** arguments.c
 */
-char	*parse_file_name(char *s1, char c);
 int		quotes_command_error(t_cmd *cmd, char *str);
 int		command_not_found(char *str, t_cmd *cmd);
 void	ft_pwd(t_cmd *cmd);
@@ -361,6 +360,8 @@ int		redirector(t_cmd *cmd, int i, int j);
 */
 void	check_redirections(t_cmd *cmd, int k, int j);
 int		comillas(char *str, int position);
+char	*create_array(char *str, int position);
+char	*parse_file_name(char *s1, char c);
 
 /*
 *** clean.c
