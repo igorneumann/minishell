@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/10/01 18:03:58 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/10/04 17:52:20 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,7 @@ int	redir(t_cmd *cmd, int i, int j, int k)
 			while (cmd->original[k + j] == ' ' || cmd->original[k + j] == '>'
 				|| cmd->original[k + j] == '<')
 				j++;
-			if (cmd->original[k] == '>')
-			{
-				cmd->redpip = countleft(cmd->original, k, '|', '\0') + 1;
-				cmd->outp = filename(cmd->outp, cmd->original, (k + j));
-			}
-			if (cmd->original[k] == '<')
-				cmd->inpt = filename(cmd->inpt, cmd->original, (k + j));
+			check_redirections(cmd, k, j);
 			quotes = countleft(cmd->original, k, '\"', '\0')
 				+ countleft(cmd->original, k, '\'', '\0');
 			cmd->in[k - quotes] = '\0';

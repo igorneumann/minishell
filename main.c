@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:18:47 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/25 18:20:51 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/10/04 18:21:06 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	ft_init(t_cmd *cmd, char **envp, t_raw *raw)
 	cmd->dollar_value = NULL;
 	cmd->env = NULL;
 	cmd->counter = 0;
+	cmd->contador = 0;
 	cmd->in_fd = -2;
 	cmd->out_fd = -2;
 	cmd->output_status = 0;

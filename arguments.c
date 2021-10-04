@@ -3,28 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   arguments.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 12:54:06 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/22 19:53:56 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/10/04 19:02:16 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*parse_file_name(const char *s1, char c)
+char	*parse_file_name(char *s1, char c)
 {
 	char	*dest;
 	int		i;
 	int		j;
 	int		size;
 
-	size = ft_strlentochar((char *)s1, c);
+	size = 0;
+	i = 0;
+	while (s1[i] != '\'' && s1[i] != '\"')
+		i++;
+	i++;
+	while (s1[i + size] && countleft(s1, i + size, '\'', '\"') % 2 != 0)
+		size++;
 	dest = (char *)malloc(sizeof(char) * (size + 1));
 	if (!dest)
 		return (NULL);
 	ft_bzero(dest, size);
-	i = 0;
 	j = 0;
 	while (s1[i] && (((look_for_closure('\"', s1[i], (char *)s1, i) == 0
 					&& s1[i] != c) || (look_for_closure('\'', s1[i],

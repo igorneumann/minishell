@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 17:50:59 by ineumann          #+#    #+#             */
-/*   Updated: 2021/10/01 16:51:04 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/10/04 18:31:51 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	pipewhiler(t_cmd *cmd, int i)
 	free(cmd->in);
 	cmd->in = ft_strdup(cmd->nexpip->in);
 	redir(cmd, ft_strlen(cmd->in), 0, 1);
-	ft_lst_add_arguments(&cmd->param, cmd->nexpip->in);
+	ft_lst_add_arguments(cmd, &cmd->param, cmd->nexpip->in, 0);
 	free(cmd->buff);
 	cmd->buff = ft_strduptochar(cmd->in, 32, '\0');
 	cleanspcback(cmd->in, ft_strlen(cmd->in));
@@ -64,7 +64,7 @@ void	pipenator(t_cmd *cmd, int i)
 		free(cmd->in);
 		cmd->in = ft_strdup(cmd->nexpip->in);
 		redir(cmd, ft_strlen(cmd->in), 0, 1);
-		ft_lst_add_arguments(&cmd->param, cmd->nexpip->in);
+		ft_lst_add_arguments(cmd, &cmd->param, cmd->nexpip->in, 0);
 		free(cmd->buff);
 		cmd->buff = ft_strduptochar(cmd->in, 32, '\0');
 		cleanspcback(cmd->in, ft_strlen(cmd->in));

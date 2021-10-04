@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+         #
+#    By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 10:24:24 by narroyo-          #+#    #+#              #
-#    Updated: 2021/09/22 19:53:20 by ineumann         ###   ########.fr        #
+#    Updated: 2021/10/04 17:51:33 by narroyo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS			=	main.c ./includes/gnl/get_next_line.c ./f_rawmode.c \
 					semicolon.c moreprompt.c exec.c export_utils.c pipes.c \
 					free.c path.c pipenator.c redir.c quotes.c dollar.c cd.c \
 					quotes_utils.c other.c echo.c echo_nl.c clean.c init.c \
-					filename.c
+					filename.c redir2.c
 LIBFT			=	./includes/libft
 OBJS 			=	$(SRCS:.c=.o)
 LIBS			=	./includes/libft/libft.a

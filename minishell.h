@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 20:20:24 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/09/30 17:21:18 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/10/04 18:54:30 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_raw
 typedef struct s_command
 {
 	char	*in;
+	int		contador;
 	int		i;
 	int		fd1[2];
 	int		fd2[2];
@@ -111,7 +112,7 @@ typedef struct s_command
 /*
 *** arguments.c
 */
-char	*parse_file_name(const char *s1, char c);
+char	*parse_file_name(char *s1, char c);
 int		quotes_command_error(t_cmd *cmd, char *str);
 int		command_not_found(char *str, t_cmd *cmd);
 void	ft_pwd(t_cmd *cmd);
@@ -291,7 +292,7 @@ void	ft_read_arguments(t_cmd *cmd);
 void	builtins(t_cmd *cmd, int i);
 void	init_arguments(t_cmd *cmd);
 int		ft_arguments(t_cmd *cmd);
-void	ft_lst_add_arguments(t_data **in, char *new);
+void	ft_lst_add_arguments(t_cmd *cmd, t_data **in, char *new, int f_quotes);
 
 /*
 *** utils.c
@@ -354,6 +355,12 @@ void	redirout_one(t_cmd *cmd, int *in[2], int *out[2]);
 void	redirout(t_cmd *cmd, int i);;
 void	tempinput(t_cmd *cmd);
 int		redirector(t_cmd *cmd, int i, int j);
+
+/*
+*** redir2.c
+*/
+void	check_redirections(t_cmd *cmd, int k, int j);
+int		comillas(char *str, int position);
 
 /*
 *** clean.c

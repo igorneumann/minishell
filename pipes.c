@@ -6,7 +6,7 @@
 /*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 19:10:34 by ineumann          #+#    #+#             */
-/*   Updated: 2021/10/01 16:00:09 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/10/04 18:18:42 by narroyo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	pipes(t_cmd *cmd)
 				&& countleft(cmd->original, i, '\'', '\"') % 2 == 0)
 				k++;
 			cmd->in[k] = '\0';
+			cmd->contador += ft_strlen(cmd->in);
 			while (cmd->original[i + j] == ' ')
 				j++;
 			ft_lst_add_front(&cmd->nexpip, ft_new(&cmd->in[k + j]));
