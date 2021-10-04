@@ -6,7 +6,7 @@
 /*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 19:00:43 by narroyo-          #+#    #+#             */
-/*   Updated: 2021/10/01 20:40:59 by ineumann         ###   ########.fr       */
+/*   Updated: 2021/10/04 17:39:42 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_read_arguments(t_cmd *cmd)
 	noinp = redir(cmd, ft_strlen(cmd->original), 0, 0);
 	if (noinp > 0 && cmd->inpt[0] == '\0')
 		ft_putstr_fd("syntax error near unexpected token `newline'\r\n", 2);
-	ft_lst_add_arguments(&cmd->param, cmd->original, 0, NULL);
+	ft_lst_add_arguments(&cmd->param, cmd->in, 0, NULL);
 	if (pip > 0)
 	{
 		pipes(cmd);
