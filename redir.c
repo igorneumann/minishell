@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narroyo- <narroyo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ineumann <ineumann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:27:21 by ineumann          #+#    #+#             */
-/*   Updated: 2021/10/01 18:03:58 by narroyo-         ###   ########.fr       */
+/*   Updated: 2021/10/01 18:09:59 by ineumann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	redir(t_cmd *cmd, int i, int j, int k)
 {
-	int	quotes;
-
 	while (k <= i)
 	{
 		if (((cmd->original[k] == '>' && cmd->original[k + 1] != '>')
@@ -33,11 +31,9 @@ int	redir(t_cmd *cmd, int i, int j, int k)
 			}
 			if (cmd->original[k] == '<')
 				cmd->inpt = filename(cmd->inpt, cmd->original, (k + j));
-			quotes = countleft(cmd->original, k, '\"', '\0')
-				+ countleft(cmd->original, k, '\'', '\0');
-			cmd->in[k - quotes] = '\0';
-			if (!(cmd->inpt[0] == '\r' && cmd->outp[0] == '\r')
-				&& redirector(cmd, k, 0) == -1)
+			if (cmd->in[k] == '>' || cmd->in[k] == '<')
+				cmd->in[k] = '\0';
+			if (redirector(cmd, k, 0) == -1)
 				return (-1);
 		}
 		k++;
